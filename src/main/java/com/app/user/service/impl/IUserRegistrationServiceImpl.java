@@ -10,7 +10,7 @@ import com.app.user.dto.request.CreateUserRequestDTO;
 import com.app.user.dto.response.CreateUserResponseDTO;
 import com.app.user.entity.UserRegistrationEtity;
 import com.app.user.entityDtoMapper.UserSaveUpdateMapper;
-import com.app.user.repository.UserRepogitory;
+import com.app.user.repository.UserRepository;
 
 @Service
 public class IUserRegistrationServiceImpl {
@@ -18,7 +18,7 @@ public class IUserRegistrationServiceImpl {
 	private static final Logger LOGGER = LoggerFactory.getLogger(IUserRegistrationServiceImpl.class);
 
 	@Autowired
-	private UserRepogitory userRegistrationRepogitory;
+	private UserRepository userRegistrationRepogitory;
 
 	public ServiceResponseDTO saveUserData(CreateUserRequestDTO userMasterCreateDTO) {
 		LOGGER.info("user registration process start in IUserRegistrationServiceImpl and saveUserData method");

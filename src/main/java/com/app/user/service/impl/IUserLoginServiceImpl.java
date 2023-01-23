@@ -16,14 +16,14 @@ import com.app.user.dto.request.LoginRequestDTO;
 import com.app.user.dto.request.SendOTPRequestDTO;
 import com.app.user.dto.response.RouteScreenResponseDTO;
 import com.app.user.dto.response.SendOtpResponseDTO;
-import com.app.user.repository.UserRepogitory;
+import com.app.user.repository.UserRepository;
 
 @Service
 public class IUserLoginServiceImpl {
 	private static final Logger LOGGER = LoggerFactory.getLogger(IUserLoginServiceImpl.class);
 
 	@Autowired
-	private UserRepogitory userRepogitory;
+	private UserRepository userRepogitory;
 	
 	public ServiceResponseDTO userLogin(LoginRequestDTO loginDTO) {
 		LOGGER.info("user userLogin process start in IUserLoginServiceImpl and userLogin method Executing");
