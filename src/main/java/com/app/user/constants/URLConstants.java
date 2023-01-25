@@ -17,5 +17,10 @@ public interface URLConstants {
 	String LOGOUT = "/logout";
 	String FORGET_PASSWORD = "/fogetPassword";
 	String MASTER_SERVICE = "/masterservice";
+	String SAVE_CLIENT = "/saveclient";
+	String UPDATE_CLIENT = "/updateclient/{id}";
+	String DELETE_CLIENT = "/deleclient";
+	String GET_CLIENT = "/getallclientdata";
+	String GET_CLIENT_BY_ID = "/getclientdata/{id}";
 
 }

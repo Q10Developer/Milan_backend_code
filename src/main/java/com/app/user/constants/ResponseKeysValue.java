@@ -50,6 +50,9 @@ public interface ResponseKeysValue {
 	String WARNING_CLIENT_ALREADY_EXIST_CODE = "100";
 	String WARNING_CLIENT_ALREADY_EXIST_DESC = "Client Already Exist";
 
+	String WARNING_CLIENT_DOESNT_EXIST_CODE = "100";
+	String WARNING_CLIENT_DOESNT_EXIST_DESC = "Client doesn't Exist";
+
 	// String SUCCESS_STATUS_DESCRIPTION_USER_UPDATE="User details Updated
 	// Successfully";
 	// String SUCCESS_STATUS_DESCRIPTION_USER_CREATE="User Registration Success";
