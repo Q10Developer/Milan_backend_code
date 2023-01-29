@@ -11,6 +11,10 @@ public interface URLConstants {
 	String LOGIN_USER = "/login";
 	String MPIN_LOGIN_USER = "/mpinLogin";
 	String CHANGE_PASSWORD = "/changepassword";
+	String UPDATE_USER = "/updateuser/{id}";
+	String GET_ALL_USER_DETAILS = "/getallusers";
+	String GET_USER_DETAIL_BY_ID = "/getuserdetail";
+	String ENABLE_DISABLE_USER = "/enabledisableuser/{id}";
 	String FORGOT_PASSWORD = "/forgotpassword";
 	String GENERATE_MPIN = "/generatempin";
 	String SEND_OTP = "/sendotp";
@@ -22,5 +26,6 @@ public interface URLConstants {
 	String DELETE_CLIENT = "/deleclient";
 	String GET_CLIENT = "/getallclientdata";
 	String GET_CLIENT_BY_ID = "/getclientdata/{id}";
+	String GET_MASTER_DATA_LIST = "/masterdatalist";
 
 }

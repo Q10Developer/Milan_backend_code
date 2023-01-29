@@ -13,95 +13,97 @@ public class CreateUserRequestDTO implements Serializable {
 	 */
 	private Long id;
 	private String name;
+	private String emailId;
+	private Long mobileNumber;
 	private String password;
 	private String confirmPassword;
-	private Long mobileNumber;
-	private String emailId;
-	private int usertype;
-	
-	
-	
-
+	private Integer roleType;
+	private Integer activeStatus;
 
 	public Long getId() {
 		return id;
 	}
 
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 
 	public String getName() {
 		return name;
 	}
 
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-	public String getPassword() {
-		return password;
-	}
-
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
-
-
-	public Long getMobileNumber() {
-		return mobileNumber;
-	}
-
-
-	public void setMobileNumber(Long mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
-
 
 	public String getEmailId() {
 		return emailId;
 	}
 
-
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
 
-
-
-	public int getUsertype() {
-		return usertype;
+	public Long getMobileNumber() {
+		return mobileNumber;
 	}
 
-
-	public void setUsertype(int usertype) {
-		this.usertype = usertype;
+	public void setMobileNumber(Long mobileNumber) {
+		this.mobileNumber = mobileNumber;
 	}
 
+	public String getPassword() {
+		return password;
+	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	public Integer getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(int roleType) {
+		this.roleType = roleType;
+	}
+
+	public Integer getActiveStatus() {
+		return activeStatus;
+	}
+
+	public void setActiveStatus(int activeStatus) {
+		this.activeStatus = activeStatus;
 	}
 
 	@Override
 	public String toString() {
-		return "CreateUserRequestDTO [id=" + id + ", name=" + name + ", password=" + password + ", confirmPassword="
-				+ confirmPassword + ", mobileNumber=" + mobileNumber + ", emailId=" + emailId + ",  usertype=" + usertype
-				+ "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("CreateUserRequestDTO [id=");
+		builder.append(id);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", emailId=");
+		builder.append(emailId);
+		builder.append(", mobileNumber=");
+		builder.append(mobileNumber);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", confirmPassword=");
+		builder.append(confirmPassword);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", activeStatus=");
+		builder.append(activeStatus);
+		builder.append("]");
+		return builder.toString();
 	}
 }

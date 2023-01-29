@@ -1,6 +1,8 @@
 package com.app.user.service.impl;
 
+import java.util.List;
 import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -11,7 +13,9 @@ import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ClientMasterRequestDTO;
 import com.app.user.dto.response.GenericResponseDTO;
 import com.app.user.entity.ClientMasterEntity;
+import com.app.user.entity.MasterDataListEntity;
 import com.app.user.repository.ClientMasterRepository;
+import com.app.user.repository.MasterDataListRepository;
 
 @Service
 public class IMasterServiceImpl {
@@ -20,6 +24,9 @@ public class IMasterServiceImpl {
 
 	@Autowired
 	private ClientMasterRepository clientMasterRepository;
+
+	@Autowired
+	private MasterDataListRepository masterDataListRepository;
 
 	public ServiceResponseDTO saveClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO) {
 		LOGGER.info("client master data in IMasterServiceImpl and saveClientMasterData method");
@@ -80,6 +87,25 @@ public class IMasterServiceImpl {
 			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
 			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
 		}
+		return response;
+	}
+
+	public ServiceResponseDTO getMasterDataList(String dataType, String activeStatus) {
+		LOGGER.info("client master data in IMasterServiceImpl and updateClientMasterData method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		List<MasterDataListEntity> masterList = null;
+		if (!StringUtils.isEmpty(dataType)) {
+			if (activeStatus.equalsIgnoreCase("1") || activeStatus.equalsIgnoreCase("0")) {
+				masterList = masterDataListRepository.findAllByDataTypeAndActiveStatus(dataType,
+						Integer.valueOf(activeStatus));
+			} else {
+				masterList = masterDataListRepository.findAllByDataType(dataType);
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		response.setResult(masterList);
 		return response;
 	}
 

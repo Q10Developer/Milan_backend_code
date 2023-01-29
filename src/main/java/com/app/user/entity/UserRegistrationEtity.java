@@ -6,46 +6,32 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="user_master")
+@Table(name = "user_master")
 public class UserRegistrationEtity {
 	@Id
 	@GeneratedValue
-	@Column(name="user_id")
-	private long id;
-	
-	@Column(name="user_name" ,nullable = false)
+	@Column(name = "user_id")
+	private Integer userId;
+	@Column(name = "user_name", nullable = false)
 	private String name;
-	
-	
-	@Column(name="user_password",nullable = false)
+	@Column(name = "user_password", nullable = false)
 	private String password;
-	
-	@Column(name="user_mobile",nullable = false)
+	@Column(name = "user_mobile", nullable = false)
 	private Long mobileNumber;
-	
-	
-	@Column(name="user_email",nullable = true)
+	@Column(name = "user_email", nullable = true)
 	private String emailId;
-	
-	
-	@Column(name="user_type")
-	private int userType;
+	@Column(name = "role_type")
+	private Integer roleType;
+	@Column(name = "active_status")
+	private Integer activeStatus;
 
-
-	
-	@Column(name="user_status")
-	private boolean status;
-	
-
-
-	public long getId() {
-		return id;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getName() {
@@ -80,32 +66,41 @@ public class UserRegistrationEtity {
 		this.emailId = emailId;
 	}
 
-
-	public int getUserType() {
-		return userType;
+	public Integer getRoleType() {
+		return roleType;
 	}
 
-	public void setUserType(int userType) {
-		this.userType = userType;
+	public void setRoleType(Integer roleType) {
+		this.roleType = roleType;
 	}
 
-
-	public boolean isStatus() {
-		return status;
+	public Integer getActiveStatus() {
+		return activeStatus;
 	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setActiveStatus(Integer activeStatus) {
+		this.activeStatus = activeStatus;
 	}
-
-
 
 	@Override
 	public String toString() {
-		return "UserRegistrationEtity [id=" + id + ", name=" + name + ", password=" + password
-				+ ", mobileNumber=" + mobileNumber + ",  emailId=" + emailId + ",  userType="
-				+ userType + ", status=" + status + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserRegistrationEtity [userId=");
+		builder.append(userId);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", mobileNumber=");
+		builder.append(mobileNumber);
+		builder.append(", emailId=");
+		builder.append(emailId);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", activeStatus=");
+		builder.append(activeStatus);
+		builder.append("]");
+		return builder.toString();
 	}
 
-	
 }
