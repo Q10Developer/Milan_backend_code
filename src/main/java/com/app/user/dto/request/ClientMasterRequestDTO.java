@@ -11,21 +11,16 @@ public class ClientMasterRequestDTO {
 	private String clientEmailId;
 	private String clientWebsite;
 	private Long clientMobileNo;
-	private Long clientPhoneNo;
+	private String clientPhoneNo;
 	private Long gstRegistrationType;
 	private String clientGstNumber;
 	private String clientPanNumber;
-	private String clientShippingAddress;
-	private String clientShippingState;
-	private String clientShippingCity;
-	private String clientShippingCountry;
-	private String clientShippingPincode;
-	private boolean isBillingSameAsShipping;
 	private String clientBillingAddress;
 	private String clientBillingState;
 	private String clientBillingCity;
 	private String clientBillingCountry;
 	private String clientBillingPincode;
+	private int clientActiveStatus;
 
 	public Long getClientId() {
 		return clientId;
@@ -99,11 +94,11 @@ public class ClientMasterRequestDTO {
 		this.clientMobileNo = clientMobileNo;
 	}
 
-	public Long getClientPhoneNo() {
+	public String getClientPhoneNo() {
 		return clientPhoneNo;
 	}
 
-	public void setClientPhoneNo(Long clientPhoneNo) {
+	public void setClientPhoneNo(String clientPhoneNo) {
 		this.clientPhoneNo = clientPhoneNo;
 	}
 
@@ -129,54 +124,6 @@ public class ClientMasterRequestDTO {
 
 	public void setClientPanNumber(String clientPanNumber) {
 		this.clientPanNumber = clientPanNumber;
-	}
-
-	public String getClientShippingAddress() {
-		return clientShippingAddress;
-	}
-
-	public void setClientShippingAddress(String clientShippingAddress) {
-		this.clientShippingAddress = clientShippingAddress;
-	}
-
-	public String getClientShippingState() {
-		return clientShippingState;
-	}
-
-	public void setClientShippingState(String clientShippingState) {
-		this.clientShippingState = clientShippingState;
-	}
-
-	public String getClientShippingCity() {
-		return clientShippingCity;
-	}
-
-	public void setClientShippingCity(String clientShippingCity) {
-		this.clientShippingCity = clientShippingCity;
-	}
-
-	public String getClientShippingCountry() {
-		return clientShippingCountry;
-	}
-
-	public void setClientShippingCountry(String clientShippingCountry) {
-		this.clientShippingCountry = clientShippingCountry;
-	}
-
-	public String getClientShippingPincode() {
-		return clientShippingPincode;
-	}
-
-	public void setClientShippingPincode(String clientShippingPincode) {
-		this.clientShippingPincode = clientShippingPincode;
-	}
-
-	public boolean isBillingSameAsShipping() {
-		return isBillingSameAsShipping;
-	}
-
-	public void setBillingSameAsShipping(boolean isBillingSameAsShipping) {
-		this.isBillingSameAsShipping = isBillingSameAsShipping;
 	}
 
 	public String getClientBillingAddress() {
@@ -219,6 +166,14 @@ public class ClientMasterRequestDTO {
 		this.clientBillingPincode = clientBillingPincode;
 	}
 
+	public int getClientActiveStatus() {
+		return clientActiveStatus;
+	}
+
+	public void setClientActiveStatus(int clientActiveStatus) {
+		this.clientActiveStatus = clientActiveStatus;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -248,18 +203,6 @@ public class ClientMasterRequestDTO {
 		builder.append(clientGstNumber);
 		builder.append(", clientPanNumber=");
 		builder.append(clientPanNumber);
-		builder.append(", clientShippingAddress=");
-		builder.append(clientShippingAddress);
-		builder.append(", clientShippingState=");
-		builder.append(clientShippingState);
-		builder.append(", clientShippingCity=");
-		builder.append(clientShippingCity);
-		builder.append(", clientShippingCountry=");
-		builder.append(clientShippingCountry);
-		builder.append(", clientShippingPincode=");
-		builder.append(clientShippingPincode);
-		builder.append(", isBillingSameAsShipping=");
-		builder.append(isBillingSameAsShipping);
 		builder.append(", clientBillingAddress=");
 		builder.append(clientBillingAddress);
 		builder.append(", clientBillingState=");
@@ -270,6 +213,8 @@ public class ClientMasterRequestDTO {
 		builder.append(clientBillingCountry);
 		builder.append(", clientBillingPincode=");
 		builder.append(clientBillingPincode);
+		builder.append(", clientActiveStatus=");
+		builder.append(clientActiveStatus);
 		builder.append("]");
 		return builder.toString();
 	}

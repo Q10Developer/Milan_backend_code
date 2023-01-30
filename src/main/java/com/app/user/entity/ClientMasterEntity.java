@@ -15,6 +15,9 @@ public class ClientMasterEntity {
 	@Column(name = "client_id")
 	private Long clientId;
 
+	@Column(name = "client_title", nullable = false)
+	private String clientTitle;
+
 	@Column(name = "client_first_name", nullable = false)
 	private String clientFirstName;
 
@@ -30,14 +33,17 @@ public class ClientMasterEntity {
 	@Column(name = "client_email_id")
 	private String clientEmailId;
 
-	@Column(name = "client_mobile_no")
-	private Long clientMobileNo;
-
 	@Column(name = "client_website")
 	private String clientWebsite;
 
+	@Column(name = "client_mobile_no")
+	private Long clientMobileNo;
+
 	@Column(name = "client_phone_no")
-	private Long clientPhoneNo;
+	private String clientPhoneNo;
+
+	@Column(name = "client_gst_registration_type")
+	private int gstRegistrationType;
 
 	@Column(name = "client_gst_number")
 	private String clientGstNumber;
@@ -45,11 +51,23 @@ public class ClientMasterEntity {
 	@Column(name = "client_pan_number")
 	private String clientPanNumber;
 
-	@Column(name = "client_shipping_address")
-	private String clientShippingAddress;
-
 	@Column(name = "client_billing_address")
 	private String clientBillingAddress;
+
+	@Column(name = "client_billing_state")
+	private String clientBillingState;
+
+	@Column(name = "client_billing_city")
+	private String clientBillingCity;
+
+	@Column(name = "client_billing_country")
+	private String clientBillingCountry;
+
+	@Column(name = "client_billing_pincode")
+	private String clientBillingPincode;
+
+	@Column(name = "client_active_status")
+	private int clientActiveStatus;
 
 	public Long getClientId() {
 		return clientId;
@@ -57,6 +75,14 @@ public class ClientMasterEntity {
 
 	public void setClientId(Long clientId) {
 		this.clientId = clientId;
+	}
+
+	public String getClientTitle() {
+		return clientTitle;
+	}
+
+	public void setClientTitle(String clientTitle) {
+		this.clientTitle = clientTitle;
 	}
 
 	public String getClientFirstName() {
@@ -99,14 +125,6 @@ public class ClientMasterEntity {
 		this.clientEmailId = clientEmailId;
 	}
 
-	public Long getClientMobileNo() {
-		return clientMobileNo;
-	}
-
-	public void setClientMobileNo(Long clientMobileNo) {
-		this.clientMobileNo = clientMobileNo;
-	}
-
 	public String getClientWebsite() {
 		return clientWebsite;
 	}
@@ -115,12 +133,28 @@ public class ClientMasterEntity {
 		this.clientWebsite = clientWebsite;
 	}
 
-	public Long getClientPhoneNo() {
+	public Long getClientMobileNo() {
+		return clientMobileNo;
+	}
+
+	public void setClientMobileNo(Long clientMobileNo) {
+		this.clientMobileNo = clientMobileNo;
+	}
+
+	public String getClientPhoneNo() {
 		return clientPhoneNo;
 	}
 
-	public void setClientPhoneNo(Long clientPhoneNo) {
+	public void setClientPhoneNo(String clientPhoneNo) {
 		this.clientPhoneNo = clientPhoneNo;
+	}
+
+	public int getGstRegistrationType() {
+		return gstRegistrationType;
+	}
+
+	public void setGstRegistrationType(int gstRegistrationType) {
+		this.gstRegistrationType = gstRegistrationType;
 	}
 
 	public String getClientGstNumber() {
@@ -139,14 +173,6 @@ public class ClientMasterEntity {
 		this.clientPanNumber = clientPanNumber;
 	}
 
-	public String getClientShippingAddress() {
-		return clientShippingAddress;
-	}
-
-	public void setClientShippingAddress(String clientShippingAddress) {
-		this.clientShippingAddress = clientShippingAddress;
-	}
-
 	public String getClientBillingAddress() {
 		return clientBillingAddress;
 	}
@@ -155,11 +181,53 @@ public class ClientMasterEntity {
 		this.clientBillingAddress = clientBillingAddress;
 	}
 
+	public String getClientBillingState() {
+		return clientBillingState;
+	}
+
+	public void setClientBillingState(String clientBillingState) {
+		this.clientBillingState = clientBillingState;
+	}
+
+	public String getClientBillingCity() {
+		return clientBillingCity;
+	}
+
+	public void setClientBillingCity(String clientBillingCity) {
+		this.clientBillingCity = clientBillingCity;
+	}
+
+	public String getClientBillingCountry() {
+		return clientBillingCountry;
+	}
+
+	public void setClientBillingCountry(String clientBillingCountry) {
+		this.clientBillingCountry = clientBillingCountry;
+	}
+
+	public String getClientBillingPincode() {
+		return clientBillingPincode;
+	}
+
+	public void setClientBillingPincode(String clientBillingPincode) {
+		this.clientBillingPincode = clientBillingPincode;
+	}
+
+	public int getClientActiveStatus() {
+		return clientActiveStatus;
+	}
+
+	public void setClientActiveStatus(int clientActiveStatus) {
+		this.clientActiveStatus = clientActiveStatus;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("ClientMasterEntity [clientId=");
 		builder.append(clientId);
+		builder.append(", clientTitle=");
+		builder.append(clientTitle);
 		builder.append(", clientFirstName=");
 		builder.append(clientFirstName);
 		builder.append(", clientMiddleName=");
@@ -170,20 +238,30 @@ public class ClientMasterEntity {
 		builder.append(clientCompanyName);
 		builder.append(", clientEmailId=");
 		builder.append(clientEmailId);
-		builder.append(", clientMobileNo=");
-		builder.append(clientMobileNo);
 		builder.append(", clientWebsite=");
 		builder.append(clientWebsite);
+		builder.append(", clientMobileNo=");
+		builder.append(clientMobileNo);
 		builder.append(", clientPhoneNo=");
 		builder.append(clientPhoneNo);
+		builder.append(", gstRegistrationType=");
+		builder.append(gstRegistrationType);
 		builder.append(", clientGstNumber=");
 		builder.append(clientGstNumber);
 		builder.append(", clientPanNumber=");
 		builder.append(clientPanNumber);
-		builder.append(", clientShippingAddress=");
-		builder.append(clientShippingAddress);
 		builder.append(", clientBillingAddress=");
 		builder.append(clientBillingAddress);
+		builder.append(", clientBillingState=");
+		builder.append(clientBillingState);
+		builder.append(", clientBillingCity=");
+		builder.append(clientBillingCity);
+		builder.append(", clientBillingCountry=");
+		builder.append(clientBillingCountry);
+		builder.append(", clientBillingPincode=");
+		builder.append(clientBillingPincode);
+		builder.append(", clientActiveStatus=");
+		builder.append(clientActiveStatus);
 		builder.append("]");
 		return builder.toString();
 	}

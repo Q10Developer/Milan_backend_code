@@ -7,6 +7,7 @@ public class CreateUserResponseDTO {
 	public CreateUserResponseDTO() {
 
 	}
+
 	public CreateUserResponseDTO(Long userID) {
 		super();
 		this.userID = userID;
@@ -19,6 +20,7 @@ public class CreateUserResponseDTO {
 	public void setUserID(Long userID) {
 		this.userID = userID;
 	}
+
 	@Override
 	public String toString() {
 		return "CreateUserResponseDTO [userID=" + userID + "]";

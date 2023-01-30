@@ -19,13 +19,16 @@ public class MasterDataListEntity {
 	private String dataKey;
 
 	@Column(name = "data_value", nullable = false)
-	private Long dataValue;
+	private int dataValue;
 
 	@Column(name = "data_label", nullable = false)
 	private String dataLabel;
 
 	@Column(name = "data_type", nullable = false)
 	private String dataType;
+
+	@Column(name = "parent_id", nullable = false)
+	private Long parentId;
 
 	@Column(name = "active_status", nullable = false)
 	private int activeStatus;
@@ -46,11 +49,11 @@ public class MasterDataListEntity {
 		this.dataKey = dataKey;
 	}
 
-	public Long getDataValue() {
+	public int getDataValue() {
 		return dataValue;
 	}
 
-	public void setDataValue(Long dataValue) {
+	public void setDataValue(int dataValue) {
 		this.dataValue = dataValue;
 	}
 
@@ -68,6 +71,14 @@ public class MasterDataListEntity {
 
 	public void setDataType(String dataType) {
 		this.dataType = dataType;
+	}
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
 	}
 
 	public int getActiveStatus() {
@@ -91,6 +102,8 @@ public class MasterDataListEntity {
 		builder.append(dataLabel);
 		builder.append(", dataType=");
 		builder.append(dataType);
+		builder.append(", parentId=");
+		builder.append(parentId);
 		builder.append(", activeStatus=");
 		builder.append(activeStatus);
 		builder.append("]");

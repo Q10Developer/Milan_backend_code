@@ -1,8 +1,8 @@
 package com.app.user.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import com.app.user.entity.ClientMasterEntity;
 
-public interface ClientMasterRepository extends JpaRepository<ClientMasterEntity, Long> {
+public interface ClientMasterRepository extends PagingAndSortingRepository<ClientMasterEntity, Long> {
 
 }

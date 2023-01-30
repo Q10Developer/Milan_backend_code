@@ -1,13 +1,11 @@
 package com.app.user.service.impl;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -93,7 +91,7 @@ public class IUserRegistrationServiceImpl {
 					.findPasswordAndUserIdByEmail(changePasswordRequestDTO.getEmailId());
 			if (!CollectionUtils.isEmpty(userData)) {
 				String password = (String) userData.get("password");
-				Integer userId = (Integer) userData.get("userId");
+				Long userId = (Long) userData.get("userId");
 				if (!password.equals(changePasswordRequestDTO.getOldPassword()))
 					return new ServiceResponseDTO(ResponseKeysValue.WARNING_WRONG_OLD_PASSWORD_CODE,
 							ResponseKeysValue.WARNING_WRONG_OLD_PASSWORD_DESC, null);
@@ -138,7 +136,7 @@ public class IUserRegistrationServiceImpl {
 			if (userEntity.getUserId() > 0) {
 				LOGGER.info(" User  updated successfully");
 				return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-						ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, null);
+						ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, userEntity);
 			} else {
 				LOGGER.info(" Failed to update User");
 				return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_500,
@@ -167,7 +165,7 @@ public class IUserRegistrationServiceImpl {
 			if (userEntity.getUserId() > 0) {
 				LOGGER.info(" User  updated successfully");
 				return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-						ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, null);
+						ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, userEntity);
 			} else {
 				LOGGER.info(" Failed to update User");
 				return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_500,
@@ -182,7 +180,7 @@ public class IUserRegistrationServiceImpl {
 	public ServiceResponseDTO getAllUserDetails(int pageNumber, int size, String sortBy) {
 		LOGGER.info(
 				"getAllUserDetails process start in IUserRegistrationServiceImpl and getAllUserDetails method Executing ");
-		PageRequest pageable = PageRequest.of(pageNumber, size, Sort.by(sortBy));
+		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
 		Page<UserRegistrationEtity> userDetailList = userRepository.findAll(pageable);
 		if (userDetailList.getSize() > 0) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,

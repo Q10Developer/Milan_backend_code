@@ -8,12 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.app.user.constants.ResponseKeysValue;
-import com.app.user.constants.ScreenRouteConstant;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ForgetPasswordRequestDTO;
 import com.app.user.dto.request.LoginRequestDTO;
 import com.app.user.dto.request.SendOTPRequestDTO;
-import com.app.user.dto.response.RouteScreenResponseDTO;
+import com.app.user.dto.response.CreateUserResponseDTO;
 import com.app.user.dto.response.SendOtpResponseDTO;
 import com.app.user.repository.UserRepository;
 
@@ -35,10 +34,8 @@ public class IUserLoginServiceImpl {
 				if (userData != null && !userData.isEmpty()) {
 					Long userId = (Long) userData.get("userId");
 					LOGGER.info("Login Success. Routing to Dashboard Screen");
-					RouteScreenResponseDTO routeScreenResponseDTOForDashBoard = setRouteScreenResponseDTOForDashBoard(
-							userId);
 					return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-							ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, routeScreenResponseDTOForDashBoard);
+							ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, new CreateUserResponseDTO(userId));
 				} else {
 					LOGGER.info("User authetication fail");
 					return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_401,
@@ -54,14 +51,6 @@ public class IUserLoginServiceImpl {
 			return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_500,
 					ResponseKeysValue.FAILURE_STATUS_CODE_500, ex.getMessage());
 		}
-	}
-
-	private RouteScreenResponseDTO setRouteScreenResponseDTOForDashBoard(Long userId) {
-		RouteScreenResponseDTO routeScreenResponseDTO = new RouteScreenResponseDTO();
-		routeScreenResponseDTO.setUserId(userId);
-		routeScreenResponseDTO.setScreenId(ScreenRouteConstant.DASHBOARD_SCREEN_ID);
-		routeScreenResponseDTO.setScreenDescription(ScreenRouteConstant.DASHBOARD_SCREEN_DESC);
-		return routeScreenResponseDTO;
 	}
 
 	@Transactional
@@ -139,7 +128,7 @@ public class IUserLoginServiceImpl {
 				Map<String, Object> userData = userRepository.findUserIdByEmail(forgetPasswordRequestDTO.getEmailId());
 
 				if (userData != null && !userData.isEmpty()) {
-					Integer id = (Integer) userData.get("id");
+					Long id = (Long) userData.get("id");
 					Integer status = userRepository.updatePasswordById(forgetPasswordRequestDTO.getPassword(), id);
 					if (status <= 0)
 						return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_500,

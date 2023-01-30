@@ -15,12 +15,11 @@ public interface UserRepository extends PagingAndSortingRepository<UserRegistrat
 	@Transactional
 	@Modifying
 	@Query(value = "UPDATE UserRegistrationEtity u set u.password= ?1 where (u.userId= ?2) AND (u.activeStatus= 1)")
-	Integer updatePasswordById(String password, Integer userId);
+	Integer updatePasswordById(String password, Long userId);
 
 	@Query(value = "SELECT c.userId as userId  FROM UserRegistrationEtity c WHERE c.password= :password AND (c.emailId= :emailId or c.mobileNumber= :mobileNumber) AND (c.activeStatus= 1)")
 	Map<String, Object> findIdByPasswordAndEmailOrMobile(@Param("password") String password,
-			@Param("emailId") String emailId, @Param("mobileNumber") Long mobileNumber
-	);
+			@Param("emailId") String emailId, @Param("mobileNumber") Long mobileNumber);
 
 	@Query(value = "SELECT count(*) as count FROM UserRegistrationEtity c WHERE  (c.emailId= :emailId or c.mobileNumber= :mobileNumber) AND (c.activeStatus= 1)")
 	long findCountByEmailOrMobile(@Param("emailId") String emailId, @Param("mobileNumber") Long mobileNumber
@@ -32,5 +31,8 @@ public interface UserRepository extends PagingAndSortingRepository<UserRegistrat
 
 	@Query(value = "SELECT c.userId as id FROM UserRegistrationEtity c WHERE  (c.emailId= :emailId) AND (c.activeStatus= 1)")
 	Map<String, Object> findUserIdByEmail(@Param("emailId") String emailId);
+
+	@Query(value = "SELECT c.userId, c.name, c.password, c.mobileNumber, c.emailId, c.roleType, c.activeStatus FROM UserRegistrationEtity c WHERE  (c.emailId= :emailId) AND (c.activeStatus= 1)")
+	UserRegistrationEtity findUserByEmail(@Param("emailId") String emailId);
 
 }

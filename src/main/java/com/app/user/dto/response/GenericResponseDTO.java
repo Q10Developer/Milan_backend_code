@@ -13,7 +13,7 @@ public class GenericResponseDTO {
 		this.id = id;
 	}
 
-	public Long getUserID() {
+	public Long getId() {
 		return id;
 	}
 

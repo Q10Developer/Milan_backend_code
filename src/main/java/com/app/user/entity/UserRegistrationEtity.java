@@ -6,16 +6,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "user_master")
 public class UserRegistrationEtity {
 	@Id
 	@GeneratedValue
 	@Column(name = "user_id")
-	private Integer userId;
+	private Long userId;
 	@Column(name = "user_name", nullable = false)
 	private String name;
 	@Column(name = "user_password", nullable = false)
+	@JsonIgnore
 	private String password;
 	@Column(name = "user_mobile", nullable = false)
 	private Long mobileNumber;
@@ -26,11 +29,11 @@ public class UserRegistrationEtity {
 	@Column(name = "active_status")
 	private Integer activeStatus;
 
-	public Integer getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Integer userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 
