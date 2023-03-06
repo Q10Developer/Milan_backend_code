@@ -49,6 +49,11 @@ public class UserWebSecurity extends WebSecurityConfigurerAdapter {
 						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_CLIENT,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_CLIENT,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_CLIENT_BY_ID,
+						URLConstants.MASTER_SERVICE + URLConstants.SAVE_VEHICLE_TYRE,
+						URLConstants.MASTER_SERVICE + URLConstants.UPDATE_VEHICLE_TYRE,
+						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_VEHICLE_TYRE,
+						URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_VEHICLE_TYRE,
+						URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_TYRE_BY_ID,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_MASTER_DATA_LIST)
 				.permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

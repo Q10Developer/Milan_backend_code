@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ClientMasterRequestDTO;
+import com.app.user.dto.request.DropDownMasterDTO;
+import com.app.user.dto.request.VehicleTyreRequestDTO;
 import com.app.user.service.impl.IMasterServiceImpl;
 
 @RestController
@@ -58,6 +60,74 @@ public class MasterController {
 	public ServiceResponseDTO getClientDetail(@RequestParam(name = "clientId") Long clientId) {
 		LOGGER.info("Executing  getClientDetail() method of MasterController");
 		return masterServiceImpl.getClientDetailsById(clientId);
+	}
+
+	@PostMapping(value = URLConstants.SAVE_VEHICLE_TYRE)
+	public ServiceResponseDTO createVehicleTyre(@RequestBody VehicleTyreRequestDTO vehicleTyreRequestDTO) {
+		LOGGER.info("Executing  createVehicleTyre() method of MasterController");
+		return masterServiceImpl.saveVehicleTyreMasterData(vehicleTyreRequestDTO);
+	}
+
+	@PutMapping(value = URLConstants.UPDATE_VEHICLE_TYRE)
+	public ServiceResponseDTO updateVehicleTyre(@RequestParam(name = "vehicleTyreId") Long vehicleTyreId,
+			@RequestBody VehicleTyreRequestDTO vehicleTyreRequestDTO) {
+		LOGGER.info("Executing  updateClient() method of MasterController");
+		return masterServiceImpl.updateVehicleTyreMasterData(vehicleTyreRequestDTO, vehicleTyreId);
+	}
+
+	@PutMapping(value = URLConstants.ENABLE_DISABLE_VEHICLE_TYRE)
+	public ServiceResponseDTO enableDisableVehicleTyre(@RequestParam(name = "vehicleTyreId") Long vehicleTyreId,
+			@RequestBody VehicleTyreRequestDTO vehicleTyreRequestDTO) {
+		LOGGER.info("Executing  updateClient() method of MasterController");
+		return masterServiceImpl.enableDisableVehicleTyreData(vehicleTyreRequestDTO, vehicleTyreId);
+	}
+
+	@GetMapping(value = URLConstants.GET_ALL_VEHICLE_TYRE)
+	public ServiceResponseDTO getAllVehicleTyreDetails(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
+			@RequestParam(name = "size", defaultValue = "10") int size,
+			@RequestParam(name = "sortBy", defaultValue = "vehicleTyreId") String sortBy) {
+		LOGGER.info("Executing  getAllVehicleTyreDetails() method of MasterController");
+		return masterServiceImpl.getAllVehicleTyreDetails(pageNumber, size, sortBy);
+	}
+
+	@GetMapping(value = URLConstants.GET_VEHICLE_TYRE_BY_ID)
+	public ServiceResponseDTO getVehicleTyreDetail(@RequestParam(name = "vehicleTyreId") Long vehicleTyreId) {
+		LOGGER.info("Executing  getVehicleTyreDetail() method of MasterController");
+		return masterServiceImpl.getVehicleTyreDetailsById(vehicleTyreId);
+	}
+
+	@PostMapping(value = URLConstants.SAVE_DROP_DOWN_MASTER)
+	public ServiceResponseDTO saveDropDownMaster(@RequestBody DropDownMasterDTO dropDownMasterDTO) {
+		LOGGER.info("Executing  createClient() method of MasterController");
+		return masterServiceImpl.saveDropDownMasterData(dropDownMasterDTO);
+	}
+
+	@PutMapping(value = URLConstants.UPDATE_VEHICLE_TYRE)
+	public ServiceResponseDTO updateDropDownMaster(@RequestParam(name = "dropDownId") Long dropDownId,
+			@RequestBody DropDownMasterDTO dropDownMasterDTO) {
+		LOGGER.info("Executing  updateDropDownMaster() method of MasterController");
+		return masterServiceImpl.updateDropDownMasterData(dropDownMasterDTO, dropDownId);
+	}
+
+	@PutMapping(value = URLConstants.ENABLE_DISABLE_VEHICLE_TYRE)
+	public ServiceResponseDTO enableDisableDropDownMaster(@RequestParam(name = "dropDownId") Long dropDownId,
+			@RequestBody DropDownMasterDTO dropDownMasterDTO) {
+		LOGGER.info("Executing  enableDisableDropDownMaster() method of MasterController");
+		return masterServiceImpl.enableDisableDropDownMasterData(dropDownMasterDTO, dropDownId);
+	}
+
+	@GetMapping(value = URLConstants.GET_ALL_VEHICLE_TYRE)
+	public ServiceResponseDTO getAllDropDownMasterList(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
+			@RequestParam(name = "size", defaultValue = "10") int size,
+			@RequestParam(name = "sortBy", defaultValue = "vehicleTyreId") String sortBy) {
+		LOGGER.info("Executing  getAllDropDownMasterList() method of MasterController");
+		return masterServiceImpl.getAllDropDownMasterDetails(pageNumber, size, sortBy);
+	}
+
+	@GetMapping(value = URLConstants.GET_VEHICLE_TYRE_BY_ID)
+	public ServiceResponseDTO getDropDownMasterDetail(@RequestParam(name = "dropDownId") Long dropDownId) {
+		LOGGER.info("Executing  getDropDownMasterDetail() method of MasterController");
+		return masterServiceImpl.getDropDownMasterDetailsById(dropDownId);
 	}
 
 	@GetMapping(value = URLConstants.GET_MASTER_DATA_LIST)

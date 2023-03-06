@@ -57,6 +57,12 @@ public interface ResponseKeysValue {
 	String WARNING_CLIENT_DOESNT_EXIST_CODE = "100";
 	String WARNING_CLIENT_DOESNT_EXIST_DESC = "Client doesn't Exist";
 
+	String WARNING_VEHICLE_TYRE_DOESNT_EXIST_CODE = "100";
+	String WARNING_VEHICLE_TYRE_DOESNT_EXIST_DESC = "Vehicle Tyre doesn't Exist";
+	
+	String WARNING_VEHICLE_TYRE_ALREADY_EXIST_CODE = "100";
+	String WARNING_VEHICLE_TYRE_ALREADY_EXIST_DESC = "Vehicle Tyre Already Exist";
+
 	// String SUCCESS_STATUS_DESCRIPTION_USER_UPDATE="User details Updated
 	// Successfully";
 	// String SUCCESS_STATUS_DESCRIPTION_USER_CREATE="User Registration Success";
