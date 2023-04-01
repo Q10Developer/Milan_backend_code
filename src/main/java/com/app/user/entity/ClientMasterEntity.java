@@ -66,6 +66,21 @@ public class ClientMasterEntity {
 	@Column(name = "client_billing_pincode")
 	private String clientBillingPincode;
 
+	@Column(name = "client_service_address")
+	private String clientServiceAddress;
+
+	@Column(name = "client_service_state")
+	private String clientServiceState;
+
+	@Column(name = "client_service_city")
+	private String clientServiceCity;
+
+	@Column(name = "client_service_country")
+	private String clientServiceCountry;
+
+	@Column(name = "client_service_pincode")
+	private String clientServicePincode;
+
 	@Column(name = "client_active_status")
 	private int clientActiveStatus;
 
@@ -213,6 +228,46 @@ public class ClientMasterEntity {
 		this.clientBillingPincode = clientBillingPincode;
 	}
 
+	public String getClientServiceAddress() {
+		return clientServiceAddress;
+	}
+
+	public void setClientServiceAddress(String clientServiceAddress) {
+		this.clientServiceAddress = clientServiceAddress;
+	}
+
+	public String getClientServiceState() {
+		return clientServiceState;
+	}
+
+	public void setClientServiceState(String clientServiceState) {
+		this.clientServiceState = clientServiceState;
+	}
+
+	public String getClientServiceCity() {
+		return clientServiceCity;
+	}
+
+	public void setClientServiceCity(String clientServiceCity) {
+		this.clientServiceCity = clientServiceCity;
+	}
+
+	public String getClientServiceCountry() {
+		return clientServiceCountry;
+	}
+
+	public void setClientServiceCountry(String clientServiceCountry) {
+		this.clientServiceCountry = clientServiceCountry;
+	}
+
+	public String getClientServicePincode() {
+		return clientServicePincode;
+	}
+
+	public void setClientServicePincode(String clientServicePincode) {
+		this.clientServicePincode = clientServicePincode;
+	}
+
 	public int getClientActiveStatus() {
 		return clientActiveStatus;
 	}
@@ -260,6 +315,16 @@ public class ClientMasterEntity {
 		builder.append(clientBillingCountry);
 		builder.append(", clientBillingPincode=");
 		builder.append(clientBillingPincode);
+		builder.append(", clientServiceAddress=");
+		builder.append(clientServiceAddress);
+		builder.append(", clientServiceState=");
+		builder.append(clientServiceState);
+		builder.append(", clientServiceCity=");
+		builder.append(clientServiceCity);
+		builder.append(", clientServiceCountry=");
+		builder.append(clientServiceCountry);
+		builder.append(", clientServicePincode=");
+		builder.append(clientServicePincode);
 		builder.append(", clientActiveStatus=");
 		builder.append(clientActiveStatus);
 		builder.append("]");

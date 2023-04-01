@@ -1,7 +1,15 @@
 package com.app.user.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,16 +24,20 @@ import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ClientMasterRequestDTO;
 import com.app.user.dto.request.DropDownMasterDTO;
-import com.app.user.dto.request.VehicleTyreRequestDTO;
+import com.app.user.dto.request.MasterDataRequestDTO;
+import com.app.user.dto.request.TyreRequestDTO;
+import com.app.user.dto.request.VehicleRequestDTO;
 import com.app.user.dto.response.GenericResponseDTO;
 import com.app.user.entity.ClientMasterEntity;
 import com.app.user.entity.DropDownEntity;
 import com.app.user.entity.MasterDataListEntity;
-import com.app.user.entity.VehicleTyreMasterEntity;
+import com.app.user.entity.TyreMasterEntity;
+import com.app.user.entity.VehicleMasterEntity;
 import com.app.user.repository.ClientMasterRepository;
 import com.app.user.repository.DropDownMasterRepository;
 import com.app.user.repository.MasterDataListRepository;
-import com.app.user.repository.VehicleTyreRepository;
+import com.app.user.repository.TyreRepository;
+import com.app.user.repository.VehicleRepository;
 
 @Service
 public class IMasterServiceImpl {
@@ -33,10 +45,16 @@ public class IMasterServiceImpl {
 	private static final Logger LOGGER = LoggerFactory.getLogger(IMasterServiceImpl.class);
 
 	@Autowired
+	private EntityManager entityManager;
+
+	@Autowired
 	private ClientMasterRepository clientMasterRepository;
 
 	@Autowired
-	private VehicleTyreRepository vehicleTyreRepository;
+	private VehicleRepository vehicleRepository;
+
+	@Autowired
+	private TyreRepository tyreRepository;
 
 	@Autowired
 	private MasterDataListRepository masterDataListRepository;
@@ -51,7 +69,7 @@ public class IMasterServiceImpl {
 			ClientMasterEntity entity = new ClientMasterEntity();
 			try {
 				if (null != clientMasterRequestDTO.getClientId()) {
-					LOGGER.info(" Need to do Updation (Client exist) ");
+					LOGGER.info("Need to do Updation (Client exist)");
 					return new ServiceResponseDTO(ResponseKeysValue.WARNING_CLIENT_ALREADY_EXIST_CODE,
 							ResponseKeysValue.WARNING_CLIENT_ALREADY_EXIST_DESC, null);
 				}
@@ -61,7 +79,7 @@ public class IMasterServiceImpl {
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
 				response.setResult(new GenericResponseDTO(entity.getClientId()));
-				LOGGER.info(" Client data saved Successfully");
+				LOGGER.info("Client data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
 						"Exception occur in IMasterServiceImpl calss in method saveClientMasterData with Exception {}",
@@ -83,7 +101,7 @@ public class IMasterServiceImpl {
 		if (clientMasterRequestDTO != null) {
 			Optional<ClientMasterEntity> clientMasterEntity = clientMasterRepository.findById(clientId);
 			if (clientMasterEntity.isEmpty()) {
-				LOGGER.info(" Invalid client for updation ");
+				LOGGER.info("Invalid client for updation ");
 				return new ServiceResponseDTO(ResponseKeysValue.WARNING_CLIENT_DOESNT_EXIST_CODE,
 						ResponseKeysValue.WARNING_CLIENT_DOESNT_EXIST_DESC, null);
 			}
@@ -96,7 +114,7 @@ public class IMasterServiceImpl {
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
 				response.setResult(entity);
-				LOGGER.info(" Client data update Successfully");
+				LOGGER.info("Client data update Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
 						"Exception occur in IMasterServiceImpl calss in method updateClientMasterData with Exception {}",
@@ -118,7 +136,7 @@ public class IMasterServiceImpl {
 		if (clientMasterRequestDTO != null) {
 			Optional<ClientMasterEntity> clientMasterEntity = clientMasterRepository.findById(clientId);
 			if (clientMasterEntity.isEmpty()) {
-				LOGGER.info(" Invalid client for updation ");
+				LOGGER.info("Invalid client for updation");
 				return new ServiceResponseDTO(ResponseKeysValue.WARNING_CLIENT_DOESNT_EXIST_CODE,
 						ResponseKeysValue.WARNING_CLIENT_DOESNT_EXIST_DESC, null);
 			}
@@ -129,7 +147,7 @@ public class IMasterServiceImpl {
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
 				response.setResult(new GenericResponseDTO(entity.getClientId()));
-				LOGGER.info(" Client data enabled or disabled Successfully");
+				LOGGER.info("Client data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
 						"Exception occur in IMasterServiceImpl calss in method enableDisableClientData with Exception {}",
@@ -172,27 +190,27 @@ public class IMasterServiceImpl {
 		}
 	}
 
-	public ServiceResponseDTO saveVehicleTyreMasterData(VehicleTyreRequestDTO vehicleTyreRequestDTO) {
-		LOGGER.info("Vehicle Tyre data in IMasterServiceImpl and saveVehicleTyreMasterData method");
+	public ServiceResponseDTO saveVehicleMasterData(VehicleRequestDTO vehicleTyreRequestDTO) {
+		LOGGER.info("Vehicle data in IMasterServiceImpl and saveVehicleMasterData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
 		if (vehicleTyreRequestDTO != null) {
-			VehicleTyreMasterEntity entity = new VehicleTyreMasterEntity();
+			VehicleMasterEntity entity = new VehicleMasterEntity();
 			try {
-				if (null != vehicleTyreRequestDTO.getVehicleTyreId()) {
-					LOGGER.info(" Need to do Updation (Vehicle Tyre exist) ");
-					return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_TYRE_ALREADY_EXIST_CODE,
-							ResponseKeysValue.WARNING_VEHICLE_TYRE_ALREADY_EXIST_DESC, null);
+				if (null != vehicleTyreRequestDTO.getVehicleId()) {
+					LOGGER.info(" Need to do Updation (Vehicle exist) ");
+					return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_VEHICLE_ALREADY_EXIST_DESC, null);
 				}
 				vehicleTyreRequestDTO.setActiveStatus(URLConstants.ACTIVE);
 				BeanUtils.copyProperties(vehicleTyreRequestDTO, entity);
-				entity = vehicleTyreRepository.save(entity);
+				entity = vehicleRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getVehicleTyreId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleId()));
 				LOGGER.info(" Vehicle Tyre data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
-						"Exception occur in IMasterServiceImpl calss in method saveVehicleTyreMasterData with Exception {}",
+						"Exception occur in IMasterServiceImpl calss in method saveVehicleMasterData with Exception {}",
 						ex.getMessage());
 				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
 				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
@@ -205,30 +223,29 @@ public class IMasterServiceImpl {
 		return response;
 	}
 
-	public ServiceResponseDTO updateVehicleTyreMasterData(VehicleTyreRequestDTO vehicleTyreRequestDTO,
-			Long vehicleTyreId) {
-		LOGGER.info("Vehicle Tyre data in IMasterServiceImpl and updateVehicleTyreMasterData method");
+	public ServiceResponseDTO updateVehicleMasterData(VehicleRequestDTO vehicleRequestDTO, Long vehicleId) {
+		LOGGER.info("Vehicle data in IMasterServiceImpl and updateVehicleMasterData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
-		if (vehicleTyreRequestDTO != null) {
-			Optional<VehicleTyreMasterEntity> vehicleTyreEntity = vehicleTyreRepository.findById(vehicleTyreId);
+		if (vehicleRequestDTO != null) {
+			Optional<VehicleMasterEntity> vehicleTyreEntity = vehicleRepository.findById(vehicleId);
 			if (vehicleTyreEntity.isEmpty()) {
-				LOGGER.info(" Invalid Vehicle Tyre for updation ");
-				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_TYRE_DOESNT_EXIST_CODE,
-						ResponseKeysValue.WARNING_VEHICLE_TYRE_DOESNT_EXIST_DESC, null);
+				LOGGER.info("Invalid Vehicle for updation");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_VEHICLE_DOESNT_EXIST_DESC, null);
 			}
-			VehicleTyreMasterEntity entity = new VehicleTyreMasterEntity();
-			vehicleTyreRequestDTO.setVehicleTyreId(vehicleTyreId);
-			vehicleTyreRequestDTO.setActiveStatus(URLConstants.ACTIVE);
-			BeanUtils.copyProperties(vehicleTyreRequestDTO, entity);
+			VehicleMasterEntity entity = new VehicleMasterEntity();
+			vehicleRequestDTO.setVehicleId(vehicleId);
+			vehicleRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+			BeanUtils.copyProperties(vehicleRequestDTO, entity);
 			try {
-				entity = vehicleTyreRepository.save(entity);
+				entity = vehicleRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
 				response.setResult(entity);
-				LOGGER.info(" Vehicle Tyre data update Successfully");
+				LOGGER.info(" Vehicle data update Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
-						"Exception occur in IMasterServiceImpl calss in method updateVehicleTyreMasterData with Exception {}",
+						"Exception occur in IMasterServiceImpl calss in method updateVehicleMasterData with Exception {}",
 						ex.getMessage());
 				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
 				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
@@ -241,28 +258,27 @@ public class IMasterServiceImpl {
 		return response;
 	}
 
-	public ServiceResponseDTO enableDisableVehicleTyreData(VehicleTyreRequestDTO vehicleTyreRequestDTO,
-			Long vehicleTyreId) {
-		LOGGER.info("vehicle Tyre data in IMasterServiceImpl and enableDisableVehicleTyreData method");
+	public ServiceResponseDTO enableDisableVehicleData(VehicleRequestDTO vehicleTyreRequestDTO, Long vehicleId) {
+		LOGGER.info("vehicle data in IMasterServiceImpl and enableDisableVehicleData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
 		if (vehicleTyreRequestDTO != null) {
-			Optional<VehicleTyreMasterEntity> vehicleTyreEntity = vehicleTyreRepository.findById(vehicleTyreId);
+			Optional<VehicleMasterEntity> vehicleTyreEntity = vehicleRepository.findById(vehicleId);
 			if (vehicleTyreEntity.isEmpty()) {
-				LOGGER.info(" Invalid Vehicle Tyre for updation ");
-				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_TYRE_DOESNT_EXIST_CODE,
-						ResponseKeysValue.WARNING_VEHICLE_TYRE_DOESNT_EXIST_DESC, null);
+				LOGGER.info("Invalid Vehicle for acvtivation and deactivation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_VEHICLE_DOESNT_EXIST_DESC, null);
 			}
-			VehicleTyreMasterEntity entity = vehicleTyreEntity.get();
+			VehicleMasterEntity entity = vehicleTyreEntity.get();
 			entity.setActiveStatus(vehicleTyreRequestDTO.getActiveStatus());
 			try {
-				entity = vehicleTyreRepository.save(entity);
+				entity = vehicleRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getVehicleTyreId()));
-				LOGGER.info(" Vehicle Tyre data enabled or disabled Successfully");
+				response.setResult(new GenericResponseDTO(entity.getVehicleId()));
+				LOGGER.info(" Vehicle data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
-						"Exception occur in IMasterServiceImpl calss in method enableDisableVehicleTyreData with Exception {}",
+						"Exception occur in IMasterServiceImpl calss in method enableDisableVehicleData with Exception {}",
 						ex.getMessage());
 				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
 				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
@@ -275,50 +291,157 @@ public class IMasterServiceImpl {
 		return response;
 	}
 
-	public ServiceResponseDTO getAllVehicleTyreDetails(int pageNumber, int size, String sortBy) {
+	public ServiceResponseDTO getAllVehicleDetails(int pageNumber, int size, String sortBy) {
 		LOGGER.info(
-				"getAllVehicleTyreDetails process start in IMasterServiceImpl and getAllVehicleTyreDetails method Executing ");
+				"getAllVehicleDetails process start in IMasterServiceImpl and getAllVehicleDetails method Executing ");
 		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
-		Page<VehicleTyreMasterEntity> vehicleTyreDetailList = vehicleTyreRepository.findAll(pageable);
-		if (vehicleTyreDetailList.getSize() > 0) {
+		Page<VehicleMasterEntity> vehicleDetail = vehicleRepository.findAll(pageable);
+		if (vehicleDetail.getSize() > 0) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleTyreDetailList);
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleDetail);
 		} else {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
 					null);
 		}
 	}
 
-	public ServiceResponseDTO getVehicleTyreDetailsById(Long vehicleTyreId) {
+	public ServiceResponseDTO getVehicleDetailsById(Long vehicleTyreId) {
 		LOGGER.info(
-				"getVehicleTyreDetailsById process start in IMasterServiceImpl and getClientDetailsById method Executing ");
-		Optional<VehicleTyreMasterEntity> vehicleTyreDetail = vehicleTyreRepository.findById(vehicleTyreId);
-		if (!vehicleTyreDetail.isEmpty()) {
+				"getVehicleDetailsById process start in IMasterServiceImpl and getVehicleDetailsById method Executing ");
+		Optional<VehicleMasterEntity> vehicleDetail = vehicleRepository.findById(vehicleTyreId);
+		if (!vehicleDetail.isEmpty()) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleTyreDetail.get());
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleDetail.get());
 		} else {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
 					null);
 		}
 	}
 
-	public ServiceResponseDTO getMasterDataList(String dataType, Long parentId, Integer activeStatus) {
-		LOGGER.info("Master data in IMasterServiceImpl and getMasterDataList method");
+	public ServiceResponseDTO saveTyreMasterData(TyreRequestDTO tyreRequestDTO) {
+		LOGGER.info("Tyre data in IMasterServiceImpl and saveTyreMasterData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
-		List<MasterDataListEntity> masterList = null;
-		if (!StringUtils.isEmpty(dataType)) {
-			if (activeStatus == 1 || activeStatus == 0) {
-				masterList = masterDataListRepository.findAllByDataTypeAndActiveStatus(dataType, parentId,
-						activeStatus);
-			} else {
-				masterList = masterDataListRepository.findAllByDataType(dataType, parentId);
+		if (tyreRequestDTO != null) {
+			TyreMasterEntity entity = new TyreMasterEntity();
+			try {
+				if (null != tyreRequestDTO.getTyreId()) {
+					LOGGER.info(" Need to do Updation (Tyre exist) ");
+					return new ServiceResponseDTO(ResponseKeysValue.WARNING_TYRE_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_TYRE_ALREADY_EXIST_DESC, null);
+				}
+				tyreRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+				BeanUtils.copyProperties(tyreRequestDTO, entity);
+				entity = tyreRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
+				response.setResult(new GenericResponseDTO(entity.getTyreId()));
+				LOGGER.info(" Tyre data saved Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method saveTyreMasterData with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
 			}
 		} else {
 			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
 			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
 		}
-		response.setResult(masterList);
 		return response;
+	}
+
+	public ServiceResponseDTO updateTyreMasterData(TyreRequestDTO tyreRequestDTO, Long tyreId) {
+		LOGGER.info("Tyre data in IMasterServiceImpl and updateTyreMasterData method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (tyreRequestDTO != null) {
+			Optional<TyreMasterEntity> tyreEntity = tyreRepository.findById(tyreId);
+			if (tyreEntity.isEmpty()) {
+				LOGGER.info("Invalid Tyre for updation");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TYRE_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_TYRE_DOESNT_EXIST_DESC, null);
+			}
+			TyreMasterEntity entity = new TyreMasterEntity();
+			tyreRequestDTO.setTyreId(tyreId);
+			tyreRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+			BeanUtils.copyProperties(tyreRequestDTO, entity);
+			try {
+				entity = tyreRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(entity);
+				LOGGER.info(" Tyre data update Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method updateTyreMasterData with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+	public ServiceResponseDTO enableDisableTyreData(TyreRequestDTO tyreRequestDTO, Long tyreId) {
+		LOGGER.info("Tyre data in IMasterServiceImpl and enableDisableTyreData method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (tyreRequestDTO != null) {
+			Optional<TyreMasterEntity> tyreEntity = tyreRepository.findById(tyreId);
+			if (tyreEntity.isEmpty()) {
+				LOGGER.info("Invalid Tyre for acvtivation and deactivation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TYRE_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_TYRE_DOESNT_EXIST_DESC, null);
+			}
+			TyreMasterEntity entity = tyreEntity.get();
+			entity.setActiveStatus(tyreRequestDTO.getActiveStatus());
+			try {
+				entity = tyreRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(new GenericResponseDTO(entity.getTyreId()));
+				LOGGER.info("Tyre data enabled or disabled Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method enableDisableTyreData with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+	public ServiceResponseDTO getAllTyreDetails(int pageNumber, int size, String sortBy) {
+		LOGGER.info("getAllTyreDetails process start in IMasterServiceImpl and getAllTyreDetails method Executing ");
+		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		Page<TyreMasterEntity> tyreDetailList = tyreRepository.findAll(pageable);
+		if (tyreDetailList.getSize() > 0) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, tyreDetailList);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+
+	public ServiceResponseDTO getTyreDetailsById(Long vehicleTyreId) {
+		LOGGER.info("getTyreDetailsById process start in IMasterServiceImpl and getTyreDetailsById method Executing ");
+		Optional<TyreMasterEntity> tyreDetail = tyreRepository.findById(vehicleTyreId);
+		if (!tyreDetail.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, tyreDetail.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
 	}
 
 	public ServiceResponseDTO saveDropDownMasterData(DropDownMasterDTO dropDownMasterDTO) {
@@ -328,17 +451,25 @@ public class IMasterServiceImpl {
 			DropDownEntity entity = new DropDownEntity();
 			try {
 				if (null != dropDownMasterDTO.getDropDownId()) {
-					LOGGER.info(" Need to do Updation (Client exist) ");
-					return new ServiceResponseDTO(ResponseKeysValue.WARNING_CLIENT_ALREADY_EXIST_CODE,
-							ResponseKeysValue.WARNING_CLIENT_ALREADY_EXIST_DESC, null);
+					LOGGER.info("Need to do Updation (Drop Down exist) ");
+					return new ServiceResponseDTO(ResponseKeysValue.WARNING_DROP_DOWN_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_DROP_DOWN_ALREADY_EXIST_DESC, null);
 				}
-				dropDownMasterDTO.setActiveStatus(URLConstants.ACTIVE);
-				BeanUtils.copyProperties(dropDownMasterDTO, entity);
-				entity = dropDownMasterRepository.save(entity);
-				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
-				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getDropDownId()));
-				LOGGER.info(" Client data saved Successfully");
+				Integer dataCount = checkDropDownAvailablity(dropDownMasterDTO.getDropDownName(),
+						dropDownMasterDTO.getDropDownKey(), Long.valueOf(0));
+				if (dataCount <= 0) {
+					dropDownMasterDTO.setActiveStatus(URLConstants.ACTIVE);
+					BeanUtils.copyProperties(dropDownMasterDTO, entity);
+					entity = dropDownMasterRepository.save(entity);
+					response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
+					response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
+					response.setResult(new GenericResponseDTO(entity.getDropDownId()));
+					LOGGER.info(" Client data saved Successfully");
+				} else {
+					response.setStatusCode(ResponseKeysValue.DUPLICATE_DROP_DOWN_COMBINATION_CODE);
+					response.setStatusDescription(ResponseKeysValue.DUPLICATE_DROP_DOWN_COMBINATION_DESC);
+					LOGGER.info("Duplicate data #########");
+				}
 			} catch (Exception ex) {
 				LOGGER.error(
 						"Exception occur in IMasterServiceImpl calss in method saveDropDownMasterData with Exception {}",
@@ -361,26 +492,34 @@ public class IMasterServiceImpl {
 			Optional<DropDownEntity> dropDownEntity = dropDownMasterRepository.findById(dropDownId);
 			if (dropDownEntity.isEmpty()) {
 				LOGGER.info(" Invalid Vehicle Tyre for updation ");
-				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_TYRE_DOESNT_EXIST_CODE,
-						ResponseKeysValue.WARNING_VEHICLE_TYRE_DOESNT_EXIST_DESC, null);
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_DROP_DOWN_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_DROP_DOWN_DOESNT_EXIST_DESC, null);
 			}
-			DropDownEntity entity = new DropDownEntity();
-			dropDownMasterDTO.setDropDownId(dropDownId);
-			dropDownMasterDTO.setActiveStatus(URLConstants.ACTIVE);
-			BeanUtils.copyProperties(dropDownMasterDTO, entity);
-			try {
-				entity = dropDownMasterRepository.save(entity);
-				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
-				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(entity);
-				LOGGER.info(" Vehicle Tyre data update Successfully");
-			} catch (Exception ex) {
-				LOGGER.error(
-						"Exception occur in IMasterServiceImpl calss in method updateDropDownMasterData with Exception {}",
-						ex.getMessage());
-				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
-				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
-				response.setResult(ex.getMessage());
+			Integer dataCount = checkDropDownAvailablity(dropDownMasterDTO.getDropDownName(),
+					dropDownMasterDTO.getDropDownKey(), dropDownId);
+			if (dataCount <= 0) {
+				DropDownEntity entity = new DropDownEntity();
+				dropDownMasterDTO.setDropDownId(dropDownId);
+				dropDownMasterDTO.setActiveStatus(URLConstants.ACTIVE);
+				BeanUtils.copyProperties(dropDownMasterDTO, entity);
+				try {
+					entity = dropDownMasterRepository.save(entity);
+					response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+					response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+					response.setResult(entity);
+					LOGGER.info(" Vehicle Tyre data update Successfully");
+				} catch (Exception ex) {
+					LOGGER.error(
+							"Exception occur in IMasterServiceImpl calss in method updateDropDownMasterData with Exception {}",
+							ex.getMessage());
+					response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+					response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+					response.setResult(ex.getMessage());
+				}
+			} else {
+				response.setStatusCode(ResponseKeysValue.DUPLICATE_DROP_DOWN_COMBINATION_CODE);
+				response.setStatusDescription(ResponseKeysValue.DUPLICATE_DROP_DOWN_COMBINATION_DESC);
+				LOGGER.info("Duplicate data #########");
 			}
 		} else {
 			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
@@ -389,15 +528,15 @@ public class IMasterServiceImpl {
 		return response;
 	}
 
-	public ServiceResponseDTO enableDisableDropDownMasterData(DropDownMasterDTO dropDownMasterDTO, Long vehicleTyreId) {
+	public ServiceResponseDTO enableDisableDropDownMasterData(DropDownMasterDTO dropDownMasterDTO, Long dropDownId) {
 		LOGGER.info("vehicle Tyre data in IMasterServiceImpl and enableDisableVehicleTyreData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
 		if (dropDownMasterDTO != null) {
-			Optional<DropDownEntity> dropDownEntity = dropDownMasterRepository.findById(vehicleTyreId);
+			Optional<DropDownEntity> dropDownEntity = dropDownMasterRepository.findById(dropDownId);
 			if (dropDownEntity.isEmpty()) {
 				LOGGER.info(" Invalid Drop Down for updation ");
-				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_TYRE_DOESNT_EXIST_CODE,
-						ResponseKeysValue.WARNING_VEHICLE_TYRE_DOESNT_EXIST_DESC, null);
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_DROP_DOWN_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_DROP_DOWN_DOESNT_EXIST_DESC, null);
 			}
 			DropDownEntity entity = dropDownEntity.get();
 			entity.setActiveStatus(dropDownMasterDTO.getActiveStatus());
@@ -424,7 +563,12 @@ public class IMasterServiceImpl {
 
 	public ServiceResponseDTO getAllDropDownMasterDetails(int pageNumber, int size, String sortBy) {
 		LOGGER.info("getAllDropDownMasterDetails process start in IMasterServiceImpl");
-		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		PageRequest pageable = null;
+		if (size != 0) {
+			pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		} else {
+			pageable = PageRequest.of(0, Integer.MAX_VALUE);
+		}
 		Page<DropDownEntity> dropDownDetailList = dropDownMasterRepository.findAll(pageable);
 		if (dropDownDetailList.getSize() > 0) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
@@ -445,5 +589,227 @@ public class IMasterServiceImpl {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
 					null);
 		}
+	}
+
+	public ServiceResponseDTO checkDropDownAvailable(String dropDownName, String dropDownKey, Long dropDownId) {
+		LOGGER.info("checkDropDownAvailable process start in IMasterServiceImpl ");
+		Integer dataCount = checkDropDownAvailablity(dropDownName, dropDownKey, dropDownId);
+		Map<String, Object> dataAvailable = new HashMap<>();
+		dataAvailable.put("dataAvailable", dataCount == 0);
+		if (dataCount == 0) {
+			return new ServiceResponseDTO(ResponseKeysValue.VALID_DROP_DOWN_DATA_CODE,
+					ResponseKeysValue.VALID_DROP_DOWN_DATA_CODE, dataAvailable);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.DUPLICATE_DROP_DOWN_COMBINATION_CODE,
+					ResponseKeysValue.DUPLICATE_DROP_DOWN_COMBINATION_DESC, dataAvailable);
+		}
+
+	}
+
+	private Integer checkDropDownAvailablity(String dropDownName, String dropDownKey, Long dropDownId) {
+		LOGGER.info("checkDropDownAvailablity process start in IMasterServiceImpl ");
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<DropDownEntity> criteriaQuery = criteriaBuilder.createQuery(DropDownEntity.class);
+		Root<DropDownEntity> dropDown = criteriaQuery.from(DropDownEntity.class);
+		List<Predicate> predicates = new ArrayList<>();
+		predicates.add(criteriaBuilder.equal(dropDown.get("activeStatus"), 1));
+		if (dropDownId != null && dropDownId != 0) {
+			predicates.add(criteriaBuilder.notEqual(dropDown.get("dropDownId"), dropDownId));
+		}
+		if (!StringUtils.isEmpty(dropDownName)) {
+			predicates.add(criteriaBuilder.equal(dropDown.get("dropDownName"), dropDownName));
+		}
+		if (!StringUtils.isEmpty(dropDownKey)) {
+			predicates.add(criteriaBuilder.equal(dropDown.get("dropDownKey"), dropDownKey));
+		}
+		criteriaQuery.where(predicates.toArray(new Predicate[0]));
+		return entityManager.createQuery(criteriaQuery).getResultList().size();
+	}
+
+	public ServiceResponseDTO saveMasterDataListMasterData(MasterDataRequestDTO masterDataRequestDTO) {
+		LOGGER.info("Master Data List master data in IMasterServiceImpl and saveMasterDataListMasterData method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (masterDataRequestDTO != null) {
+			MasterDataListEntity entity = new MasterDataListEntity();
+			DropDownEntity dropDownEntity = new DropDownEntity();
+			try {
+				if (null != masterDataRequestDTO.getDataId()) {
+					LOGGER.info(" Need to do Updation (Master Data exist) ");
+					return new ServiceResponseDTO(ResponseKeysValue.WARNING_MASTER_DATA_LIST_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_MASTER_DATA_LIST_ALREADY_EXIST_DESC, null);
+				}
+				masterDataRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+				BeanUtils.copyProperties(masterDataRequestDTO, entity);
+				dropDownEntity.setDropDownId(masterDataRequestDTO.getDropDownId());
+				entity.setDropDownId(dropDownEntity);
+				entity.setDataType(masterDataRequestDTO.getDataType());
+				entity = masterDataListRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
+				response.setResult(new GenericResponseDTO(entity.getDataId()));
+				LOGGER.info(" Master data List data saved Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method saveMasterDataListMasterData with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+	public ServiceResponseDTO updateMasterDataListMasterData(MasterDataRequestDTO masterDataRequestDTO, Long dataId) {
+		LOGGER.info("Master Data List master data in IMasterServiceImpl and updateMasterDataListMasterData method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (masterDataRequestDTO != null) {
+			Optional<MasterDataListEntity> masterDataEntity = masterDataListRepository.findById(dataId);
+			if (masterDataEntity.isEmpty()) {
+				LOGGER.info(" Invalid Master Data for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_MASTER_DATA_LIST_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_MASTER_DATA_LIST_DOESNT_EXIST_DESC, null);
+			}
+			MasterDataListEntity entity = new MasterDataListEntity();
+			DropDownEntity dropDownEntity = new DropDownEntity();
+			masterDataRequestDTO.setDataId(dataId);
+			masterDataRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+			BeanUtils.copyProperties(masterDataRequestDTO, entity);
+			dropDownEntity.setDropDownId(masterDataRequestDTO.getDropDownId());
+			entity.setDropDownId(dropDownEntity);
+			entity.setDataType(masterDataRequestDTO.getDataType());
+			entity.setDropDownId(dropDownEntity);
+			try {
+				entity = masterDataListRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(entity);
+				LOGGER.info("Master Data List data update Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method updateMasterDataListMasterData with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+	public ServiceResponseDTO enableDisableMasterDataListMasterData(MasterDataRequestDTO masterDataRequestDTO,
+			Long dataId) {
+		LOGGER.info(
+				"Master Data List master data in IMasterServiceImpl and enableDisableMasterDataListMasterData method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (masterDataRequestDTO != null) {
+			Optional<MasterDataListEntity> masterDataEntity = masterDataListRepository.findById(dataId);
+			if (masterDataEntity.isEmpty()) {
+				LOGGER.info(" Invalid Master Data List for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_MASTER_DATA_LIST_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_MASTER_DATA_LIST_DOESNT_EXIST_DESC, null);
+			}
+			MasterDataListEntity entity = masterDataEntity.get();
+			entity.setActiveStatus(masterDataRequestDTO.getActiveStatus());
+			try {
+				entity = masterDataListRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(new GenericResponseDTO(entity.getDataId()));
+				LOGGER.info(" Master Data List data enabled or disabled Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method enableDisableMasterDataListMasterData with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+	public ServiceResponseDTO getMasterDataList(String dataType, Long parentId, Integer activeStatus, int pageNumber,
+			int size, String sortBy) {
+		LOGGER.info("Master data in IMasterServiceImpl and getMasterDataList method");
+		PageRequest pageable = null;
+		if (size != 0) {
+			pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		} else {
+			pageable = PageRequest.of(0, Integer.MAX_VALUE);
+		}
+		Page<MasterDataListEntity> masterList = null;
+		if (!StringUtils.isEmpty(dataType)) {
+			if (activeStatus == 1 || activeStatus == 0) {
+				masterList = masterDataListRepository.findAllByDataTypeAndActiveStatus(dataType, parentId, activeStatus,
+						pageable);
+			} else {
+				masterList = masterDataListRepository.findAllByDataType(dataType, parentId, pageable);
+			}
+		} else {
+			masterList = masterDataListRepository.findAllByActiveStatus(activeStatus, pageable);
+		}
+		return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+				ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, masterList);
+	}
+
+	public ServiceResponseDTO getMasterDataListDetailsById(Long dataId) {
+		LOGGER.info("getDropDownMasterDetailsById process start in IMasterServiceImpl ");
+		Optional<MasterDataListEntity> masterDataDetailList = masterDataListRepository.findById(dataId);
+		if (!masterDataDetailList.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, masterDataDetailList.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+
+	public ServiceResponseDTO checkMasterDataListAvailable(String dataKey, String dataValue, String dataLabel,
+			Long dropDownId, Long dataId) {
+		LOGGER.info("checkMasterDataListAvailable process start in IMasterServiceImpl ");
+		Integer dataCount = checkMasterDataListAvailablity(dataKey, dataValue, dataLabel, dropDownId, dataId);
+		Map<String, Object> dataAvailable = new HashMap<>();
+		dataAvailable.put("dataAvailable", dataCount == 0);
+		if (dataCount == 0) {
+			return new ServiceResponseDTO(ResponseKeysValue.VALID_MASTER_DATA_LIST_CODE,
+					ResponseKeysValue.VALID_MASTER_DATA_LIST_DESC, dataAvailable);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.DUPLICATE_MASTER_DATA_LIST_COMBINATION_CODE,
+					ResponseKeysValue.DUPLICATE_MASTER_DATA_LIST_COMBINATION_DESC, dataAvailable);
+		}
+	}
+
+	private Integer checkMasterDataListAvailablity(String dataKey, String dataValue, String dataLabel, Long dropDownId,
+			Long dataId) {
+		LOGGER.info("checkMasterDataListAvailablity process start in IMasterServiceImpl ");
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<MasterDataListEntity> criteriaQuery = criteriaBuilder.createQuery(MasterDataListEntity.class);
+		Root<MasterDataListEntity> dropDown = criteriaQuery.from(MasterDataListEntity.class);
+		List<Predicate> predicates = new ArrayList<>();
+		predicates.add(criteriaBuilder.equal(dropDown.get("dropDownId"), dropDownId));
+		if (dataId != null && dataId != 0) {
+			predicates.add(criteriaBuilder.notEqual(dropDown.get("dataId"), dataId));
+		}
+		if (!StringUtils.isEmpty(dataKey)) {
+			predicates.add(criteriaBuilder.equal(dropDown.get("dataKey"), dataKey));
+		}
+		if (!StringUtils.isEmpty(dataValue)) {
+			predicates.add(criteriaBuilder.equal(dropDown.get("dataValue"), dataValue));
+		}
+		if (!StringUtils.isEmpty(dataLabel)) {
+			predicates.add(criteriaBuilder.equal(dropDown.get("dataLabel"), dataLabel));
+		}
+		criteriaQuery.where(predicates.toArray(new Predicate[0]));
+		return entityManager.createQuery(criteriaQuery).getResultList().size();
 	}
 }

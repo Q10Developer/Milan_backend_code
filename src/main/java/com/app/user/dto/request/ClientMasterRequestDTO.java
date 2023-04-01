@@ -20,6 +20,11 @@ public class ClientMasterRequestDTO {
 	private String clientBillingCity;
 	private String clientBillingCountry;
 	private String clientBillingPincode;
+	private String clientServiceAddress;
+	private String clientServiceState;
+	private String clientServiceCity;
+	private String clientServiceCountry;
+	private String clientServicePincode;
 	private int clientActiveStatus;
 
 	public Long getClientId() {
@@ -166,6 +171,46 @@ public class ClientMasterRequestDTO {
 		this.clientBillingPincode = clientBillingPincode;
 	}
 
+	public String getClientServiceAddress() {
+		return clientServiceAddress;
+	}
+
+	public void setClientServiceAddress(String clientServiceAddress) {
+		this.clientServiceAddress = clientServiceAddress;
+	}
+
+	public String getClientServiceState() {
+		return clientServiceState;
+	}
+
+	public void setClientServiceState(String clientServiceState) {
+		this.clientServiceState = clientServiceState;
+	}
+
+	public String getClientServiceCity() {
+		return clientServiceCity;
+	}
+
+	public void setClientServiceCity(String clientServiceCity) {
+		this.clientServiceCity = clientServiceCity;
+	}
+
+	public String getClientServiceCountry() {
+		return clientServiceCountry;
+	}
+
+	public void setClientServiceCountry(String clientServiceCountry) {
+		this.clientServiceCountry = clientServiceCountry;
+	}
+
+	public String getClientServicePincode() {
+		return clientServicePincode;
+	}
+
+	public void setClientServicePincode(String clientServicePincode) {
+		this.clientServicePincode = clientServicePincode;
+	}
+
 	public int getClientActiveStatus() {
 		return clientActiveStatus;
 	}
@@ -213,6 +258,16 @@ public class ClientMasterRequestDTO {
 		builder.append(clientBillingCountry);
 		builder.append(", clientBillingPincode=");
 		builder.append(clientBillingPincode);
+		builder.append(", clientServiceAddress=");
+		builder.append(clientServiceAddress);
+		builder.append(", clientServiceState=");
+		builder.append(clientServiceState);
+		builder.append(", clientServiceCity=");
+		builder.append(clientServiceCity);
+		builder.append(", clientServiceCountry=");
+		builder.append(clientServiceCountry);
+		builder.append(", clientServicePincode=");
+		builder.append(clientServicePincode);
 		builder.append(", clientActiveStatus=");
 		builder.append(clientActiveStatus);
 		builder.append("]");

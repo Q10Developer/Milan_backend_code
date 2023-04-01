@@ -29,12 +29,16 @@ public class URLConstants {
 	public static final String ENABLE_DISABLE_CLIENT = "/enabledisableclient";
 	public static final String GET_ALL_CLIENT = "/getallclientdata";
 	public static final String GET_CLIENT_BY_ID = "/getclientdata";
-	public static final String SAVE_VEHICLE_TYRE = "/savevehicletyre";
-	public static final String UPDATE_VEHICLE_TYRE = "/updatevehicletyre";
-	public static final String ENABLE_DISABLE_VEHICLE_TYRE = "/enabledisablevehicletyre";
-	public static final String GET_ALL_VEHICLE_TYRE = "/getallvehicletyredata";
-	public static final String GET_VEHICLE_TYRE_BY_ID = "/getvehicletyredata";
-	public static final String GET_MASTER_DATA_LIST = "/masterdatalist";
+	public static final String SAVE_VEHICLE = "/savevehicle";
+	public static final String UPDATE_VEHICLE = "/updatevehicle";
+	public static final String ENABLE_DISABLE_VEHICLE = "/enabledisablevehicle";
+	public static final String GET_ALL_VEHICLE = "/getallvehicledata";
+	public static final String GET_VEHICLE_BY_ID = "/getvehicledata";
+	public static final String SAVE_TYRE = "/savetyre";
+	public static final String UPDATE_TYRE = "/updatetyre";
+	public static final String ENABLE_DISABLE_TYRE = "/enabledisabletyre";
+	public static final String GET_ALL_TYRE = "/getalltyredata";
+	public static final String GET_TYRE_BY_ID = "/gettyredata";
 	public static final String TOKEN_SERVICE = "/tokenservice";
 	public static final String TOKEN = "/token";
 	public static final String SAVE_DROP_DOWN_MASTER = "/savedropdownmaster";
@@ -42,6 +46,13 @@ public class URLConstants {
 	public static final String ENABLE_DISABLE_DROP_DOWN_MASTER = "/enabledisabledropdownmaster";
 	public static final String GET_ALL_DROP_DOWN_MASTER = "/getalldropdownmasterdata";
 	public static final String GET_DROP_DOWN_MASTER_BY_ID = "/getdropdownmasterdata";
+	public static final String CHECK_DROP_DOWN_MASTER_DUPLICATE = "/checkdropdownmasterduplicate";
+	public static final String SAVE_MASTER_DATA_LIST_MASTER = "/savemasterdatalistmaster";
+	public static final String UPDATE_MASTER_DATA_LIST_MASTER = "/updatemasterdatalistmaster";
+	public static final String ENABLE_DISABLE_MASTER_DATA_LIST_MASTER = "/enabledisablemasterdatalistmaster";
+	public static final String GET_MASTER_DATA_LIST = "/masterdatalist";
+	public static final String GET_MASTER_DATA_BY_ID = "/getmasterdata";
+	public static final String CHECK_MASTER_DATA_LIST_DUPLICATE = "/checkmasterdatalistduplicate";
 	public static final Integer ACTIVE = 1;
 	public static final Integer IN_ACTIVE = 0;
 

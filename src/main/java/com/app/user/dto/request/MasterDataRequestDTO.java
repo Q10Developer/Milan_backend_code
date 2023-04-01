@@ -1,42 +1,14 @@
-package com.app.user.entity;
+package com.app.user.dto.request;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+public class MasterDataRequestDTO {
 
-@Entity
-@Table(name = "master_data_list")
-public class MasterDataListEntity {
-
-	@Id
-	@GeneratedValue
-	@Column(name = "data_id")
 	private Long dataId;
-
-	@ManyToOne
-	@JoinColumn(name = "drop_down_id")
-	private DropDownEntity dropDownId;
-
-	@Column(name = "data_key", nullable = false)
+	private Long dropDownId;
 	private String dataKey;
-
-	@Column(name = "data_value", nullable = false)
 	private int dataValue;
-
-	@Column(name = "data_label", nullable = false)
 	private String dataLabel;
-
-	@Column(name = "data_type", nullable = false)
 	private String dataType;
-
-	@Column(name = "parent_id", nullable = false)
 	private Long parentId;
-
-	@Column(name = "active_status", nullable = false)
 	private int activeStatus;
 
 	public Long getDataId() {
@@ -47,11 +19,11 @@ public class MasterDataListEntity {
 		this.dataId = dataId;
 	}
 
-	public DropDownEntity getDropDownId() {
+	public Long getDropDownId() {
 		return dropDownId;
 	}
 
-	public void setDropDownId(DropDownEntity dropDownId) {
+	public void setDropDownId(Long dropDownId) {
 		this.dropDownId = dropDownId;
 	}
 
@@ -106,7 +78,7 @@ public class MasterDataListEntity {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("MasterDataListEntity [dataId=");
+		builder.append("MasterDataRequestDTO [dataId=");
 		builder.append(dataId);
 		builder.append(", dropDownId=");
 		builder.append(dropDownId);
