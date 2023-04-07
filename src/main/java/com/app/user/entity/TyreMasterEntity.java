@@ -18,14 +18,17 @@ public class TyreMasterEntity {
 	@Column(name = "tyre_make", nullable = false)
 	private Long tyreMake;
 
+	@Column(name = "tyre_type", nullable = false)
+	private Long tyreType;
+
 	@Column(name = "tyre_number", nullable = false)
 	private String tyreNumber;
 
 	@Column(name = "tyre_size", nullable = false)
-	private String tyreSize;
+	private Long tyreSize;
 
 	@Column(name = "tyre_pattern", nullable = false)
-	private String tyrePattern;
+	private Long tyrePattern;
 
 	@Column(name = "tyre_thickness", nullable = false)
 	private Double tyreThickness;
@@ -52,6 +55,14 @@ public class TyreMasterEntity {
 		this.tyreMake = tyreMake;
 	}
 
+	public Long getTyreType() {
+		return tyreType;
+	}
+
+	public void setTyreType(Long tyreType) {
+		this.tyreType = tyreType;
+	}
+
 	public String getTyreNumber() {
 		return tyreNumber;
 	}
@@ -60,19 +71,19 @@ public class TyreMasterEntity {
 		this.tyreNumber = tyreNumber;
 	}
 
-	public String getTyreSize() {
+	public Long getTyreSize() {
 		return tyreSize;
 	}
 
-	public void setTyreSize(String tyreSize) {
+	public void setTyreSize(Long tyreSize) {
 		this.tyreSize = tyreSize;
 	}
 
-	public String getTyrePattern() {
+	public Long getTyrePattern() {
 		return tyrePattern;
 	}
 
-	public void setTyrePattern(String tyrePattern) {
+	public void setTyrePattern(Long tyrePattern) {
 		this.tyrePattern = tyrePattern;
 	}
 

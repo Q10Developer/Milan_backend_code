@@ -30,16 +30,16 @@ public class VehicleMasterEntity {
 	@Column(name = "vehicle_usage", nullable = false)
 	private Long vehicleUsage;
 
-	@Column(name = "no_of_tires", nullable = false)
+	@Column(name = "no_of_tires")
 	private Long noOfTires;
 
-	@Column(name = "no_of_axle", nullable = false)
+	@Column(name = "no_of_axle")
 	private Long noOfAxle;
 
-	@Column(name = "no_of_batteries", nullable = false)
+	@Column(name = "no_of_batteries")
 	private Long noOfBatteries;
 
-	@Column(name = "no_of_stepneys", nullable = false)
+	@Column(name = "no_of_stepneys")
 	private Long noOfStepneys;
 
 	@Column(name = "active_status")

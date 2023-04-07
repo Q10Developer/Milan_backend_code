@@ -1,13 +1,13 @@
 package com.app.user.dto.request;
 
-
 public class TyreRequestDTO {
 
 	private Long tyreId;
 	private Long tyreMake;
+	private Long tyreType;
 	private String tyreNumber;
-	private String tyreSize;
-	private String tyrePattern;
+	private Long tyreSize;
+	private Long tyrePattern;
 	private Double tyreThickness;
 	private Double tyreRecommendedPressure;
 	private int activeStatus;
@@ -28,6 +28,14 @@ public class TyreRequestDTO {
 		this.tyreMake = tyreMake;
 	}
 
+	public Long getTyreType() {
+		return tyreType;
+	}
+
+	public void setTyreType(Long tyreType) {
+		this.tyreType = tyreType;
+	}
+
 	public String getTyreNumber() {
 		return tyreNumber;
 	}
@@ -36,19 +44,19 @@ public class TyreRequestDTO {
 		this.tyreNumber = tyreNumber;
 	}
 
-	public String getTyreSize() {
+	public Long getTyreSize() {
 		return tyreSize;
 	}
 
-	public void setTyreSize(String tyreSize) {
+	public void setTyreSize(Long tyreSize) {
 		this.tyreSize = tyreSize;
 	}
 
-	public String getTyrePattern() {
+	public Long getTyrePattern() {
 		return tyrePattern;
 	}
 
-	public void setTyrePattern(String tyrePattern) {
+	public void setTyrePattern(Long tyrePattern) {
 		this.tyrePattern = tyrePattern;
 	}
 
