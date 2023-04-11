@@ -20,15 +20,27 @@ public class VehicleMasterEntity {
 
 	@Column(name = "vehicle_manufacturer", nullable = false)
 	private Long vehicleManufacturer;
+	
+	@Column(name = "vehicle_manufacturer_label")
+	private String vehicleManufacturerLabel;
 
 	@Column(name = "vehicle_type", nullable = false)
 	private Long vehicleType;
+	
+	@Column(name = "vehicle_type_label")
+	private String vehicleTypeLabel;
 
 	@Column(name = "vehicle_sub_type", nullable = false)
 	private Long vehicleSubType;
+	
+	@Column(name = "vehicle_sub_type_label")
+	private String vehicleSubTypeLabel;
 
 	@Column(name = "vehicle_usage", nullable = false)
 	private Long vehicleUsage;
+	
+	@Column(name = "vehicle_usage_label")
+	private String vehicleUsageLabel;
 
 	@Column(name = "no_of_tires")
 	private Long noOfTires;
@@ -132,6 +144,39 @@ public class VehicleMasterEntity {
 	public void setActiveStatus(int activeStatus) {
 		this.activeStatus = activeStatus;
 	}
+	
+
+	public String getVehicleManufacturerLabel() {
+		return vehicleManufacturerLabel;
+	}
+
+	public void setVehicleManufacturerLabel(String vehicleManufacturerLabel) {
+		this.vehicleManufacturerLabel = vehicleManufacturerLabel;
+	}
+
+	public String getVehicleTypeLabel() {
+		return vehicleTypeLabel;
+	}
+
+	public void setVehicleTypeLabel(String vehicleTypeLabel) {
+		this.vehicleTypeLabel = vehicleTypeLabel;
+	}
+
+	public String getVehicleSubTypeLabel() {
+		return vehicleSubTypeLabel;
+	}
+
+	public void setVehicleSubTypeLabel(String vehicleSubTypeLabel) {
+		this.vehicleSubTypeLabel = vehicleSubTypeLabel;
+	}
+
+	public String getVehicleUsageLabel() {
+		return vehicleUsageLabel;
+	}
+
+	public void setVehicleUsageLabel(String vehicleUsageLabel) {
+		this.vehicleUsageLabel = vehicleUsageLabel;
+	}
 
 	@Override
 	public String toString() {
@@ -157,7 +202,15 @@ public class VehicleMasterEntity {
 		builder.append(", noOfStepneys=");
 		builder.append(noOfStepneys);
 		builder.append(", activeStatus=");
-		builder.append(activeStatus);
+		builder.append(activeStatus);		
+		builder.append(", vehicleManufacturerLabel=");
+		builder.append(vehicleManufacturerLabel);
+		builder.append(", vehicleTypeLabel=");
+		builder.append(vehicleTypeLabel);
+		builder.append(", vehicleSubTypeLabel=");
+		builder.append(vehicleSubTypeLabel);
+		builder.append(", vehicleUsageLabel=");
+		builder.append(vehicleUsageLabel);
 		builder.append("]");
 		return builder.toString();
 	}
