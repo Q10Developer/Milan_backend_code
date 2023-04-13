@@ -24,6 +24,9 @@ public class TyreMasterEntity {
 	@Column(name = "tyre_type", nullable = false)
 	private Long tyreType;
 
+	@Column(name = "tyre_type_label")
+	private String tyreTypeLabel;
+	
 	@Column(name = "tyre_number", nullable = false)
 	private String tyreNumber;
 
@@ -122,6 +125,14 @@ public class TyreMasterEntity {
 		this.tyreMakeLabel = tyreMakeLabel;
 	}
 
+	public String getTyreTypeLabel() {
+		return tyreTypeLabel;
+	}
+
+	public void setTyreTypeLabel(String tyreTypeLabel) {
+		this.tyreTypeLabel = tyreTypeLabel;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -143,6 +154,8 @@ public class TyreMasterEntity {
 		builder.append(tyreRecommendedPressure);
 		builder.append(", activeStatus=");
 		builder.append(activeStatus);
+		builder.append(", tyreTypeLabel=");
+		builder.append(tyreTypeLabel); 
 		builder.append("]");
 		return builder.toString();
 	}
