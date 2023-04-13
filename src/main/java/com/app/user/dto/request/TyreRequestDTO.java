@@ -4,6 +4,7 @@ public class TyreRequestDTO {
 
 	private Long tyreId;
 	private Long tyreMake;
+	private String tyreMakeLabel;
 	private Long tyreType;
 	private String tyreNumber;
 	private Long tyreSize;
@@ -84,6 +85,14 @@ public class TyreRequestDTO {
 		this.activeStatus = activeStatus;
 	}
 
+	public String getTyreMakeLabel() {
+		return tyreMakeLabel;
+	}
+
+	public void setTyreMakeLabel(String tyreMakeLabel) {
+		this.tyreMakeLabel = tyreMakeLabel;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -91,6 +100,8 @@ public class TyreRequestDTO {
 		builder.append(tyreId);
 		builder.append(", tyreMake=");
 		builder.append(tyreMake);
+		builder.append(", tyreMakeLabel=");
+		builder.append(tyreMakeLabel);
 		builder.append(", tyreNumber=");
 		builder.append(tyreNumber);
 		builder.append(", tyreSize=");
@@ -102,7 +113,7 @@ public class TyreRequestDTO {
 		builder.append(", tyreRecommendedPressure=");
 		builder.append(tyreRecommendedPressure);
 		builder.append(", activeStatus=");
-		builder.append(activeStatus);
+		builder.append(activeStatus);	
 		builder.append("]");
 		return builder.toString();
 	}
