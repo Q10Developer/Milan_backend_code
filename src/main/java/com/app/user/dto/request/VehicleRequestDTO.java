@@ -13,6 +13,10 @@ public class VehicleRequestDTO {
 	private Long noOfBatteries;
 	private Long noOfStepneys;
 	private int activeStatus;
+	private String vehicleManufacturerLabel;
+	private String vehicleTypeLabel;
+	private String vehicleSubTypeLabel;
+	private String vehicleUsageLabel;
 
 	public Long getVehicleId() {
 		return vehicleId;
@@ -101,6 +105,39 @@ public class VehicleRequestDTO {
 	public void setActiveStatus(int activeStatus) {
 		this.activeStatus = activeStatus;
 	}
+	
+
+	public String getVehicleManufacturerLabel() {
+		return vehicleManufacturerLabel;
+	}
+
+	public void setVehicleManufacturerLabel(String vehicleManufacturerLabel) {
+		this.vehicleManufacturerLabel = vehicleManufacturerLabel;
+	}
+
+	public String getVehicleTypeLabel() {
+		return vehicleTypeLabel;
+	}
+
+	public void setVehicleTypeLabel(String vehicleTypeLabel) {
+		this.vehicleTypeLabel = vehicleTypeLabel;
+	}
+
+	public String getVehicleSubTypeLabel() {
+		return vehicleSubTypeLabel;
+	}
+
+	public void setVehicleSubTypeLabel(String vehicleSubTypeLabel) {
+		this.vehicleSubTypeLabel = vehicleSubTypeLabel;
+	}
+
+	public String getVehicleUsageLabel() {
+		return vehicleUsageLabel;
+	}
+
+	public void setVehicleUsageLabel(String vehicleUsageLabel) {
+		this.vehicleUsageLabel = vehicleUsageLabel;
+	}
 
 	@Override
 	public String toString() {
@@ -127,6 +164,14 @@ public class VehicleRequestDTO {
 		builder.append(noOfStepneys);
 		builder.append(", activeStatus=");
 		builder.append(activeStatus);
+		builder.append(", vehicleManufacturerLabel=");
+		builder.append(vehicleManufacturerLabel);
+		builder.append(", vehicleTypeLabel=");
+		builder.append(vehicleTypeLabel);
+		builder.append(", vehicleSubTypeLabel=");
+		builder.append(vehicleSubTypeLabel);
+		builder.append(", vehicleUsageLabel=");
+		builder.append(vehicleUsageLabel);		
 		builder.append("]");
 		return builder.toString();
 	}

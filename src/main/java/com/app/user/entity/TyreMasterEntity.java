@@ -17,10 +17,16 @@ public class TyreMasterEntity {
 
 	@Column(name = "tyre_make", nullable = false)
 	private Long tyreMake;
+	
+	@Column(name = "tyre_make_label")
+	private String tyreMakeLabel;
 
 	@Column(name = "tyre_type", nullable = false)
 	private Long tyreType;
 
+	@Column(name = "tyre_type_label")
+	private String tyreTypeLabel;
+	
 	@Column(name = "tyre_number", nullable = false)
 	private String tyreNumber;
 
@@ -111,6 +117,22 @@ public class TyreMasterEntity {
 		this.activeStatus = activeStatus;
 	}
 
+	public String getTyreMakeLabel() {
+		return tyreMakeLabel;
+	}
+
+	public void setTyreMakeLabel(String tyreMakeLabel) {
+		this.tyreMakeLabel = tyreMakeLabel;
+	}
+
+	public String getTyreTypeLabel() {
+		return tyreTypeLabel;
+	}
+
+	public void setTyreTypeLabel(String tyreTypeLabel) {
+		this.tyreTypeLabel = tyreTypeLabel;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -118,6 +140,8 @@ public class TyreMasterEntity {
 		builder.append(tyreId);
 		builder.append(", tyreMake=");
 		builder.append(tyreMake);
+		builder.append(", tyreMakeLabel=");
+		builder.append(tyreMakeLabel);
 		builder.append(", tyreNumber=");
 		builder.append(tyreNumber);
 		builder.append(", tyreSize=");
@@ -130,6 +154,8 @@ public class TyreMasterEntity {
 		builder.append(tyreRecommendedPressure);
 		builder.append(", activeStatus=");
 		builder.append(activeStatus);
+		builder.append(", tyreTypeLabel=");
+		builder.append(tyreTypeLabel); 
 		builder.append("]");
 		return builder.toString();
 	}
