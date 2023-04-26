@@ -830,7 +830,7 @@ public class IMasterServiceImpl {
 					LOGGER.info("Need to do Updation (observation data exist) ");
 					return new ServiceResponseDTO(ResponseKeysValue.WARNING__Observation_Master_Data_ALREADY_EXIST_CODE,
 							ResponseKeysValue.WARNING_Observation_Master_Data_ALREADY_EXIT_DESC, null);
-				}
+	 			}
 				 observationrequestDTO.setActiveStatus(URLConstants.ACTIVE);
 					BeanUtils.copyProperties(observationrequestDTO, entity);
 					entity = observationRepository.save(entity);

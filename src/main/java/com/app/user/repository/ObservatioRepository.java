@@ -15,7 +15,7 @@ public interface ObservatioRepository extends PagingAndSortingRepository < Obser
 
 	
 	
-	
+	  
 	
 
 }

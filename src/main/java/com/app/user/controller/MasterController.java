@@ -261,6 +261,6 @@ public class MasterController {
 		LOGGER.info("Executing  getObservationmasterDetail() method of MasterController");
 		return masterServiceImpl.getObservationDetailsById(observationId);
 	}
-	
+	 
 
 }
