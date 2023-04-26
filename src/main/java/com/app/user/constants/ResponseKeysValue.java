@@ -92,6 +92,9 @@ public interface ResponseKeysValue {
 
 	String DUPLICATE_MASTER_DATA_LIST_COMBINATION_CODE = "500";
 	String DUPLICATE_MASTER_DATA_LIST_COMBINATION_DESC = "Master Data List already exist";
+	String WARNING_Observation_Master_Data_ALREADY_EXIT_DESC = "observation master data Alrady Exist";
+	String WARNING__Observation_Master_Data_ALREADY_EXIST_CODE = "100";
+	
 
 	// String SUCCESS_STATUS_DESCRIPTION_USER_UPDATE="User details Updated
 	// Successfully";

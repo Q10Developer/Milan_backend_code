@@ -1,5 +1,13 @@
 package com.app.user.constants;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.app.user.dto.ServiceResponseDTO;
+import com.app.user.dto.request.ClientMasterRequestDTO;
+
 public class URLConstants {
 
 	private URLConstants() {
@@ -55,5 +63,12 @@ public class URLConstants {
 	public static final String CHECK_MASTER_DATA_LIST_DUPLICATE = "/checkmasterdatalistduplicate";
 	public static final Integer ACTIVE = 1;
 	public static final Integer IN_ACTIVE = 0;
+	public static final String SAVE__OBSERVATION_MASTER = "/saveobservationmaster";
+	public static final String UPDATE_OBSERVATION_MASTER = "/updateobservationmaster";
+	public static final String ENABLE_DISABLE_OBSERVATION_MASTER ="/enabledisableobservationmaster";
+	public static final String GET_ALL_OBSERVATION = "/getallobservation";
+	
 
+
+	public static final String GET_OBSERVATION_DATA_BY_ID = "/getobservation";
 }

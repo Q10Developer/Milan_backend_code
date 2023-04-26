@@ -16,6 +16,7 @@ import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ClientMasterRequestDTO;
 import com.app.user.dto.request.DropDownMasterDTO;
 import com.app.user.dto.request.MasterDataRequestDTO;
+import com.app.user.dto.request.ObservationRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
 import com.app.user.dto.request.VehicleRequestDTO;
 import com.app.user.service.impl.IMasterServiceImpl;
@@ -26,6 +27,8 @@ import com.app.user.service.impl.IMasterServiceImpl;
 public class MasterController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MasterController.class);
+
+	
 
 	@Autowired
 	private IMasterServiceImpl masterServiceImpl;
@@ -38,7 +41,7 @@ public class MasterController {
 
 	@PutMapping(value = URLConstants.UPDATE_CLIENT)
 	public ServiceResponseDTO updateClient(@RequestParam(name = "clientId") Long clientId,
-			@RequestBody ClientMasterRequestDTO clientMasterRequestDTO) {
+@RequestBody ClientMasterRequestDTO clientMasterRequestDTO) {
 		LOGGER.info("Executing  updateClient() method of MasterController");
 		return masterServiceImpl.updateClientMasterData(clientMasterRequestDTO, clientId);
 	}
@@ -222,4 +225,42 @@ public class MasterController {
 		LOGGER.info("Executing  checkMasterDataListDuplicate() method of MasterController");
 		return masterServiceImpl.checkMasterDataListAvailable(dataKey, dataValue, dataLabel, dropDownId, dataId);
 	}
+	
+	
+	@PostMapping(value = URLConstants.SAVE__OBSERVATION_MASTER)
+	public ServiceResponseDTO saveObservation(@RequestBody  ObservationRequestDTO  observationRequestDTO) {
+		LOGGER.info("Executing  saveObservation() method of MasterController");
+		return masterServiceImpl.saveObservationMasterData(observationRequestDTO);
+	}
+	                                                         
+
+	@PutMapping(value = URLConstants.UPDATE_OBSERVATION_MASTER)
+	public ServiceResponseDTO updateObservation(@RequestParam(name = "observationId") int observationId,
+			@RequestBody  ObservationRequestDTO  observationRequestDTO ) {
+		LOGGER.info("Executing  updateObservation() method of MasterController");
+		return masterServiceImpl.updateObservation(observationRequestDTO , observationId );
+	}
+	
+	@PutMapping(value = URLConstants.ENABLE_DISABLE_OBSERVATION_MASTER)
+	public ServiceResponseDTO enableDisableObservationMaster(@RequestParam(name = "observationId") Long observationId,
+			@RequestBody  ObservationRequestDTO observationRequestDTO  ) {
+		LOGGER.info("Executing  enableDisableObservationMaster() method of MasterController");
+		return masterServiceImpl. enableDisableObservationData(observationRequestDTO, observationId);
+	}
+	
+	@GetMapping(value = URLConstants.GET_ALL_OBSERVATION)
+	public ServiceResponseDTO getAllObservationDetails(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
+			@RequestParam(name = "size", defaultValue = "10") int size,
+			@RequestParam(name = "sortBy", defaultValue = "observationId") String sortBy) {
+		LOGGER.info("Executing  getAllObservationDetails() method of MasterController");
+		return masterServiceImpl.getAllObservationDetials(pageNumber, size, sortBy);
+	}                           
+	
+	@GetMapping(value = URLConstants.GET_OBSERVATION_DATA_BY_ID)
+	public ServiceResponseDTO getObservationmasterDetail(@RequestParam(name = "observationId") Long  observationId) {
+		LOGGER.info("Executing  getObservationmasterDetail() method of MasterController");
+		return masterServiceImpl.getObservationDetailsById(observationId);
+	}
+	
+
 }
