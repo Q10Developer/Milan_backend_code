@@ -70,7 +70,12 @@ public class UserWebSecurity extends WebSecurityConfigurerAdapter {
 						URLConstants.MASTER_SERVICE + URLConstants.GET_MASTER_DATA_LIST,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_MASTER_DATA_BY_ID,
 						URLConstants.MASTER_SERVICE + URLConstants.CHECK_DROP_DOWN_MASTER_DUPLICATE,
-						URLConstants.MASTER_SERVICE + URLConstants.CHECK_MASTER_DATA_LIST_DUPLICATE)
+						URLConstants.MASTER_SERVICE + URLConstants.CHECK_MASTER_DATA_LIST_DUPLICATE
+						URLConstants.MASTER_SERVICE + URLConstants.SAVE__OBSERVATION_MASTER,
+						URLConstants.MASTER_SERVICE + URLConstants.UPDATE_OBSERVATION_MASTER,
+						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_OBSERVATION_MASTER,
+						URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_OBSERVATION,
+						URLConstants.MASTER_SERVICE + URLConstants.GET_OBSERVATION_DATA_BY_ID)
 				.permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
