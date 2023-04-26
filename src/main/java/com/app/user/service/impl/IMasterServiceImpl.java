@@ -820,19 +820,19 @@ public class IMasterServiceImpl {
 		return entityManager.createQuery(criteriaQuery).getResultList().size();
 	}
 	
-	public ServiceResponseDTO saveObservationMasterData(ObservationRequestDTO observationrequestDTO) {
+	public ServiceResponseDTO saveObservationMasterData(ObservationRequestDTO observationRequestDTO) {
 		LOGGER.info("Save Observation master data in IMasterServiceImpl and saveObservationMasterData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
-		if (observationrequestDTO!= null) {
+		if (observationRequestDTO!= null) {
 		ObservationEntity entity = new ObservationEntity();
 		try {
-				if (null !=observationrequestDTO.getObservationId()) {
+				if (null !=observationRequestDTO.getObservationId()) {
 					LOGGER.info("Need to do Updation (observation data exist) ");
 					return new ServiceResponseDTO(ResponseKeysValue.WARNING__Observation_Master_Data_ALREADY_EXIST_CODE,
 							ResponseKeysValue.WARNING_Observation_Master_Data_ALREADY_EXIT_DESC, null);
 	 			}
-				 observationrequestDTO.setActiveStatus(URLConstants.ACTIVE);
-					BeanUtils.copyProperties(observationrequestDTO, entity);
+				 observationRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+					BeanUtils.copyProperties(observationRequestDTO, entity);
 					entity = observationRepository.save(entity);
 					response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 					response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
@@ -853,10 +853,10 @@ public class IMasterServiceImpl {
 		}
 		return response;
 	}
-	public ServiceResponseDTO updateObservation (ObservationRequestDTO observationrequestDTO,long observationId ) {
+	public ServiceResponseDTO updateObservation (ObservationRequestDTO observationRequestDTO,long observationId ) {
 		LOGGER.info(" Observation data in IMasterServiceImpl and updateObservation method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
-		if (observationrequestDTO!= null) {
+		if (observationRequestDTO!= null) {
 			Optional<ObservationEntity> observationEntity = observationRepository.findById(observationId);
 			if (ObservationEntity.isEmpty())
 			{
@@ -865,8 +865,8 @@ public class IMasterServiceImpl {
 						ResponseKeysValue.WARNING_Observation_Master_Data_ALREADY_EXIT_DESC, null);
 			}
 			ObservationEntity entity = new 	ObservationEntity ();
-			observationrequestDTO.setObservationId(observationId);
-			observationrequestDTO.setActiveStatus(URLConstants.ACTIVE);
+			observationRequestDTO.setObservationId(observationId);
+			observationRequestDTO.setActiveStatus(URLConstants.ACTIVE);
 			BeanUtils.copyProperties(observationrequestDTO, entity);
 				try {
 				entity = observationRepository.save(entity);
@@ -889,11 +889,11 @@ public class IMasterServiceImpl {
 		return response;
 	}
 	
-	public ServiceResponseDTO enableDisableObservationData(ObservationRequestDTO observationrequestDTO,Long observationId)
+	public ServiceResponseDTO enableDisableObservationData(ObservationRequestDTO observationRequestDTO,Long observationId)
 	{
 		LOGGER.info("observation master data in IMasterServiceImpl and enableDisableObservationMaster method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
-		if ( observationrequestDTO!= null) {
+		if ( observationRequestDTO!= null) {
 			Optional<ObservationEntity> ObservationEntity= observationRepository.findById(observationId);
 			if (ObservationEntity.isEmpty()) {
 				LOGGER.info("Invalid observation for updation");
@@ -901,7 +901,7 @@ public class IMasterServiceImpl {
 						ResponseKeysValue.WARNING_Observation_Master_Data_ALREADY_EXIT_DESC, null);
 			}
 			ObservationEntity entity = ObservationEntity.get();
-			entity.setActiveStatus(observationrequestDTO.getActiveStatus());
+			entity.setActiveStatus(observationRequestDTO.getActiveStatus());
 			try {
 				entity = observationRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
