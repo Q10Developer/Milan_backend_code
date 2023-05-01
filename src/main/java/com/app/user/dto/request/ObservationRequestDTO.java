@@ -3,8 +3,8 @@ package com.app.user.dto.request;
 public class ObservationRequestDTO {
 	
 	private Long observationId;
-	private int observationValue;
-	private String observationLabel;
+	private String observationName;
+	private String observationRecommendation;
 	private int activeStatus;
 	
 	
@@ -27,26 +27,25 @@ public class ObservationRequestDTO {
 
 
 
-	public int getObservationValue() {
-		return observationValue;
+	public int getgetObservationName() {
+		return observationName ;
 	}
 
 
 
-	public void setObservationValue(int observationValue) {
-		this.observationValue = observationValue;
+		public void setObservationName(String observationName) {
+		this.observationName = observationName;
 	}
 
 
 
-	public String getObservationLabel() {
-		return observationLabel;
+	public String getObservationRecommendation() {
+		return observationRecommendation;
 	}
 
 
-
-	public void setObservationLabel(String observationLabel) {
-		this.observationLabel = observationLabel;
+	public void setObservationRecommendation(String observationRecommendation) {
+		this.observationRecommendation = observationRecommendation;
 	}
 
 
