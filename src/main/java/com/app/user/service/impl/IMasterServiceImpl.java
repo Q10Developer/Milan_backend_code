@@ -858,7 +858,7 @@ public class IMasterServiceImpl {
 		ServiceResponseDTO response = new ServiceResponseDTO();
 		if (observationRequestDTO!= null) {
 			Optional<ObservationEntity> observationEntity = observationRepository.findById(observationId);
-			if (ObservationEntity.isEmpty())
+			if (observationEntity.isEmpty())
 			{
 				LOGGER.info(" Invalid observation data for updation ");
 				return new ServiceResponseDTO(ResponseKeysValue.WARNING__Observation_Master_Data_ALREADY_EXIST_CODE,
@@ -867,7 +867,7 @@ public class IMasterServiceImpl {
 			ObservationEntity entity = new 	ObservationEntity ();
 			observationRequestDTO.setObservationId(observationId);
 			observationRequestDTO.setActiveStatus(URLConstants.ACTIVE);
-			BeanUtils.copyProperties(observationrequestDTO, entity);
+			BeanUtils.copyProperties(observationRequestDTO, entity);
 				try {
 				entity = observationRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
