@@ -19,13 +19,14 @@ public class ObservationEntity {
 	@Column(name = "observation_id")
 	private Long observationId;
 
-	@Column(name = "observation_value")
-	private  int observationValue;
+	@Column(name = "observation_name")
+	private String observationName;
 	
 	
-    @Column (name=" observation_label")
-    private String observationLabel;
+	  @Column (name="observation_recommendation")
+    private String observationRecommendation;
     
+   
     
 
 	@Column(name = "active_status")
@@ -46,28 +47,25 @@ public class ObservationEntity {
 
 
 
-	public int getObservationValue() {
-		return observationValue;
+	public String getObservationName() {
+		return observationName;
 	}
 
 
 
-	public void setObservationValue(int observationValue) {
-		this.observationValue = observationValue;
+	public void setObservationName(String observationName) {
+		this.observationName = observationName;
 	}
 
 
-
-	public String getObservationLabel() {
-		return observationLabel;
+	public String getObservationRecommendation() {
+		return observationRecommendation;
 	}
 
 
-
-	public void setObservationLabel(String observationLabel) {
-		this.observationLabel = observationLabel;
+      public void setObservationRecommendation(String observationRecommendation) {
+		this.observationRecommendation = observationRecommendation;
 	}
-
 
 
 	public int getActiveStatus() {
@@ -82,10 +80,11 @@ public class ObservationEntity {
 
 
 
+	
 	@Override
 	public String toString() {
-		return "ObservationEntity [observationId=" + observationId + ", observationValue=" + observationValue
-				+ ", observationLabel=" + observationLabel + ", activeStatus=" + activeStatus + "]";
+		return "ObservationEntity [observationId=" + observationId + ", observationName=" + observationName
+				+ ", observationRecommendation=" + observationRecommendation + ", activeStatus=" + activeStatus + "]";
 	}
 
 
