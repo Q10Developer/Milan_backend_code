@@ -8,9 +8,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
+
 import com.app.user.entity.UserRegistrationEtity;
 
-public interface UserRepository extends PagingAndSortingRepository<UserRegistrationEtity, Long> {
+public interface UserRepository extends PagingAndSortingRepository<UserRegistrationEtity , Long> {
 
 	@Transactional
 	@Modifying
