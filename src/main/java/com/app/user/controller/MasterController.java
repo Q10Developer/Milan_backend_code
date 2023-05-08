@@ -354,7 +354,7 @@ public ServiceResponseDTO updateVehicleUsage(@RequestParam(name="vehicleUsageId"
 }
 
 @PutMapping(value = URLConstants.ENABLE_DISABLE_VEHICLE_USAGE_MASTER )
-public ServiceResponseDTO enableDisableVehicleUsageMaster(@RequestParam(name = "vehicleUsageId") Long vehicleUsageId,
+public ServiceResponseDTO enableDisableVehicleUsageMaster(@RequestParam(name ="vehicleUsageId") Long vehicleUsageId,
 		@RequestBody   VehicleUsageRequestDTO  vehicleUsageRequestDTO  ) {
 	LOGGER.info("Executing  enableDisableVehicleUsageMaster() method of MasterController");
 	return masterServiceImpl.enableDisableVehicleUsageData( vehicleUsageRequestDTO,vehicleUsageId);
