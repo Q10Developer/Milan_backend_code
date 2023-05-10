@@ -94,6 +94,34 @@ public interface ResponseKeysValue {
 	String DUPLICATE_MASTER_DATA_LIST_COMBINATION_DESC = "Master Data List already exist";
 	String WARNING_Observation_Master_Data_ALREADY_EXIT_DESC = "observation master data Alrady Exist";
 	String WARNING__Observation_Master_Data_ALREADY_EXIST_CODE = "100";
+	String WARNING__VehicleManufacture_Master_Data_ALREADY_EXIST_CODE = "100";
+	String WARNING_VehicleManufacture_Master_Data_ALREADY_EXIT_DESC ="vehicleManufacture master data  Alrady Exist";
+	String WARNING_VEHICLE_TYPE_ALREADY_EXIST_CODE = "100";
+	String WARNING_VEHICLE_TYPE_ALREADY_EXIST_DESC = "vehicletypealreadyexit";
+	String WARNING_VEHICLE_USAGE_ALREADY_EXIST_CODE = "100";
+	String WARNING_VEHICLE_USAGE_ALREADY_EXIST_DESC = "vehicleusagealreadyexit";
+	String WARNING_VEHICLE_SUB_TYPE_DATA__ALREADY_EXIST_CODE = "100";
+	String WARNING_VEHICLE_SUB_TYPE_DATA__ALREADY_EXIST_DESC ="vehiclesubtypedataalreadyexist";
+	String WARNING_TIRE_MAKE_ALREADY_EXIST_CODE = "100";
+	String WARNING_TIRE_MAKE_ALREADY_EXIST_DESC = "tiremakealreadyexist";
+	String WARNING__VehicleManufacture_Master_Data_DOESNT_EXIST_CODE = "100";
+	String WARNING_VehicleManufacture_Master_Data_DOESNT_EXIST_DESC = "vehiclemanufacture master data doesn't Exist";
+	String WARNING_OBSERVATION_MASTER_DATA_DOESNT_EXIST_CODE = "100";
+	String WARNING_OBSERVATION_MASTER_DATA_DOESNT_EXIT_DESC = "Observation master data doesn't Exist";
+	String WARNING_VEHICLE_TYPE_DOESNT_EXIST_CODE = "100";
+    String WARNING_VEHICLE_TYPE_DOESNT_EXIST_DESC = "vehicle type doesn't Exist";
+	String WARNING_VEHICLE_USAGE_DOESNT_EXIST_CODE = "100";
+	String WARNING_VEHICLE_USAGE_DOESNT_EXIST_DESC = "vehicle usage doesn't Exist";
+	String WARNING_VEHICLE_SUB_TYPE_DATA__DOESNT_EXIST_CODE = "100";
+	String WARNING_VEHICLE_SUB_TYPE_DATA__DOESNT_EXIST_DESC = "vehicle subType doesn't Exist";
+	String WARNING_TIRE_MAKE_DOESNT_EXIST_CODE = "100";
+	String WARNING_TIRE_MAKE_DOESNT_EXIST_DESC = "tire Make doesn't Exist";
+	
+	
+	
+	
+
+
 	
 
 	// String SUCCESS_STATUS_DESCRIPTION_USER_UPDATE="User details Updated

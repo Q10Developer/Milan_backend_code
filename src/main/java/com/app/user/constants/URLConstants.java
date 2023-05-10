@@ -10,6 +10,7 @@ import com.app.user.dto.request.ClientMasterRequestDTO;
 
 public class URLConstants {
 
+	
 	private URLConstants() {
 	}
 
@@ -71,4 +72,31 @@ public class URLConstants {
 
 
 	public static final String GET_OBSERVATION_DATA_BY_ID = "/getobservation";
+	public static final String SAVE_VEHICLE_MANUFACTURER_MASTER = "/savevehiclemanufacturermaster";
+	public static final String UPDATE_VEHICLE_MANUFACTURER_MASTER = "/updatevehiclemanufacturermaster";
+	public static final String ENABLE_DISABLE_VEHICLE_MANUFACTURER_MASTER = "/enabledisablevehiclemanufacturermaster";
+	public static final String GET_ALL_VEHICLE_MANUFACTURER = "/getallvehiclemanufacturer";
+	public static final String GET_VEHICLE_MANUFACTURER_BY_ID = "/getvehiclemanufacturer";
+	
+	public static final String UPDATE_VEHICLE_TYPE = "/updatevehicletype";
+	public static final String ENABLE_DISABLE_VEHICLE_TYPE_MASTER = "/enabledisablevehicletypemaster";
+	public static final String GET_ALL_VEHICLE_TYPE = "/getallvehicletype";
+	public static final String GET_VEHICLE_TYPE_BY_ID = "/getallvehicletypeid";
+	public static final String UPDATE_VEHICLE_USAGE_MASTER = "/updatevehicleusagemaster";
+	public static final String SAVE_VEHICLE_USAGE_MASTER  = "/savevehicleusagemaster";
+	public static final String SAVE_VEHICLE_TYPE = "/savevehicletype";
+	public static final String ENABLE_DISABLE_VEHICLE_USAGE_MASTER = "/enabledisablevehicleusagemaster";
+	public static final String GET_ALL_VEHICLE_USAGE = "/getallvehicleusage";
+	public static final String GET_VEHICLE_USAGE_BY_ID = "/getvehicleusageid";
+	public static final String SAVE_VEHICLE_SUB_TYPE_MASTER = "/savevehiclesubtypemaster";
+	public static final String UPDATE_VEHICLE_SUB_TYPE_MASTER = "/updatevehiclesubtypemaster";
+	public static final String ENABLE_DISABLE_VEHICLE_SUB_TYPE__MASTER = "/enabledisablevehiclesubtypemaster";
+	public static final String GET_VEHICLE_SUB_TYPE_MASTER_DATA = "/getvehiclesubtypemasterdata";
+	public static final String GET_VEHICLE_SUB_TYPE_MASTER_DATA_BY_ID = "/getvehiclesubtypemasterdatabyid";
+	public static final String SAVE_TIRE_MAKE_MASTER = "/savetiremakemaster";
+	public static final String UPDATE_TIRE_MAKE_MASTER ="/updatetiremakemaster";
+	public static final String ENABLE_DISABLE_TIRE_MAKE_USAGE_MASTER = "/enabledisabletiremakemaster";
+	public static final String GET_TIRE_MAKE_TYPE_MASTER_DATA = "/tiremaketypemasterdata";
+	public static final String GET_TIRE_MAKE_BY_ID = "/tiremakebyid";
+	
 }
