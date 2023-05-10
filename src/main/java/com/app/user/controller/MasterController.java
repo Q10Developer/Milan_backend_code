@@ -34,7 +34,7 @@ public class MasterController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MasterController.class);
 
 	
-
+      
 	@Autowired
 	private IMasterServiceImpl masterServiceImpl;
 	

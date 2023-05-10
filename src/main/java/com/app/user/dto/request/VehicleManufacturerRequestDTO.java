@@ -2,7 +2,7 @@ package com.app.user.dto.request;
 
 public class VehicleManufacturerRequestDTO {
 	
-	private Long vehicleManufacturerId;
+	private Long vehicleManufacturerId;   
 	private String vehicleManufacturerName;
 	private int activeStatus;
 	

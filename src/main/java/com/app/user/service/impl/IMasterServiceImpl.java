@@ -60,7 +60,7 @@ import com.app.user.repository.VehicleUsageRepository;
 
 @Service
 public class IMasterServiceImpl {
-
+   
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(IMasterServiceImpl.class);
 
