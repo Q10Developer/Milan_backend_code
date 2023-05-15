@@ -20,6 +20,7 @@ import com.app.user.dto.request.ObservationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
 import com.app.user.dto.request.VehicleManufacturerRequestDTO;
+import com.app.user.dto.request.VehicleModelRequestDTO;
 import com.app.user.dto.request.VehicleRequestDTO;
 import com.app.user.dto.request.VehicleSubTypeRequestDTO;
 import com.app.user.dto.request.VehicleTypeRequestDTO;
@@ -375,7 +376,7 @@ public ServiceResponseDTO getVehicleUsageDetails(@RequestParam(name = "vehicleUs
 }
 
 @PostMapping(value = URLConstants.SAVE_VEHICLE_SUB_TYPE_MASTER)
-public ServiceResponseDTO saveVehicleSubTypeMaster(@RequestBody VehicleSubTypeRequestDTO   vehicleSubTypeRequestDTO) {
+public ServiceResponseDTO saveVehicleSubTypeMaster(@RequestBody VehicleSubTypeRequestDTO  vehicleSubTypeRequestDTO) {
 	LOGGER.info("Executing saveVehicleSubTypeMaster() method of MasterController");
 	return masterServiceImpl.saveVehicleSubTypeData(vehicleSubTypeRequestDTO);
 }
@@ -386,7 +387,7 @@ public ServiceResponseDTO saveVehicleSubTypeMaster(@RequestBody VehicleSubTypeRe
 public ServiceResponseDTO updateVehicleSubTypeMaster(@RequestParam(name = "vehicleSubTypeId") Long vehicleSubTypeId,
 		@RequestBody VehicleSubTypeRequestDTO   vehicleSubTypeRequestDTO) {
 	LOGGER.info("Executing  updateVehicleSubTypeMaster() method of MasterController");
-	return masterServiceImpl.updateVehicleMasterData(vehicleSubTypeRequestDTO, vehicleSubTypeId);
+	return masterServiceImpl.updateVehicleSubTypeMasterData(vehicleSubTypeRequestDTO, vehicleSubTypeId);
 }
 
 @PutMapping(value = URLConstants.ENABLE_DISABLE_VEHICLE_SUB_TYPE__MASTER)
@@ -446,4 +447,36 @@ public ServiceResponseDTO getTireMakeDetails(@RequestParam(name = "tireMakeId") 
 	return masterServiceImpl.getTireMakeDetailsById(tireMakeId);
 }
 
+@PostMapping(value = URLConstants.SAVE_VEHICLE_MODEL_MASTER)
+public ServiceResponseDTO saveVehicleModelMaster(@RequestBody VehicleModelRequestDTO vehicleModelRequestDTO  ) {
+	LOGGER.info("Executing saveVehicleModelMaster() method of MasterController");
+	return masterServiceImpl.saveVehicleModelTypeData(vehicleModelRequestDTO);
+}
+@PutMapping(value = URLConstants.UPDATE_VEHICLE_MODEL_MASTER)
+public ServiceResponseDTO updateVehicleModelMaster(@RequestParam(name = "vehicleModelTypeId") Long vehicleModelTypeId,
+		@RequestBody VehicleModelRequestDTO   vehicleModelRequestDTO) {
+	LOGGER.info("Executing  updateVehicleModelTypeMaster() method of MasterController");
+	return masterServiceImpl.updateVehicleModelTypeMasterData(vehicleModelRequestDTO, vehicleModelTypeId);
+}
+
+@PutMapping(value = URLConstants.ENABLE_DISABLE_VEHICLE_MODEL_MASTER)
+public ServiceResponseDTO enableDisableVehicleModelMaster(@RequestParam(name = "vehicleModelId") Long vehicleModelId,
+		@RequestBody VehicleModelRequestDTO   vehicleModelRequestDTO)  {
+	LOGGER.info("Executing  enableDisableVehicleModelTypeMaster() method of MasterController");
+	return masterServiceImpl.enableDisableVehicleModelTypeMaster(vehicleModelRequestDTO, vehicleModelId);
+}     
+
+@GetMapping(value = URLConstants.GET_VEHICLE_MODEL_MASTER_DATA)
+public ServiceResponseDTO getVehicleModelMasterData(
+		@RequestParam(name = "page", defaultValue = "0") int pageNumber,
+		@RequestParam(name = "size", defaultValue = "10") int size,
+		@RequestParam(name = "sortBy", defaultValue = "vehicleModelId") String sortBy) {
+	LOGGER.info("Executing  getVehicleModelMasterData method of MasterController");
+	return masterServiceImpl.getVehicleModelMasterData(  pageNumber, size, sortBy);
+}
+@GetMapping(value = URLConstants.GET_VEHICLE_MODEL_MASTER_DATA_BY_ID)
+public ServiceResponseDTO getVehicleModelMasterDataById(@RequestParam(name = "vehicleModelId") Long vehicleModelId) {
+	LOGGER.info("Executing  getVehicleModelMasterDataById() method of MasterController");
+	return masterServiceImpl.getVehicleModelDataById(vehicleModelId);
+}
 }

@@ -103,7 +103,16 @@ public class UserWebSecurity extends WebSecurityConfigurerAdapter {
 						URLConstants.MASTER_SERVICE + URLConstants.UPDATE_TIRE_MAKE_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_TIRE_MAKE_USAGE_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_MAKE_TYPE_MASTER_DATA,
-						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_MAKE_BY_ID)
+						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_MAKE_BY_ID,
+				
+				     URLConstants.MASTER_SERVICE + URLConstants.SAVE_VEHICLE_MODEL_MASTER,
+				     URLConstants.MASTER_SERVICE + URLConstants.UPDATE_VEHICLE_MODEL_MASTER,
+				     URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_VEHICLE_MODEL_MASTER,
+				     URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_MODEL_MASTER_DATA,
+				     URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_MODEL_MASTER_DATA_BY_ID)
+		
+				
+				
 				.permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

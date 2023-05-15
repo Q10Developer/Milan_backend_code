@@ -9,31 +9,29 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name ="mst_vehicle_sub_type")
+@Table(name = "mst_vehicle_sub_type")
 public class VehicleSubTypeEntity {
+
 	
 	@Id
 	@GeneratedValue
-	@Column(name = "vehicle_subtype_id")
-	private Long vehicleSubTypeId ;
-	             
+	@Column(name = " vehicle_subtype_id")
+	private Long  vehicleSubTypeId;
 	
 	@ManyToOne
 	@JoinColumn(name = "vehicle_type_id")
-	private  VehicleTypeEntity VehicleTypeId;
+	private VehicleTypeEntity vehicleTypeId ;
 	
 	@Column(name = "vehicle_subtype_name")
 	private String vehicleSubTypeName;
-	
-	@Column(name = "active_status")
-	private int activeStatus;
-	
-	
 
+	@Column(name = "active_status", nullable = false)
+	private int activeStatus;
+
+	
 	public VehicleSubTypeEntity() {
 		// TODO Auto-generated constructor stub
 	}
-
 
 
 	public Long getVehicleSubTypeId() {
@@ -41,23 +39,19 @@ public class VehicleSubTypeEntity {
 	}
 
 
-
 	public void setVehicleSubTypeId(Long vehicleSubTypeId) {
-		vehicleSubTypeId = vehicleSubTypeId;
+		this.vehicleSubTypeId = vehicleSubTypeId;
 	}
-
 
 
 	public VehicleTypeEntity getVehicleTypeId() {
-		return VehicleTypeId;
+		return vehicleTypeId;
 	}
-
 
 
 	public void setVehicleTypeId(VehicleTypeEntity vehicleTypeId) {
-		VehicleTypeId = vehicleTypeId;
+		this.vehicleTypeId = vehicleTypeId;
 	}
-
 
 
 	public String getVehicleSubTypeName() {
@@ -65,11 +59,9 @@ public class VehicleSubTypeEntity {
 	}
 
 
-
 	public void setVehicleSubTypeName(String vehicleSubTypeName) {
-		vehicleSubTypeName = vehicleSubTypeName;
+		this.vehicleSubTypeName = vehicleSubTypeName;
 	}
-
 
 
 	public int getActiveStatus() {
@@ -77,19 +69,16 @@ public class VehicleSubTypeEntity {
 	}
 
 
-
 	public void setActiveStatus(int activeStatus) {
 		this.activeStatus = activeStatus;
 	}
 
 
-
 	@Override
 	public String toString() {
-		return "VehicleSubTypeEntity [VehicleSubTypeId=" + vehicleSubTypeId + ", VehicleTypeId=" + VehicleTypeId
-				+ ", VehicleSubTypeName=" + vehicleSubTypeName + ", activeStatus=" + activeStatus + "]";
+		return "VehicleSubTypeEntity [vehicleSubTypeId=" + vehicleSubTypeId + ", vehicleTypeId=" + vehicleTypeId
+				+ ", vehicleSubTypeName=" + vehicleSubTypeName + ", activeStatus=" + activeStatus + "]";
 	}
+	
 
-	
-	
 }

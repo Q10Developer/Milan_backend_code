@@ -30,6 +30,7 @@ import com.app.user.dto.request.ObservationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
 import com.app.user.dto.request.VehicleManufacturerRequestDTO;
+import com.app.user.dto.request.VehicleModelRequestDTO;
 import com.app.user.dto.request.VehicleRequestDTO;
 import com.app.user.dto.request.VehicleSubTypeRequestDTO;
 import com.app.user.dto.request.VehicleTypeRequestDTO;
@@ -43,6 +44,7 @@ import com.app.user.entity.TireMakeEntity;
 import com.app.user.entity.TyreMasterEntity;
 import com.app.user.entity.VehicleManufacturerEntity;
 import com.app.user.entity.VehicleMasterEntity;
+import com.app.user.entity.VehicleModelEntity;
 import com.app.user.entity.VehicleSubTypeEntity;
 import com.app.user.entity.VehicleTypeEntity;
 import com.app.user.entity.VehicleUsageEntity;
@@ -53,6 +55,7 @@ import com.app.user.repository.ObservatioRepository;
 import com.app.user.repository.TireMakeRepository;
 import com.app.user.repository.TyreRepository;
 import com.app.user.repository.VehicleManufacturerRepository;
+import com.app.user.repository.VehicleModelRepository;
 import com.app.user.repository.VehicleRepository;
 import com.app.user.repository.VehicleSubTypeRepository;
 import com.app.user.repository.VehicleTypeRepository;
@@ -101,6 +104,10 @@ public class IMasterServiceImpl {
 	
 	@Autowired
 	private TireMakeRepository tireMakeRepository;
+	
+	
+	@Autowired 
+	private VehicleModelRepository vehicleModelRepository;
 	
 	
 	
@@ -1392,11 +1399,11 @@ public class IMasterServiceImpl {
 	
 	
 	
-	public ServiceResponseDTO saveVehicleSubTypeData( VehicleSubTypeRequestDTO   vehicleSubTypeRequestDTO) {
+	public ServiceResponseDTO saveVehicleSubTypeData(VehicleSubTypeRequestDTO  vehicleSubTypeRequestDTO) {
 		LOGGER.info("VehicleSub Type Data List master data in IMasterServiceImpl and saveVehicleSubTypeData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
-		if (vehicleSubTypeRequestDTO!= null) {
-			VehicleSubTypeEntity vehicleSubTypeEntity = new VehicleSubTypeEntity();
+		if (vehicleSubTypeRequestDTO != null) {
+			VehicleSubTypeEntity entity = new VehicleSubTypeEntity();
 			VehicleTypeEntity vehicleTypeEntity = new VehicleTypeEntity();
 			try {
 				if (null != vehicleSubTypeRequestDTO.getVehicleSubTypeId()) {
@@ -1405,13 +1412,14 @@ public class IMasterServiceImpl {
 							ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA__ALREADY_EXIST_DESC, null);
 				}
 				vehicleSubTypeRequestDTO.setActiveStatus(URLConstants.ACTIVE);
-				BeanUtils.copyProperties(vehicleSubTypeRequestDTO, vehicleSubTypeEntity);
+				BeanUtils.copyProperties(vehicleSubTypeRequestDTO,entity);
 				 vehicleTypeEntity.setVehicleTypeId(vehicleSubTypeRequestDTO.getVehicleTypeId());
-				 vehicleSubTypeEntity.setVehicleTypeId(vehicleTypeEntity);
-				vehicleSubTypeEntity = vehicleSubTypeRepository.save(vehicleSubTypeEntity);
+				 entity.setVehicleTypeId(vehicleTypeEntity);
+				 entity.setVehicleSubTypeName(vehicleSubTypeRequestDTO.getVehiclesubTypeName());
+				entity = vehicleSubTypeRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(vehicleSubTypeEntity.getVehicleSubTypeId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleSubTypeId()));
 				LOGGER.info(" Master data List data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1429,11 +1437,11 @@ public class IMasterServiceImpl {
 	}
 	
 	
-	public ServiceResponseDTO updateVehicleMasterData(VehicleSubTypeRequestDTO   vehicleSubTypeRequestDTO, Long vehicleSubTypeId ) {
-		LOGGER.info("VehicleMaster Data List master data in IMasterServiceImpl and updateVehicleMasterData method");
+	public ServiceResponseDTO updateVehicleSubTypeMasterData(VehicleSubTypeRequestDTO   vehicleSubTypeRequestDTO, Long vehicleSubTypeId ) {
+		LOGGER.info("VehiclesubTypeMaster Data List master data in IMasterServiceImpl and updateVehicleSubTypeMasterData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
-		if ( vehicleSubTypeRequestDTO!= null) {
-			Optional<VehicleSubTypeEntity> vehicleSubTypeEntity = vehicleSubTypeRepository.findById(vehicleSubTypeId );
+		if ( vehicleSubTypeRequestDTO != null) {
+			Optional<VehicleSubTypeEntity> vehicleSubTypeEntity = vehicleSubTypeRepository.findById(vehicleSubTypeId);
 			if (vehicleSubTypeEntity.isEmpty()) {
 				LOGGER.info(" Invalid Vehicle master Data for updation ");
 				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA__DOESNT_EXIST_CODE,
@@ -1446,7 +1454,8 @@ public class IMasterServiceImpl {
 			BeanUtils.copyProperties(vehicleSubTypeRequestDTO, entity);
 			 vehicleTypeEntity.setVehicleTypeId(vehicleSubTypeRequestDTO.getVehicleTypeId());
 			entity.setVehicleTypeId( vehicleTypeEntity);
-			entity.setVehicleTypeId( vehicleTypeEntity);
+			entity.setVehicleSubTypeName(vehicleSubTypeRequestDTO.getVehiclesubTypeName());
+			entity.setVehicleTypeId(vehicleTypeEntity);
 			try {
 				entity = vehicleSubTypeRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
@@ -1455,7 +1464,7 @@ public class IMasterServiceImpl {
 				LOGGER.info("VehicleMaster Data List data update Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
-						"Exception occur in IMasterServiceImpl calss in method updateMasterDataListMasterData with Exception {}",
+						"Exception occur in IMasterServiceImpl calss in method updateVehicleSubTypeMasterData with Exception {}",
 						ex.getMessage());
 				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
 				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
@@ -1667,7 +1676,147 @@ public class IMasterServiceImpl {
 					null);
 		}
 }
+	
+	public ServiceResponseDTO saveVehicleModelTypeData( VehicleModelRequestDTO vehicleModelRequestDTO  ) {
+		LOGGER.info("VehicleModel Type Data List master data in IMasterServiceImpl and saveVehicleModelTypeData  method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (vehicleModelRequestDTO!= null) {
+			VehicleModelEntity vehicleModelEntity= new VehicleModelEntity();
+			VehicleManufacturerEntity vehicleManufacturerEntity= new VehicleManufacturerEntity();
+			try {
+				if (null != vehicleModelRequestDTO.getVehicleModelId()) {
+					LOGGER.info(" Need to do Updation (VehicleModelType Data exist) ");
+					return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__ALREADY_EXIST_DESC, null);
+				}
+				vehicleModelRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+				BeanUtils.copyProperties(vehicleModelRequestDTO, vehicleModelEntity);
+				vehicleManufacturerEntity.setVehicleManufacturerId(vehicleModelRequestDTO.getVehicleManufacturerId());
+				 vehicleModelEntity.setVehicleManufacturerId(vehicleManufacturerEntity);
+				 vehicleModelEntity=vehicleModelRepository.save(vehicleModelEntity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
+				response.setResult(new GenericResponseDTO(vehicleModelEntity.getVehicleModelId()));
+				LOGGER.info(" Master data List data saved Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method saveVehicleModelTypeData with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	
+	public ServiceResponseDTO updateVehicleModelTypeMasterData(VehicleModelRequestDTO   vehicleModelRequestDTO, Long vehicleModelId ) {
+		LOGGER.info("VehicleModelMaster Data List master data in IMasterServiceImpl and updateVehicleModelMasterData method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if ( vehicleModelRequestDTO!= null) {
+			Optional<VehicleModelEntity> vehicleModelEntity = vehicleModelRepository.findById(vehicleModelId );
+			if (vehicleModelEntity.isEmpty()) {
+				LOGGER.info(" Invalid Vehicle Model Master Data for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__DOESNT_EXIST_DESC, null);
+				}
+			VehicleModelEntity entity = new VehicleModelEntity();
+			VehicleManufacturerEntity vehicleManufacturerEntity = new VehicleManufacturerEntity();
+			vehicleModelRequestDTO.setVehicleModelId(vehicleModelId);
+			vehicleModelRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+			BeanUtils.copyProperties(vehicleModelRequestDTO, entity);
+			 vehicleManufacturerEntity.setVehicleManufacturerId(vehicleModelRequestDTO.getVehicleManufacturerId());
+			entity.setVehicleManufacturerId(vehicleManufacturerEntity);
+			try {
+				entity = vehicleModelRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(entity);
+				LOGGER.info("VehicleModelMaster Data List data update Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method updateVehicleMpodel with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	
+	public ServiceResponseDTO enableDisableVehicleModelTypeMaster(VehicleModelRequestDTO   vehicleModelRequestDTO,Long vehicleModelId) {
+		LOGGER.info(
+				"Vehicle Model Master Data  master data in IMasterServiceImpl and  enableDisableVehicleModelTypeMaster method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (vehicleModelRequestDTO != null) {
+			Optional<VehicleModelEntity> vehicleModelEntity = vehicleModelRepository.findById(vehicleModelId );
+			if (vehicleModelEntity.isEmpty()) {
+				LOGGER.info(" Invalid  Vehicle Model Master Data List for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__DOESNT_EXIST_DESC, null);
+						
+			}
+			VehicleModelEntity	entity = vehicleModelEntity.get();
+			entity.setActiveStatus(vehicleModelRequestDTO.getActiveStatus());
+			try {
+				entity = vehicleModelRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(new GenericResponseDTO(entity.getVehicleModelId()));
+				LOGGER.info(" Vehicle Model Master Data List data enabled or disabled Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method enableDisableVehicleModelMaster with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	
+	public ServiceResponseDTO getVehicleModelMasterData( int pageNumber,int size, String sortBy) {
+		LOGGER.info("Vechile Model Master data in IMasterServiceImpl and getVehicleModelMasterData method");
+		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		Page<VehicleModelEntity> vehicleModelDetails = vehicleModelRepository.findAll(pageable);
+		if (vehicleModelDetails.getSize() > 0) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200,vehicleModelDetails);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+		
+	}
+	public ServiceResponseDTO getVehicleModelDataById(Long vehicleModelId) {
+		LOGGER.info("getVehicleModelDataById  process start in IMasterServiceImpl ");
+		Optional<VehicleModelEntity> vehicleModelEntity = vehicleModelRepository.findById(vehicleModelId);
+		if (!vehicleModelEntity.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleModelEntity.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+
+	}
 }
+	
+	         
+		
+	
+
 
 
 	

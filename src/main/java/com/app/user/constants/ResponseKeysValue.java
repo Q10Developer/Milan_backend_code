@@ -116,6 +116,11 @@ public interface ResponseKeysValue {
 	String WARNING_VEHICLE_SUB_TYPE_DATA__DOESNT_EXIST_DESC = "vehicle subType doesn't Exist";
 	String WARNING_TIRE_MAKE_DOESNT_EXIST_CODE = "100";
 	String WARNING_TIRE_MAKE_DOESNT_EXIST_DESC = "tire Make doesn't Exist";
+	String WARNING_VEHICLE_MODEL_TYPE_DATA__ALREADY_EXIST_CODE = "100";
+	String WARNING_VEHICLE_MODEL_TYPE_DATA__ALREADY_EXIST_DESC = "vehicle model type data  Alrady Exist";
+	String WARNING_VEHICLE_MODEL_TYPE_DATA__DOESNT_EXIST_CODE = "100";
+	String WARNING_VEHICLE_MODEL_TYPE_DATA__DOESNT_EXIST_DESC = "vehicle model type data doesn't Exist";
+	
 	
 	
 	

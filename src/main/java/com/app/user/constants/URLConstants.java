@@ -98,5 +98,11 @@ public class URLConstants {
 	public static final String ENABLE_DISABLE_TIRE_MAKE_USAGE_MASTER = "/enabledisabletiremakemaster";
 	public static final String GET_TIRE_MAKE_TYPE_MASTER_DATA = "/tiremaketypemasterdata";
 	public static final String GET_TIRE_MAKE_BY_ID = "/tiremakebyid";
+	public static final String SAVE_VEHICLE_MODEL_MASTER = "/savevehiclemodelmaster";
+	public static final String UPDATE_VEHICLE_MODEL_MASTER ="/updatevehiclemodelmaster";
+	public static final String ENABLE_DISABLE_VEHICLE_MODEL_MASTER = "/enabledisablevehiclemodelmaster";
+	public static final String GET_VEHICLE_MODEL_MASTER_DATA = "/getVehicleModel";
+	public static final String GET_VEHICLE_MODEL_MASTER_DATA_BY_ID = "/getvehiclemodelmasterdatabyid";
+	
 	
 }
