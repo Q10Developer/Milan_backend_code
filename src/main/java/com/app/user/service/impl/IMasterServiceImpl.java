@@ -26,6 +26,7 @@ import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ClientMasterRequestDTO;
 import com.app.user.dto.request.DropDownMasterDTO;
 import com.app.user.dto.request.MasterDataRequestDTO;
+import com.app.user.dto.request.ObservationCategoryRequestDTO;
 import com.app.user.dto.request.ObservationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
@@ -39,6 +40,7 @@ import com.app.user.dto.response.GenericResponseDTO;
 import com.app.user.entity.ClientMasterEntity;
 import com.app.user.entity.DropDownEntity;
 import com.app.user.entity.MasterDataListEntity;
+import com.app.user.entity.ObservationCategoryEntity;
 import com.app.user.entity.ObservationEntity;
 import com.app.user.entity.TireMakeEntity;
 import com.app.user.entity.TyreMasterEntity;
@@ -52,6 +54,7 @@ import com.app.user.repository.ClientMasterRepository;
 import com.app.user.repository.DropDownMasterRepository;
 import com.app.user.repository.MasterDataListRepository;
 import com.app.user.repository.ObservatioRepository;
+import com.app.user.repository.ObservationCategoryRepository;
 import com.app.user.repository.TireMakeRepository;
 import com.app.user.repository.TyreRepository;
 import com.app.user.repository.VehicleManufacturerRepository;
@@ -108,6 +111,9 @@ public class IMasterServiceImpl {
 	
 	@Autowired 
 	private VehicleModelRepository vehicleModelRepository;
+	
+	@Autowired
+	private  ObservationCategoryRepository  observationCategoryRepository;
 	
 	
 	
@@ -1811,6 +1817,143 @@ public class IMasterServiceImpl {
 		}
 
 	}
+	                         
+	public ServiceResponseDTO saveObservationCategoryMasterData(ObservationCategoryRequestDTO observationCategoryRequestDTO) {
+		LOGGER.info("Save Observation Category master data in IMasterServiceImpl and saveObservationMasterData method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (observationCategoryRequestDTO!= null) {
+		ObservationCategoryEntity entity = new ObservationCategoryEntity();
+		try {
+				if (null !=observationCategoryRequestDTO.getObservationCategoryId()) {
+					LOGGER.info("Need to do Updation (observation data exist) ");
+					return new ServiceResponseDTO(ResponseKeysValue.WARNING__OBSERVATION_CATEGORY_MASTER_DATA_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING__OBSERVATION_CATEGORY_MASTER_DATA_ALREADY_EXIST_DESC, null);
+	 			}
+				 observationCategoryRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+					BeanUtils.copyProperties(observationCategoryRequestDTO, entity);
+				entity = observationCategoryRepository.save(entity);
+					response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
+					response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
+					response.setResult(new GenericResponseDTO(entity.getObservationCategoryId()));
+					LOGGER.info("observation Category data saved Successfully");
+			}
+			catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method saveObservationCategoryMasterData  with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	
+	public ServiceResponseDTO updateObservationCategoryMaster (ObservationCategoryRequestDTO observationCategoryRequestDTO,long observationCategoryId ) {
+		LOGGER.info(" ObservationCategory data in IMasterServiceImpl and updateObservation method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (observationCategoryRequestDTO!= null) {
+			Optional<ObservationCategoryEntity> observationCategoryEntity = observationCategoryRepository.findById(observationCategoryId);
+			if (observationCategoryEntity.isEmpty())
+			{
+				LOGGER.info(" Invalid observationCategory data for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_OBSERVATION_CATEGORY_MASTER_DATA_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_OBSERVATION_CATEGORY_MASTER_DATA_DOESNT_EXIT_DESC,null);
+			}
+			ObservationCategoryEntity entity = new 	ObservationCategoryEntity ();
+			observationCategoryRequestDTO.setObservationCategoryId(observationCategoryId);
+			observationCategoryRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+			BeanUtils.copyProperties(observationCategoryRequestDTO, entity);
+				try {
+				entity = observationCategoryRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(entity);
+				LOGGER.info("Master observation Category data update Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method updateObservationCategoryMaster  with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	
+	public ServiceResponseDTO enableDisableObservationCategoryData(ObservationCategoryRequestDTO observationCategoryRequestDTO,Long observationCategoryId)
+	{
+		LOGGER.info("observationCategory  master data in IMasterServiceImpl and enableDisableObservationCategoryMaster method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if ( observationCategoryRequestDTO!= null) {
+			Optional<ObservationCategoryEntity> ObservationCategoryEntity= observationCategoryRepository.findById(observationCategoryId);
+			if (ObservationCategoryEntity.isEmpty()) {
+				LOGGER.info("Invalid observationCategory for updation");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_OBSERVATION_CATEGORY_MASTER_DATA_DOESNT_EXIST_CODE,
+				ResponseKeysValue.WARNING_OBSERVATION_CATEGORY_MASTER_DATA_DOESNT_EXIT_DESC, null);
+			}
+			ObservationCategoryEntity entity = ObservationCategoryEntity.get();
+			entity.setActiveStatus(observationCategoryRequestDTO.getActiveStatus());
+			try {
+				entity = observationCategoryRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(new GenericResponseDTO(entity.getObservationCategoryId ()));
+				LOGGER.info("ObservationCategory data enabled or disabled Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method enableDisableObservationCategoryMasterData with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+	
+
+
+	public ServiceResponseDTO getAllObservationCategoryDetials(int pageNumber, int size, String sortBy) {
+		LOGGER.info(
+				"getAllObservationCategoryDetials process start in IMasterServiceImpl and getAllObservationCategoryDetials method Executing ");
+		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		Page<ObservationCategoryEntity> observationCategoryDetail = observationCategoryRepository.findAll(pageable);
+		if ( observationCategoryDetail.getSize() > 0) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, observationCategoryDetail);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+	
+	
+	public ServiceResponseDTO getObservationCategoryDetailsById(Long  observationCategoryId) {
+		LOGGER.info("getObservationCategoryDetailsById process start in IMasterServiceImpl and geObservationCategoryDetailsById method Executing ");
+		Optional<ObservationCategoryEntity> observationCategoryDetails= observationCategoryRepository.findById(observationCategoryId);
+		if (!observationCategoryDetails.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, observationCategoryDetails.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+	
+	
+	
 }
 	
 	         

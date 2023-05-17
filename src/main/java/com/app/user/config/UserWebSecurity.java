@@ -109,8 +109,13 @@ public class UserWebSecurity extends WebSecurityConfigurerAdapter {
 				     URLConstants.MASTER_SERVICE + URLConstants.UPDATE_VEHICLE_MODEL_MASTER,
 				     URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_VEHICLE_MODEL_MASTER,
 				     URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_MODEL_MASTER_DATA,
-				     URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_MODEL_MASTER_DATA_BY_ID)
-		
+				     URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_MODEL_MASTER_DATA_BY_ID,
+		         URLConstants.MASTER_SERVICE + URLConstants.SAVE_OBSERVATION_CATEGORY_MASTER,
+			     URLConstants.MASTER_SERVICE + URLConstants.UPDATE_OBSERVATION_CATEGORY_MASTER,
+			     URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_OBSERVATION_CATEGORY_MASTER,
+			     URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_OBSERVATION_CATEGORY,
+			     URLConstants.MASTER_SERVICE + URLConstants.GET_OBSERVATION_CATEGORY_DATA_BY_ID)
+	
 				
 				
 				.permitAll().anyRequest().authenticated().and().sessionManagement()

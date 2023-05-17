@@ -120,6 +120,11 @@ public interface ResponseKeysValue {
 	String WARNING_VEHICLE_MODEL_TYPE_DATA__ALREADY_EXIST_DESC = "vehicle model type data  Alrady Exist";
 	String WARNING_VEHICLE_MODEL_TYPE_DATA__DOESNT_EXIST_CODE = "100";
 	String WARNING_VEHICLE_MODEL_TYPE_DATA__DOESNT_EXIST_DESC = "vehicle model type data doesn't Exist";
+	String WARNING__OBSERVATION_CATEGORY_MASTER_DATA_ALREADY_EXIST_CODE = "100";
+	String WARNING__OBSERVATION_CATEGORY_MASTER_DATA_ALREADY_EXIST_DESC = "observationcategory master data alrady existcode";
+	String WARNING_OBSERVATION_CATEGORY_MASTER_DATA_DOESNT_EXIST_CODE = "100";
+	String WARNING_OBSERVATION_CATEGORY_MASTER_DATA_DOESNT_EXIT_DESC = "observationcategory master data doesn't Exist";
+	
 	
 	
 	

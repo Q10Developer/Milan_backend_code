@@ -16,6 +16,7 @@ import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ClientMasterRequestDTO;
 import com.app.user.dto.request.DropDownMasterDTO;
 import com.app.user.dto.request.MasterDataRequestDTO;
+import com.app.user.dto.request.ObservationCategoryRequestDTO;
 import com.app.user.dto.request.ObservationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
@@ -479,4 +480,41 @@ public ServiceResponseDTO getVehicleModelMasterDataById(@RequestParam(name = "ve
 	LOGGER.info("Executing  getVehicleModelMasterDataById() method of MasterController");
 	return masterServiceImpl.getVehicleModelDataById(vehicleModelId);
 }
+
+
+@PostMapping(value = URLConstants.SAVE_OBSERVATION_CATEGORY_MASTER)    
+public ServiceResponseDTO saveObservationCategoryMaster(@RequestBody  ObservationCategoryRequestDTO  observationCategoryRequestDTO) {
+	LOGGER.info("Executing  saveObservationCategory() method of MasterController");
+	return masterServiceImpl.saveObservationCategoryMasterData(observationCategoryRequestDTO);
+}
+
+@PutMapping(value = URLConstants.UPDATE_OBSERVATION_CATEGORY_MASTER)
+public ServiceResponseDTO updateObservationCategoryMaster(@RequestParam(name = "observationCategoryId") Long observationCategoryId,
+		@RequestBody  ObservationCategoryRequestDTO  observationCategoryRequestDTO ) {
+	LOGGER.info("Executing  updateObservationCategoryMaster() method of MasterController");
+	return masterServiceImpl.updateObservationCategoryMaster(observationCategoryRequestDTO , observationCategoryId );
+}
+
+@PutMapping(value = URLConstants.ENABLE_DISABLE_OBSERVATION_CATEGORY_MASTER)
+public ServiceResponseDTO enableDisableObservationCategoryMaster(@RequestParam(name = "observationCategoryId") Long observationCategoryId,
+		@RequestBody  ObservationCategoryRequestDTO observationCategoryRequestDTO  ) {
+	LOGGER.info("Executing  enableDisableObservationCategoryMaster() method of MasterController");
+	return masterServiceImpl. enableDisableObservationCategoryData(observationCategoryRequestDTO, observationCategoryId);
+}
+
+@GetMapping(value = URLConstants.GET_ALL_OBSERVATION_CATEGORY)
+public ServiceResponseDTO getAllObservationCategoryDetails(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
+		@RequestParam(name = "size", defaultValue = "10") int size,
+		@RequestParam(name = "sortBy", defaultValue = "observationCategoryId") String sortBy) {
+	LOGGER.info("Executing  getAllObservationCategoryDetails() method of MasterController");
+	return masterServiceImpl.getAllObservationCategoryDetials(pageNumber, size, sortBy);
+}     
+
+@GetMapping(value = URLConstants.GET_OBSERVATION_CATEGORY_DATA_BY_ID)
+public ServiceResponseDTO getObservationmasterCategoryDetail(@RequestParam(name = "observationCategoryId") Long  observationCategoryId) {
+	LOGGER.info("Executing  getObservationCategorymasterDetail() method of MasterController");
+	return masterServiceImpl.getObservationCategoryDetailsById(observationCategoryId);
+}
+
+
 }
