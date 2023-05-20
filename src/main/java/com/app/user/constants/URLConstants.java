@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ClientMasterRequestDTO;
 
-public class URLConstants {
+public class URLConstants{
 
 	
 	private URLConstants() {
@@ -98,5 +98,16 @@ public class URLConstants {
 	public static final String ENABLE_DISABLE_TIRE_MAKE_USAGE_MASTER = "/enabledisabletiremakemaster";
 	public static final String GET_TIRE_MAKE_TYPE_MASTER_DATA = "/tiremaketypemasterdata";
 	public static final String GET_TIRE_MAKE_BY_ID = "/tiremakebyid";
+	public static final String SAVE_VEHICLE_MODEL_MASTER = "/savevehiclemodelmaster";
+	public static final String UPDATE_VEHICLE_MODEL_MASTER ="/updatevehiclemodelmaster";
+	public static final String ENABLE_DISABLE_VEHICLE_MODEL_MASTER = "/enabledisablevehiclemodelmaster";
+	public static final String GET_VEHICLE_MODEL_MASTER_DATA = "/getVehicleModel";
+	public static final String GET_VEHICLE_MODEL_MASTER_DATA_BY_ID = "/getvehiclemodelmasterdatabyid";
+	public static final String SAVE_OBSERVATION_CATEGORY_MASTER ="/saveobservationcategorymaster";
+	public static final String UPDATE_OBSERVATION_CATEGORY_MASTER ="/updateobservationcategorymaster";
+	public static final String ENABLE_DISABLE_OBSERVATION_CATEGORY_MASTER ="/enabledisableobservationcategorymaster";
+	public static final String GET_ALL_OBSERVATION_CATEGORY = "/getallcategoryobservtion";
+	public static final String GET_OBSERVATION_CATEGORY_DATA_BY_ID ="/getobservationcategorydatabyid";
+	
 	
 }

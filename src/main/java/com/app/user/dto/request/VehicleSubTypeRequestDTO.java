@@ -1,65 +1,53 @@
 package com.app.user.dto.request;
 
 public class VehicleSubTypeRequestDTO {
+     private  Long vehicleSubTypeId;
+	private String vehiclesubTypeName;
+	private  Long vehicleTypeId;
+	private int  activeStatus;
 	
 	
-	private Long vehicleSubTypeId;
-	private String vehicleSubTypeName;
-private int ActiveStatus;
-private Long vehicleTypeId;
-
-
 	public VehicleSubTypeRequestDTO() {
 		// TODO Auto-generated constructor stub
 	}
-
 
 	public Long getVehicleSubTypeId() {
 		return vehicleSubTypeId;
 	}
 
-
 	public void setVehicleSubTypeId(Long vehicleSubTypeId) {
 		this.vehicleSubTypeId = vehicleSubTypeId;
 	}
 
-
-	public String getVehicleSubTypeName() {
-		return vehicleSubTypeName;
+	public String getVehiclesubTypeName() {
+		return vehiclesubTypeName;
 	}
 
-
-	public void setVehicleSubTypeName(String vehicleSubTypeName) {
-		this.vehicleSubTypeName = vehicleSubTypeName;
+	public void setVehiclesubTypeName(String vehiclesubTypeName) {
+		this.vehiclesubTypeName = vehiclesubTypeName;
 	}
-
-
-	public int getActiveStatus() {
-		return ActiveStatus;
-	}
-
-
-	public void setActiveStatus(int activeStatus) {
-		ActiveStatus = activeStatus;
-	}
-
 
 	public Long getVehicleTypeId() {
 		return vehicleTypeId;
 	}
 
-
 	public void setVehicleTypeId(Long vehicleTypeId) {
 		this.vehicleTypeId = vehicleTypeId;
 	}
 
+	public int getActiveStatus() {
+		return activeStatus;
+	}
+
+	public void setActiveStatus(int activeStatus) {
+		this.activeStatus = activeStatus;
+	}
 
 	@Override
 	public String toString() {
-		return "VehicleSubTypeDTO [vehicleSubTypeId=" + vehicleSubTypeId + ", vehicleSubTypeName=" + vehicleSubTypeName
-				+ ", ActiveStatus=" + ActiveStatus + ", vehicleTypeId=" + vehicleTypeId + "]";
+		return "VehicleSubTypeRequestDTO [vehicleSubTypeId=" + vehicleSubTypeId + ", vehiclesubTypeName="
+				+ vehiclesubTypeName + ", vehicleTypeId=" + vehicleTypeId + ", activeStatus=" + activeStatus + "]";
 	}
 
-	
 	
 }
