@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "vehicle_master")
+@Table(name = "vehicle_configuration_master")
 public class VehicleMasterEntity {
 
 	@Id
@@ -15,30 +15,33 @@ public class VehicleMasterEntity {
 	@Column(name = "vehicle_id")
 	private Long vehicleId;
 
-	@Column(name = "vehicle_model", nullable = false)
-	private String vehicleModel;
-
 	@Column(name = "vehicle_manufacturer", nullable = false)
 	private Long vehicleManufacturer;
-	
+
 	@Column(name = "vehicle_manufacturer_label")
 	private String vehicleManufacturerLabel;
 
+	@Column(name = "vehicle_model", nullable = false)
+	private Long vehicleModel;
+
+	@Column(name = "vehicle_model_label", nullable = false)
+	private String vehicleModelLabel;
+
 	@Column(name = "vehicle_type", nullable = false)
 	private Long vehicleType;
-	
+
 	@Column(name = "vehicle_type_label")
 	private String vehicleTypeLabel;
 
 	@Column(name = "vehicle_sub_type", nullable = false)
 	private Long vehicleSubType;
-	
+
 	@Column(name = "vehicle_sub_type_label")
 	private String vehicleSubTypeLabel;
 
 	@Column(name = "vehicle_usage", nullable = false)
 	private Long vehicleUsage;
-	
+
 	@Column(name = "vehicle_usage_label")
 	private String vehicleUsageLabel;
 
@@ -47,9 +50,6 @@ public class VehicleMasterEntity {
 
 	@Column(name = "no_of_axle")
 	private Long noOfAxle;
-
-	@Column(name = "no_of_batteries")
-	private Long noOfBatteries;
 
 	@Column(name = "no_of_stepneys")
 	private Long noOfStepneys;
@@ -65,20 +65,36 @@ public class VehicleMasterEntity {
 		this.vehicleId = vehicleId;
 	}
 
-	public String getVehicleModel() {
-		return vehicleModel;
-	}
-
-	public void setVehicleModel(String vehicleModel) {
-		this.vehicleModel = vehicleModel;
-	}
-
 	public Long getVehicleManufacturer() {
 		return vehicleManufacturer;
 	}
 
 	public void setVehicleManufacturer(Long vehicleManufacturer) {
 		this.vehicleManufacturer = vehicleManufacturer;
+	}
+
+	public String getVehicleManufacturerLabel() {
+		return vehicleManufacturerLabel;
+	}
+
+	public void setVehicleManufacturerLabel(String vehicleManufacturerLabel) {
+		this.vehicleManufacturerLabel = vehicleManufacturerLabel;
+	}
+
+	public Long getVehicleModel() {
+		return vehicleModel;
+	}
+
+	public void setVehicleModel(Long vehicleModel) {
+		this.vehicleModel = vehicleModel;
+	}
+
+	public String getVehicleModelLabel() {
+		return vehicleModelLabel;
+	}
+
+	public void setVehicleModelLabel(String vehicleModelLabel) {
+		this.vehicleModelLabel = vehicleModelLabel;
 	}
 
 	public Long getVehicleType() {
@@ -89,6 +105,14 @@ public class VehicleMasterEntity {
 		this.vehicleType = vehicleType;
 	}
 
+	public String getVehicleTypeLabel() {
+		return vehicleTypeLabel;
+	}
+
+	public void setVehicleTypeLabel(String vehicleTypeLabel) {
+		this.vehicleTypeLabel = vehicleTypeLabel;
+	}
+
 	public Long getVehicleSubType() {
 		return vehicleSubType;
 	}
@@ -97,12 +121,28 @@ public class VehicleMasterEntity {
 		this.vehicleSubType = vehicleSubType;
 	}
 
+	public String getVehicleSubTypeLabel() {
+		return vehicleSubTypeLabel;
+	}
+
+	public void setVehicleSubTypeLabel(String vehicleSubTypeLabel) {
+		this.vehicleSubTypeLabel = vehicleSubTypeLabel;
+	}
+
 	public Long getVehicleUsage() {
 		return vehicleUsage;
 	}
 
 	public void setVehicleUsage(Long vehicleUsage) {
 		this.vehicleUsage = vehicleUsage;
+	}
+
+	public String getVehicleUsageLabel() {
+		return vehicleUsageLabel;
+	}
+
+	public void setVehicleUsageLabel(String vehicleUsageLabel) {
+		this.vehicleUsageLabel = vehicleUsageLabel;
 	}
 
 	public Long getNoOfTires() {
@@ -121,14 +161,6 @@ public class VehicleMasterEntity {
 		this.noOfAxle = noOfAxle;
 	}
 
-	public Long getNoOfBatteries() {
-		return noOfBatteries;
-	}
-
-	public void setNoOfBatteries(Long noOfBatteries) {
-		this.noOfBatteries = noOfBatteries;
-	}
-
 	public Long getNoOfStepneys() {
 		return noOfStepneys;
 	}
@@ -144,73 +176,40 @@ public class VehicleMasterEntity {
 	public void setActiveStatus(int activeStatus) {
 		this.activeStatus = activeStatus;
 	}
-	
-
-	public String getVehicleManufacturerLabel() {
-		return vehicleManufacturerLabel;
-	}
-
-	public void setVehicleManufacturerLabel(String vehicleManufacturerLabel) {
-		this.vehicleManufacturerLabel = vehicleManufacturerLabel;
-	}
-
-	public String getVehicleTypeLabel() {
-		return vehicleTypeLabel;
-	}
-
-	public void setVehicleTypeLabel(String vehicleTypeLabel) {
-		this.vehicleTypeLabel = vehicleTypeLabel;
-	}
-
-	public String getVehicleSubTypeLabel() {
-		return vehicleSubTypeLabel;
-	}
-
-	public void setVehicleSubTypeLabel(String vehicleSubTypeLabel) {
-		this.vehicleSubTypeLabel = vehicleSubTypeLabel;
-	}
-
-	public String getVehicleUsageLabel() {
-		return vehicleUsageLabel;
-	}
-
-	public void setVehicleUsageLabel(String vehicleUsageLabel) {
-		this.vehicleUsageLabel = vehicleUsageLabel;
-	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("VehicleMasterEntity [vehicleId=");
 		builder.append(vehicleId);
-		builder.append(", vehicleModel=");
-		builder.append(vehicleModel);
 		builder.append(", vehicleManufacturer=");
 		builder.append(vehicleManufacturer);
+		builder.append(", vehicleManufacturerLabel=");
+		builder.append(vehicleManufacturerLabel);
+		builder.append(", vehicleModel=");
+		builder.append(vehicleModel);
+		builder.append(", vehicleModelLabel=");
+		builder.append(vehicleModelLabel);
 		builder.append(", vehicleType=");
 		builder.append(vehicleType);
+		builder.append(", vehicleTypeLabel=");
+		builder.append(vehicleTypeLabel);
 		builder.append(", vehicleSubType=");
 		builder.append(vehicleSubType);
+		builder.append(", vehicleSubTypeLabel=");
+		builder.append(vehicleSubTypeLabel);
 		builder.append(", vehicleUsage=");
 		builder.append(vehicleUsage);
+		builder.append(", vehicleUsageLabel=");
+		builder.append(vehicleUsageLabel);
 		builder.append(", noOfTires=");
 		builder.append(noOfTires);
 		builder.append(", noOfAxle=");
 		builder.append(noOfAxle);
-		builder.append(", noOfBatteries=");
-		builder.append(noOfBatteries);
 		builder.append(", noOfStepneys=");
 		builder.append(noOfStepneys);
 		builder.append(", activeStatus=");
-		builder.append(activeStatus);		
-		builder.append(", vehicleManufacturerLabel=");
-		builder.append(vehicleManufacturerLabel);
-		builder.append(", vehicleTypeLabel=");
-		builder.append(vehicleTypeLabel);
-		builder.append(", vehicleSubTypeLabel=");
-		builder.append(vehicleSubTypeLabel);
-		builder.append(", vehicleUsageLabel=");
-		builder.append(vehicleUsageLabel);
+		builder.append(activeStatus);
 		builder.append("]");
 		return builder.toString();
 	}
