@@ -25,7 +25,7 @@ public class VehicleModelEntity {
 	private int activeStatus;
 	
 	@ManyToOne
-	@JoinColumn(name = "vehicle_manufacturer_id")
+	@JoinColumn(name ="vehicle_manufacturer_id")
 	private  VehicleManufacturerEntity  vehicleManufacturerId;
 	
 	

@@ -108,6 +108,12 @@ public class URLConstants{
 	public static final String ENABLE_DISABLE_OBSERVATION_CATEGORY_MASTER ="/enabledisableobservationcategorymaster";
 	public static final String GET_ALL_OBSERVATION_CATEGORY = "/getallcategoryobservtion";
 	public static final String GET_OBSERVATION_CATEGORY_DATA_BY_ID ="/getobservationcategorydatabyid";
+	public static final String SAVE_TIRE_CONFIGURATION_TYPE_MASTER = "/savetireconfigurationtypemaster";
+	public static final String SAVE_TIRE_CONFIGURATION_MASTER = "/savetireconfigurationmaster";
+	public static final String UPDATE_TIRE_CONFIGURATION_MASTER ="/updatetireconfigurationmaster";
+	public static final String ENABLE_DISABLE_TIRE_CONFIGURATION_MASTER = "/enabledisabletireconfigurationmaster";
+	public static final String GET_ALL_TIRE_CONFIGURATION= "/getalltireconfiguration";
+	public static final String GET_TIRE_CONFIGURATION_BY_ID = "/gettireconfigurationbyid";
 	
 	
 }

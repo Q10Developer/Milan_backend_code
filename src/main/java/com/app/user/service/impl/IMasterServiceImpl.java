@@ -27,6 +27,7 @@ import com.app.user.dto.request.DropDownMasterDTO;
 import com.app.user.dto.request.MasterDataRequestDTO;
 import com.app.user.dto.request.ObservationCategoryRequestDTO;
 import com.app.user.dto.request.ObservationRequestDTO;
+import com.app.user.dto.request.TireConfigurationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
 import com.app.user.dto.request.VehicleManufacturerRequestDTO;
@@ -41,6 +42,7 @@ import com.app.user.entity.DropDownEntity;
 import com.app.user.entity.MasterDataListEntity;
 import com.app.user.entity.ObservationCategoryEntity;
 import com.app.user.entity.ObservationEntity;
+import com.app.user.entity.TireConfigurationEntity;
 import com.app.user.entity.TireMakeEntity;
 import com.app.user.entity.TyreMasterEntity;
 import com.app.user.entity.VehicleManufacturerEntity;
@@ -54,6 +56,7 @@ import com.app.user.repository.DropDownMasterRepository;
 import com.app.user.repository.MasterDataListRepository;
 import com.app.user.repository.ObservatioRepository;
 import com.app.user.repository.ObservationCategoryRepository;
+import com.app.user.repository.TireConfigurationRepository;
 import com.app.user.repository.TireMakeRepository;
 import com.app.user.repository.TyreRepository;
 import com.app.user.repository.VehicleManufacturerRepository;
@@ -114,7 +117,8 @@ public class IMasterServiceImpl {
 	@Autowired
 	private  ObservationCategoryRepository  observationCategoryRepository;
 	
-	
+	@Autowired
+	private TireConfigurationRepository tireConfigurationRepository;
 	
 	public ServiceResponseDTO saveClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO) {
 		LOGGER.info("client master data in IMasterServiceImpl and saveClientMasterData method");
@@ -1682,12 +1686,12 @@ public class IMasterServiceImpl {
 		}
 }
 	
-	public ServiceResponseDTO saveVehicleModelTypeData( VehicleModelRequestDTO vehicleModelRequestDTO  ) {
-		LOGGER.info("VehicleModel Type Data List master data in IMasterServiceImpl and saveVehicleModelTypeData  method");
+	public ServiceResponseDTO saveVehicleModelTypeData(VehicleModelRequestDTO  vehicleModelRequestDTO) {
+		LOGGER.info("VehicleModel Type Data List master data in IMasterServiceImpl and saveVehicleModelDataType method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
-		if (vehicleModelRequestDTO!= null) {
-			VehicleModelEntity vehicleModelEntity= new VehicleModelEntity();
-			VehicleManufacturerEntity vehicleManufacturerEntity= new VehicleManufacturerEntity();
+		if (vehicleModelRequestDTO != null) {
+			VehicleModelEntity entity = new VehicleModelEntity();
+			VehicleManufacturerEntity vehicleManufacturerEntity = new VehicleManufacturerEntity();
 			try {
 				if (null != vehicleModelRequestDTO.getVehicleModelId()) {
 					LOGGER.info(" Need to do Updation (VehicleModelType Data exist) ");
@@ -1695,13 +1699,14 @@ public class IMasterServiceImpl {
 							ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__ALREADY_EXIST_DESC, null);
 				}
 				vehicleModelRequestDTO.setActiveStatus(URLConstants.ACTIVE);
-				BeanUtils.copyProperties(vehicleModelRequestDTO, vehicleModelEntity);
+				BeanUtils.copyProperties(vehicleModelRequestDTO,entity);
 				vehicleManufacturerEntity.setVehicleManufacturerId(vehicleModelRequestDTO.getVehicleManufacturerId());
-				 vehicleModelEntity.setVehicleManufacturerId(vehicleManufacturerEntity);
-				 vehicleModelEntity=vehicleModelRepository.save(vehicleModelEntity);
+				 entity.setVehicleManufacturerId(vehicleManufacturerEntity );
+				 entity.setVehicleModelName(vehicleModelRequestDTO.getVehicleModelName());
+				entity = vehicleModelRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(vehicleModelEntity.getVehicleModelId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleModelId()));
 				LOGGER.info(" Master data List data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1717,6 +1722,10 @@ public class IMasterServiceImpl {
 		}
 		return response;
 	}
+	
+	
+	
+	
 	
 	public ServiceResponseDTO updateVehicleModelTypeMasterData(VehicleModelRequestDTO   vehicleModelRequestDTO, Long vehicleModelId ) {
 		LOGGER.info("VehicleModelMaster Data List master data in IMasterServiceImpl and updateVehicleModelMasterData method");
@@ -1951,6 +1960,144 @@ public class IMasterServiceImpl {
 		}
 	}
 	
+	public ServiceResponseDTO saveTireConfigurationMaster(TireConfigurationRequestDTO  tireConfigurationRequestDTO ) {
+		LOGGER.info("Tire Configuratrion Sub Type Data List master data in IMasterServiceImpl and saveTireConfiguration method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (tireConfigurationRequestDTO != null) {
+			TireConfigurationEntity entity = new TireConfigurationEntity();
+			TireMakeEntity tireMakeEntity = new TireMakeEntity ();
+			try {
+				if (null != tireConfigurationRequestDTO.getTireConfigurationId()) {
+					LOGGER.info(" Need to do Updation (TireConfigurationType Data exist) ");
+					return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA_ALREADY_EXIST_DESC, null);
+				}
+				tireConfigurationRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+				BeanUtils.copyProperties(tireConfigurationRequestDTO,entity);
+				 tireMakeEntity.setTireMakeId(tireConfigurationRequestDTO.getTireMakeId());
+				 entity.setTireMakeId(tireMakeEntity);
+				 entity.setTireType(tireConfigurationRequestDTO.getTireType());
+				entity = tireConfigurationRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
+				response.setResult(new GenericResponseDTO(entity.getTireConfigurationId()));
+				LOGGER.info(" Master data List data saved Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method saveVehicleSubTypeData with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	
+	public ServiceResponseDTO updateTireConfigurationMaster(TireConfigurationRequestDTO   tireConfigurationRequestDTO, Long tireConfigurationId ) {
+		LOGGER.info("TireConfiguration  Data List master data in IMasterServiceImpl and updateTireConfigurationMaster method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if ( tireConfigurationRequestDTO != null) {
+			Optional<TireConfigurationEntity> tireConfigurationEntity = tireConfigurationRepository.findById(tireConfigurationId);
+			if (tireConfigurationEntity.isEmpty()) {
+				LOGGER.info(" Invalid TireConfiguration master Data for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_DESC, null);
+				}
+			TireConfigurationEntity entity = new TireConfigurationEntity();
+			TireMakeEntity tireMakeEntity = new TireMakeEntity();
+			tireConfigurationRequestDTO.setTireConfigurationId(tireConfigurationId);
+			tireConfigurationRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+			BeanUtils.copyProperties(tireConfigurationRequestDTO, entity);
+			 tireMakeEntity.setTireMakeId(tireConfigurationRequestDTO.getTireMakeId());
+			entity.setTireMakeId( tireMakeEntity);
+			entity.setTireType(tireConfigurationRequestDTO.getTireType());
+			entity.setTireMakeId(tireMakeEntity);
+			try {
+				entity = tireConfigurationRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(entity);
+				LOGGER.info("Tire Configuration Master Data List data update Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method updateTireConfigurationMaster with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	
+	public ServiceResponseDTO enableDisableTireConfigurationMaster(TireConfigurationRequestDTO   tireConfigurationRequestDTO ,Long tireConfigurationId) {
+		LOGGER.info(
+				"TireConfiguration  Master Data  master data in IMasterServiceImpl and  enableDisableTireConfiguration method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (tireConfigurationRequestDTO != null) {
+			Optional<TireConfigurationEntity> tireConfigurationEntity = tireConfigurationRepository.findById(tireConfigurationId );
+			if (tireConfigurationEntity.isEmpty()) {
+				LOGGER.info(" Invalid  Tire Configuration Master Data List for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_DESC, null);
+						
+			}
+			TireConfigurationEntity	entity = tireConfigurationEntity.get();
+			entity.setActiveStatus(tireConfigurationRequestDTO.getActiveStatus());
+			try {
+				entity = tireConfigurationRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(new GenericResponseDTO(entity.getTireConfigurationId()));
+				LOGGER.info(" Tire Configuration  Master Data List data enabled or disabled Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method enableDisableTireConfigurationMaster  with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	
+	public ServiceResponseDTO getAllTireConfigurationDetials(int pageNumber, int size, String sortBy) {
+		LOGGER.info(
+				"getAllTireConfigurationDetials process start in IMasterServiceImpl and getTireConfigurationDetials method Executing ");
+		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		Page<TireConfigurationEntity> tireConfigurationDetail = tireConfigurationRepository.findAll(pageable);
+		if ( tireConfigurationDetail.getSize() > 0) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, tireConfigurationDetail);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+	
+	
+	public ServiceResponseDTO getTireConfigurationById(Long  tireConfigurationId) {
+		LOGGER.info("getTireConfigurationById process start in IMasterServiceImpl and getTireConfigurationById method Executing ");
+		Optional<TireConfigurationEntity> tireConfigurationDetails= tireConfigurationRepository.findById(tireConfigurationId);
+		if (!tireConfigurationDetails.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, tireConfigurationDetails.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}	
 	
 	
 }
