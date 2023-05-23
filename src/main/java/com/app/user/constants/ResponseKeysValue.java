@@ -124,6 +124,10 @@ public interface ResponseKeysValue {
 	String WARNING__OBSERVATION_CATEGORY_MASTER_DATA_ALREADY_EXIST_DESC = "observationcategory master data alrady existcode";
 	String WARNING_OBSERVATION_CATEGORY_MASTER_DATA_DOESNT_EXIST_CODE = "100";
 	String WARNING_OBSERVATION_CATEGORY_MASTER_DATA_DOESNT_EXIT_DESC = "observationcategory master data doesn't Exist";
+	String WARNING_TIRE_CONFIGURATION_DATA_ALREADY_EXIST_CODE = "100";
+	String WARNING_TIRE_CONFIGURATION_DATA_ALREADY_EXIST_DESC = "tire configuration data already exit";
+	String WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_CODE ="100";
+	String WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_DESC = "tire configuration data doesn't exist";
 	
 	
 	

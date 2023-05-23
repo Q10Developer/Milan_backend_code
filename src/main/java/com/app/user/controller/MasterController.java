@@ -18,6 +18,7 @@ import com.app.user.dto.request.DropDownMasterDTO;
 import com.app.user.dto.request.MasterDataRequestDTO;
 import com.app.user.dto.request.ObservationCategoryRequestDTO;
 import com.app.user.dto.request.ObservationRequestDTO;
+import com.app.user.dto.request.TireConfigurationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
 import com.app.user.dto.request.VehicleManufacturerRequestDTO;
@@ -515,6 +516,43 @@ public ServiceResponseDTO getObservationmasterCategoryDetail(@RequestParam(name 
 	LOGGER.info("Executing  getObservationCategorymasterDetail() method of MasterController");
 	return masterServiceImpl.getObservationCategoryDetailsById(observationCategoryId);
 }
+
+
+
+@PostMapping(value = URLConstants.SAVE_TIRE_CONFIGURATION_MASTER)
+public ServiceResponseDTO saveTireConfigurationMaster(@RequestBody TireConfigurationRequestDTO  tireConfigurationRequestDTO) {
+	LOGGER.info("Executing saveTireMasterConfigurationmaster() method of MasterController");
+	return masterServiceImpl.saveTireConfigurationMaster(tireConfigurationRequestDTO);
+}
+
+@PutMapping(value = URLConstants.UPDATE_TIRE_CONFIGURATION_MASTER)
+public ServiceResponseDTO updateTireConfigurationMaster(@RequestParam(name = "tireConfigurationId") Long tireConfigurationId,
+		@RequestBody TireConfigurationRequestDTO  tireConfigurationRequestDTO   ) {
+	LOGGER.info("Executing  updateTireConfigurationMaster() method of MasterController");
+	return masterServiceImpl.updateTireConfigurationMaster(tireConfigurationRequestDTO, tireConfigurationId);
+}
+
+@PutMapping(value = URLConstants.ENABLE_DISABLE_TIRE_CONFIGURATION_MASTER)
+public ServiceResponseDTO enableDisableTireConfigurationMaster(@RequestParam(name = "tireConfigurationId") Long tireConfigurationId,
+		@RequestBody TireConfigurationRequestDTO   tireConfigurationRequestDTO)  {
+	LOGGER.info("Executing  enableDisabletireconfigurationMaster() method of MasterController");
+	return masterServiceImpl.enableDisableTireConfigurationMaster(tireConfigurationRequestDTO, tireConfigurationId);
+}
+
+@GetMapping(value = URLConstants.GET_ALL_TIRE_CONFIGURATION)
+public ServiceResponseDTO getAllTireConfigurationDetails(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
+		@RequestParam(name = "size", defaultValue = "10") int size,
+		@RequestParam(name = "sortBy", defaultValue = "tireConfigurationId") String sortBy) {
+	LOGGER.info("Executing  getAllTireConfigurationDetails() method of MasterController");
+	return masterServiceImpl.getAllTireConfigurationDetials(pageNumber, size, sortBy);
+}  
+
+@GetMapping(value = URLConstants.GET_TIRE_CONFIGURATION_BY_ID)
+public ServiceResponseDTO getTireConfigurationDetail(@RequestParam(name = "tireConfigurationId") Long  tireConfigurationId) {
+	LOGGER.info("Executing  getTireConfigurationDetail() method of MasterController");
+	return masterServiceImpl.getTireConfigurationById(tireConfigurationId);
+}
+
 
 
 }
