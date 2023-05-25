@@ -249,7 +249,7 @@ public class IMasterServiceImpl {
 	}
 
 	public ServiceResponseDTO saveVehicleMasterData(VehicleRequestDTO vehicleTyreRequestDTO) {
-		LOGGER.info("Vehicle data in IMasterServiceImpl and saveVehicleMasterData method");
+		LOGGER.info("Vehicle data in IMasterServiceImpl and saveVehicleMasterData method");           
 		ServiceResponseDTO response = new ServiceResponseDTO();
 		if (vehicleTyreRequestDTO != null) {
 			VehicleMasterEntity entity = new VehicleMasterEntity();
