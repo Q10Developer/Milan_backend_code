@@ -6,7 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.app.user.entity.ObservationEntity;
 
-public interface ObservatioRepository extends PagingAndSortingRepository < ObservationEntity, Long> {
+public interface ObservatioRepository extends PagingAndSortingRepository <ObservationEntity, Long> {
 
 	
 	

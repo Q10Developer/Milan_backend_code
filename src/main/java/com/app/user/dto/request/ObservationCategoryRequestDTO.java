@@ -9,7 +9,6 @@ public class ObservationCategoryRequestDTO {
 	public Long getObservationCategoryId() {
 		return observationCategoryId;
 	}
-
 	public void setObservationCategoryId(Long observationCategoryId) {
 		this.observationCategoryId = observationCategoryId;
 	}
