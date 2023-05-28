@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.app.user.dto.request.ObservationRequestDTO;
+
 @Entity
 @Table(name = "mst_observation_category")
 public class ObservationCategoryEntity {
@@ -15,8 +17,9 @@ public class ObservationCategoryEntity {
 	@Column(name = "observation_category_id")
 	private Long observationCategoryId;
 	
+	
 	@Column(name = "observation_category_type")
-	private String  observationCategoryType;
+	private  String  observationCategoryType;
 	
 	@Column(name = "active_status")
 	private int  activeStatus;
@@ -62,6 +65,8 @@ public class ObservationCategoryEntity {
 		return "ObservationCategoryEntity [observationCategoryId=" + observationCategoryId
 				+ ", observationCategoryType=" + observationCategoryType + ", activeStatus=" + activeStatus + "]";
 	}
+
+
 	
 	
 

@@ -1,9 +1,12 @@
 package com.app.user.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,7 +27,11 @@ public class ObservationEntity {
 
 	@Column(name = "observation_recommendation")
 	private String observationRecommendation;
-
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name ="observation_category_type")
+	private  ObservationCategoryEntity observationCategoryType ;
+	
 	@Column(name = "active_status")
 	private int activeStatus;
 
@@ -52,6 +59,14 @@ public class ObservationEntity {
 		this.observationRecommendation = observationRecommendation;
 	}
 
+	public ObservationCategoryEntity getObservationCategoryType() {
+		return observationCategoryType;
+	}
+
+	public void setObservationCategoryType(ObservationCategoryEntity observationCategoryType) {
+		this.observationCategoryType = observationCategoryType;
+	}
+
 	public int getActiveStatus() {
 		return activeStatus;
 	}
@@ -63,9 +78,12 @@ public class ObservationEntity {
 	@Override
 	public String toString() {
 		return "ObservationEntity [observationId=" + observationId + ", observationName=" + observationName
-				+ ", observationRecommendation=" + observationRecommendation + ", activeStatus=" + activeStatus + "]";
+				+ ", observationRecommendation=" + observationRecommendation + ", observationCategoryType="
+				+ observationCategoryType + ", activeStatus=" + activeStatus + "]";
 	}
 
-	
 
+
+
+	
 }
