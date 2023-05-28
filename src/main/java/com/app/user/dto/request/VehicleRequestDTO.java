@@ -9,7 +9,7 @@ public class VehicleRequestDTO {
 	private String vehicleModelLabel;
 	private Long vehicleType;
 	private String vehicleTypeLabel;
-	private Long vehicleSubType;
+	private String vehicleSubType;
 	private String vehicleSubTypeLabel;
 	private Long vehicleUsage;
 	private String vehicleUsageLabel;
@@ -74,11 +74,11 @@ public class VehicleRequestDTO {
 		this.vehicleTypeLabel = vehicleTypeLabel;
 	}
 
-	public Long getVehicleSubType() {
+	public String getVehicleSubType() {
 		return vehicleSubType;
 	}
 
-	public void setVehicleSubType(Long vehicleSubType) {
+	public void setVehicleSubType(String vehicleSubType) {
 		this.vehicleSubType = vehicleSubType;
 	}
 

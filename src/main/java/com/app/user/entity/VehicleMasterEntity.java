@@ -34,7 +34,7 @@ public class VehicleMasterEntity {
 	private String vehicleTypeLabel;
 
 	@Column(name = "vehicle_sub_type", nullable = false)
-	private Long vehicleSubType;
+	private String vehicleSubType;
 
 	@Column(name = "vehicle_sub_type_label")
 	private String vehicleSubTypeLabel;
@@ -113,11 +113,11 @@ public class VehicleMasterEntity {
 		this.vehicleTypeLabel = vehicleTypeLabel;
 	}
 
-	public Long getVehicleSubType() {
+	public String getVehicleSubType() {
 		return vehicleSubType;
 	}
 
-	public void setVehicleSubType(Long vehicleSubType) {
+	public void setVehicleSubType(String vehicleSubType) {
 		this.vehicleSubType = vehicleSubType;
 	}
 
