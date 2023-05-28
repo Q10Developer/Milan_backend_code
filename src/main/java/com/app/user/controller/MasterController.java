@@ -232,7 +232,7 @@ public class MasterController {
 		return masterServiceImpl.checkMasterDataListAvailable(dataKey, dataValue, dataLabel, dropDownId, dataId);
 	}
 
-	@PostMapping(value = URLConstants.SAVE__OBSERVATION_MASTER)
+	@PostMapping(value = URLConstants.SAVE_OBSERVATION_MASTER)
 	public ServiceResponseDTO saveObservation(@RequestBody ObservationRequestDTO observationRequestDTO) {
 		LOGGER.info("Executing  saveObservation() method of MasterController");
 		return masterServiceImpl.saveObservationMasterData(observationRequestDTO);

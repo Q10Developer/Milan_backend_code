@@ -1,21 +1,14 @@
 package com.app.user.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "mst_observation")
 public class ObservationEntity {
-
-	public ObservationEntity() {
-		// TODO Auto-generated constructor stub
-	}
 
 	@Id
 	@GeneratedValue
@@ -27,11 +20,13 @@ public class ObservationEntity {
 
 	@Column(name = "observation_recommendation")
 	private String observationRecommendation;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name ="observation_category_type")
-	private  ObservationCategoryEntity observationCategoryType ;
-	
+
+	@Column(name = "observation_category_id")
+	private Long observationCategoryId;
+
+	@Column(name = "observation_category_type")
+	private String observationCategoryType;
+
 	@Column(name = "active_status")
 	private int activeStatus;
 
@@ -59,11 +54,19 @@ public class ObservationEntity {
 		this.observationRecommendation = observationRecommendation;
 	}
 
-	public ObservationCategoryEntity getObservationCategoryType() {
+	public Long getObservationCategoryId() {
+		return observationCategoryId;
+	}
+
+	public void setObservationCategoryId(Long observationCategoryId) {
+		this.observationCategoryId = observationCategoryId;
+	}
+
+	public String getObservationCategoryType() {
 		return observationCategoryType;
 	}
 
-	public void setObservationCategoryType(ObservationCategoryEntity observationCategoryType) {
+	public void setObservationCategoryType(String observationCategoryType) {
 		this.observationCategoryType = observationCategoryType;
 	}
 
@@ -77,13 +80,21 @@ public class ObservationEntity {
 
 	@Override
 	public String toString() {
-		return "ObservationEntity [observationId=" + observationId + ", observationName=" + observationName
-				+ ", observationRecommendation=" + observationRecommendation + ", observationCategoryType="
-				+ observationCategoryType + ", activeStatus=" + activeStatus + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("ObservationEntity [observationId=");
+		builder.append(observationId);
+		builder.append(", observationName=");
+		builder.append(observationName);
+		builder.append(", observationRecommendation=");
+		builder.append(observationRecommendation);
+		builder.append(", observationCategoryId=");
+		builder.append(observationCategoryId);
+		builder.append(", observationCategoryType=");
+		builder.append(observationCategoryType);
+		builder.append(", activeStatus=");
+		builder.append(activeStatus);
+		builder.append("]");
+		return builder.toString();
 	}
 
-
-
-
-	
 }
