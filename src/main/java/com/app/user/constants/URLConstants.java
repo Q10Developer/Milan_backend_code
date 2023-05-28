@@ -1,13 +1,5 @@
 package com.app.user.constants;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.app.user.dto.ServiceResponseDTO;
-import com.app.user.dto.request.ClientMasterRequestDTO;
-
 public class URLConstants{
 
 	
@@ -90,7 +82,7 @@ public class URLConstants{
 	public static final String GET_VEHICLE_USAGE_BY_ID = "/getvehicleusageid";
 	public static final String SAVE_VEHICLE_SUB_TYPE_MASTER = "/savevehiclesubtypemaster";
 	public static final String UPDATE_VEHICLE_SUB_TYPE_MASTER = "/updatevehiclesubtypemaster";
-	public static final String ENABLE_DISABLE_VEHICLE_SUB_TYPE__MASTER = "/enabledisablevehiclesubtypemaster";
+	public static final String ENABLE_DISABLE_VEHICLE_SUB_TYPE_MASTER = "/enabledisablevehiclesubtypemaster";
 	public static final String GET_VEHICLE_SUB_TYPE_MASTER_DATA = "/getvehiclesubtypemasterdata";
 	public static final String GET_VEHICLE_SUB_TYPE_MASTER_DATA_BY_ID = "/getvehiclesubtypemasterdatabyid";
 	public static final String SAVE_TIRE_MAKE_MASTER = "/savetiremakemaster";

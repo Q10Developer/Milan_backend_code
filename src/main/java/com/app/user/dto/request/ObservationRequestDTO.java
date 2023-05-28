@@ -7,10 +7,6 @@ public class ObservationRequestDTO {
 	private String observationRecommendation;
 	private int activeStatus;
 
-	public ObservationRequestDTO() {
-		// TODO Auto-generated constructor stub
-	}
-
 	public Long getObservationId() {
 		return observationId;
 	}
