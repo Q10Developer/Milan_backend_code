@@ -6,27 +6,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
-
 @Entity
 @Table(name = " mst_vehicle_type")
 public class VehicleTypeEntity {
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "vehicle_type_id")
-	private Long  vehicleTypeId;
-	
-	
+	private Long vehicleTypeId;
+
 	@Column(name = "vehicle_type_name")
-	private String  vehicleTypeName;
-	
+	private String vehicleTypeName;
+
 	@Column(name = "active_status")
 	private int activeStatus;
-
-	public VehicleTypeEntity() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public Long getVehicleTypeId() {
 		return vehicleTypeId;
@@ -57,8 +50,5 @@ public class VehicleTypeEntity {
 		return "VehicleTypeEntity [vehicleTypeId=" + vehicleTypeId + ", vehicleTypeName=" + vehicleTypeName
 				+ ", activeStatus=" + activeStatus + "]";
 	}
-
-	
-
 
 }

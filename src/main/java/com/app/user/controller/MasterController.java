@@ -402,9 +402,10 @@ public class MasterController {
 	public ServiceResponseDTO getVehicleSubTypeMasterData(
 			@RequestParam(name = "page", defaultValue = "0") int pageNumber,
 			@RequestParam(name = "size", defaultValue = "10") int size,
-			@RequestParam(name = "sortBy", defaultValue = "vehicleSubTypeId") String sortBy) {
+			@RequestParam(name = "sortBy", defaultValue = "vehicleSubTypeId") String sortBy,
+			@RequestParam(name = "vehicleTypeId", defaultValue = "0") int vehicleTypeId) {
 		LOGGER.info("Executing  getVehicleSubTypeMasterData method of MasterController");
-		return masterServiceImpl.getVehicleSubTypeMasterData(pageNumber, size, sortBy);
+		return masterServiceImpl.getVehicleSubTypeMasterData(pageNumber, size, sortBy , vehicleTypeId);
 	}
 
 	@GetMapping(value = URLConstants.GET_VEHICLE_SUB_TYPE_MASTER_DATA_BY_ID)

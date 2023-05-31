@@ -1512,10 +1512,19 @@ public class IMasterServiceImpl {
 		return response;
 	}
 
-	public ServiceResponseDTO getVehicleSubTypeMasterData(int pageNumber, int size, String sortBy) {
+	public ServiceResponseDTO getVehicleSubTypeMasterData(int pageNumber, int size, String sortBy, int vehicleTypeId) {
 		LOGGER.info("Vechile Master data in IMasterServiceImpl and getVehicleSubTypeMasterData method");
-		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
-		Page<VehicleSubTypeEntity> vehicleSubTypeDetails = vehicleSubTypeRepository.findAll(pageable);
+		Page<VehicleSubTypeEntity> vehicleSubTypeDetails = null;
+		PageRequest pageable = null;
+		if (vehicleTypeId > 0) {
+			pageable = PageRequest.of(0, Integer.MAX_VALUE);
+			VehicleTypeEntity vehicleTypeEntity = new VehicleTypeEntity();
+			vehicleTypeEntity.setVehicleTypeId(Long.valueOf(vehicleTypeId));
+			vehicleSubTypeDetails = vehicleSubTypeRepository.findByVehicleTypeId(vehicleTypeEntity, pageable);
+		} else {
+			pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+			vehicleSubTypeDetails = vehicleSubTypeRepository.findAll(pageable);
+		}
 		if (vehicleSubTypeDetails.getSize() > 0) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleSubTypeDetails);
