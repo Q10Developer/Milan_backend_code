@@ -9,11 +9,11 @@
 		<version>2.7.0</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.app.user</groupId>
-	<artifactId>user</artifactId>
+	<groupId>com.app.milan</groupId>
+	<artifactId>milan-application</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>user</name>
-	<description>user managemnt project for Spring Boot</description>
+	<description>Milan Tyre Web Application Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
