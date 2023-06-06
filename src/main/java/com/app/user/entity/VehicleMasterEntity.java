@@ -39,6 +39,9 @@ public class VehicleMasterEntity {
 	@Column(name = "vehicle_sub_type_label")
 	private String vehicleSubTypeLabel;
 
+	@Column(name = "configured_vehicle", updatable = false)
+	private String configuredVehicle;
+
 	@Column(name = "vehicle_usage", nullable = false)
 	private Long vehicleUsage;
 
@@ -129,6 +132,14 @@ public class VehicleMasterEntity {
 		this.vehicleSubTypeLabel = vehicleSubTypeLabel;
 	}
 
+	public String getConfiguredVehicle() {
+		return configuredVehicle;
+	}
+
+	public void setConfiguredVehicle(String configuredVehicle) {
+		this.configuredVehicle = configuredVehicle;
+	}
+
 	public Long getVehicleUsage() {
 		return vehicleUsage;
 	}
@@ -198,6 +209,8 @@ public class VehicleMasterEntity {
 		builder.append(vehicleSubType);
 		builder.append(", vehicleSubTypeLabel=");
 		builder.append(vehicleSubTypeLabel);
+		builder.append(", configuredVehicle=");
+		builder.append(configuredVehicle);
 		builder.append(", vehicleUsage=");
 		builder.append(vehicleUsage);
 		builder.append(", vehicleUsageLabel=");
