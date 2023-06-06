@@ -39,7 +39,7 @@ public class VehicleMasterEntity {
 	@Column(name = "vehicle_sub_type_label")
 	private String vehicleSubTypeLabel;
 
-	@Column(name = "configured_vehicle", updatable = false)
+	@Column(name = "configured_vehicle", updatable = false, insertable = false)
 	private String configuredVehicle;
 
 	@Column(name = "vehicle_usage", nullable = false)
