@@ -6,13 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "vehicle_inspection")
 public class VehicleInspectionEntity {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(generator = "custom-id-generator")
+	@GenericGenerator(name = "custom-id-generator", strategy = "com.app.user.config.helper.CustomIdGenerator")
 	@Column(name = "inspection_id")
 	private String inspectionId;
 

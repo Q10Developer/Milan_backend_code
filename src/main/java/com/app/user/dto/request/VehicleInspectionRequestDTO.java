@@ -1,6 +1,5 @@
 package com.app.user.dto.request;
 
-import java.math.BigInteger;
 import java.util.Date;
 
 public class VehicleInspectionRequestDTO {
@@ -10,7 +9,7 @@ public class VehicleInspectionRequestDTO {
 	private String clientInformation;
 	private Date inspectionDateTime;
 	private String vehicleRegNumber;
-	private BigInteger vehicleOdometerReading;
+	private Integer vehicleOdometerReading;
 	private Long vehicleId;
 	private String configuredVehicle;
 	private Long noOfTires;
@@ -57,11 +56,11 @@ public class VehicleInspectionRequestDTO {
 		this.vehicleRegNumber = vehicleRegNumber;
 	}
 
-	public BigInteger getVehicleOdometerReading() {
+	public Integer getVehicleOdometerReading() {
 		return vehicleOdometerReading;
 	}
 
-	public void setVehicleOdometerReading(BigInteger vehicleOdometerReading) {
+	public void setVehicleOdometerReading(Integer vehicleOdometerReading) {
 		this.vehicleOdometerReading = vehicleOdometerReading;
 	}
 
