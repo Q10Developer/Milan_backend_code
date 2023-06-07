@@ -2,22 +2,22 @@ package com.app.user.dto.response;
 
 public class GenericResponseDTO {
 
-	private Long id;
+	private String id;
 
 	public GenericResponseDTO() {
 
 	}
 
-	public GenericResponseDTO(Long id) {
+	public GenericResponseDTO(String id) {
 		super();
 		this.id = id;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

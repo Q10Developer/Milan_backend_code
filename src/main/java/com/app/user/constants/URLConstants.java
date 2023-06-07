@@ -1,8 +1,7 @@
 package com.app.user.constants;
 
-public class URLConstants{
+public class URLConstants {
 
-	
 	private URLConstants() {
 	}
 
@@ -58,10 +57,8 @@ public class URLConstants{
 	public static final Integer IN_ACTIVE = 0;
 	public static final String SAVE_OBSERVATION_MASTER = "/saveobservationmaster";
 	public static final String UPDATE_OBSERVATION_MASTER = "/updateobservationmaster";
-	public static final String ENABLE_DISABLE_OBSERVATION_MASTER ="/enabledisableobservationmaster";
+	public static final String ENABLE_DISABLE_OBSERVATION_MASTER = "/enabledisableobservationmaster";
 	public static final String GET_ALL_OBSERVATION = "/getallobservation";
-	
-
 
 	public static final String GET_OBSERVATION_DATA_BY_ID = "/getobservation";
 	public static final String SAVE_VEHICLE_MANUFACTURER_MASTER = "/savevehiclemanufacturermaster";
@@ -69,13 +66,13 @@ public class URLConstants{
 	public static final String ENABLE_DISABLE_VEHICLE_MANUFACTURER_MASTER = "/enabledisablevehiclemanufacturermaster";
 	public static final String GET_ALL_VEHICLE_MANUFACTURER = "/getallvehiclemanufacturer";
 	public static final String GET_VEHICLE_MANUFACTURER_BY_ID = "/getvehiclemanufacturer";
-	
+
 	public static final String UPDATE_VEHICLE_TYPE = "/updatevehicletype";
 	public static final String ENABLE_DISABLE_VEHICLE_TYPE_MASTER = "/enabledisablevehicletypemaster";
 	public static final String GET_ALL_VEHICLE_TYPE = "/getallvehicletype";
 	public static final String GET_VEHICLE_TYPE_BY_ID = "/getallvehicletypeid";
 	public static final String UPDATE_VEHICLE_USAGE_MASTER = "/updatevehicleusagemaster";
-	public static final String SAVE_VEHICLE_USAGE_MASTER  = "/savevehicleusagemaster";
+	public static final String SAVE_VEHICLE_USAGE_MASTER = "/savevehicleusagemaster";
 	public static final String SAVE_VEHICLE_TYPE = "/savevehicletype";
 	public static final String ENABLE_DISABLE_VEHICLE_USAGE_MASTER = "/enabledisablevehicleusagemaster";
 	public static final String GET_ALL_VEHICLE_USAGE = "/getallvehicleusage";
@@ -86,26 +83,35 @@ public class URLConstants{
 	public static final String GET_VEHICLE_SUB_TYPE_MASTER_DATA = "/getvehiclesubtypemasterdata";
 	public static final String GET_VEHICLE_SUB_TYPE_MASTER_DATA_BY_ID = "/getvehiclesubtypemasterdatabyid";
 	public static final String SAVE_TIRE_MAKE_MASTER = "/savetiremakemaster";
-	public static final String UPDATE_TIRE_MAKE_MASTER ="/updatetiremakemaster";
+	public static final String UPDATE_TIRE_MAKE_MASTER = "/updatetiremakemaster";
 	public static final String ENABLE_DISABLE_TIRE_MAKE_USAGE_MASTER = "/enabledisabletiremakemaster";
 	public static final String GET_TIRE_MAKE_TYPE_MASTER_DATA = "/tiremaketypemasterdata";
 	public static final String GET_TIRE_MAKE_BY_ID = "/tiremakebyid";
 	public static final String SAVE_VEHICLE_MODEL_MASTER = "/savevehiclemodelmaster";
-	public static final String UPDATE_VEHICLE_MODEL_MASTER ="/updatevehiclemodelmaster";
+	public static final String UPDATE_VEHICLE_MODEL_MASTER = "/updatevehiclemodelmaster";
 	public static final String ENABLE_DISABLE_VEHICLE_MODEL_MASTER = "/enabledisablevehiclemodelmaster";
 	public static final String GET_VEHICLE_MODEL_MASTER_DATA = "/getVehicleModel";
 	public static final String GET_VEHICLE_MODEL_MASTER_DATA_BY_ID = "/getvehiclemodelmasterdatabyid";
-	public static final String SAVE_OBSERVATION_CATEGORY_MASTER ="/saveobservationcategorymaster";
-	public static final String UPDATE_OBSERVATION_CATEGORY_MASTER ="/updateobservationcategorymaster";
-	public static final String ENABLE_DISABLE_OBSERVATION_CATEGORY_MASTER ="/enabledisableobservationcategorymaster";
+	public static final String SAVE_OBSERVATION_CATEGORY_MASTER = "/saveobservationcategorymaster";
+	public static final String UPDATE_OBSERVATION_CATEGORY_MASTER = "/updateobservationcategorymaster";
+	public static final String ENABLE_DISABLE_OBSERVATION_CATEGORY_MASTER = "/enabledisableobservationcategorymaster";
 	public static final String GET_ALL_OBSERVATION_CATEGORY = "/getallcategoryobservtion";
-	public static final String GET_OBSERVATION_CATEGORY_DATA_BY_ID ="/getobservationcategorydatabyid";
+	public static final String GET_OBSERVATION_CATEGORY_DATA_BY_ID = "/getobservationcategorydatabyid";
 	public static final String SAVE_TIRE_CONFIGURATION_TYPE_MASTER = "/savetireconfigurationtypemaster";
 	public static final String SAVE_TIRE_CONFIGURATION_MASTER = "/savetireconfigurationmaster";
-	public static final String UPDATE_TIRE_CONFIGURATION_MASTER ="/updatetireconfigurationmaster";
+	public static final String UPDATE_TIRE_CONFIGURATION_MASTER = "/updatetireconfigurationmaster";
 	public static final String ENABLE_DISABLE_TIRE_CONFIGURATION_MASTER = "/enabledisabletireconfigurationmaster";
-	public static final String GET_ALL_TIRE_CONFIGURATION= "/getalltireconfiguration";
+	public static final String GET_ALL_TIRE_CONFIGURATION = "/getalltireconfiguration";
 	public static final String GET_TIRE_CONFIGURATION_BY_ID = "/gettireconfigurationbyid";
-	
-	
+	public static final String VEHICLE_INSPECTION = "/vehicleinspection";
+	public static final String CREATE_VEHICLE_INSPECTION = "/createvehicleinspection";
+	public static final String GET_ALL_VEHICLE_INSPECTION = "/getallvehicleinspection";
+	public static final String GET_VEHICLE_INSPECTION_BY_ID = "/getvehicleinspection";
+	public static final String GET_VEHICLE_INSPECTION_BY_CLIENT_ID = "/getvehicleinspectionbyclient";
+	public static final String SAVE_VEHICLE_INSPECTION_DETAILS = "/savevehicleinspectiondetails";
+	public static final String UPDATE_VEHICLE_INSPECTION_DETAILS = "/updatevehicleinspectiondetails";
+	public static final String GET_VEHICLE_INSPECTION_DETAILS = "/getvehicleinspectiondetails";
+	public static final Integer DRAFT = 2;
+	public static final Integer SUBMITTED = 1;
+
 }
