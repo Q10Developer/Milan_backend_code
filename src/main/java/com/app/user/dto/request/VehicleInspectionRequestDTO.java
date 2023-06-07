@@ -13,6 +13,8 @@ public class VehicleInspectionRequestDTO {
 	private BigInteger vehicleOdometerReading;
 	private Long vehicleId;
 	private String configuredVehicle;
+	private Long noOfTires;
+	private Long noOfStepneys;
 	private int inspectionStatus;
 
 	public String getInspectionId() {
@@ -79,6 +81,22 @@ public class VehicleInspectionRequestDTO {
 		this.configuredVehicle = configuredVehicle;
 	}
 
+	public Long getNoOfTires() {
+		return noOfTires;
+	}
+
+	public void setNoOfTires(Long noOfTires) {
+		this.noOfTires = noOfTires;
+	}
+
+	public Long getNoOfStepneys() {
+		return noOfStepneys;
+	}
+
+	public void setNoOfStepneys(Long noOfStepneys) {
+		this.noOfStepneys = noOfStepneys;
+	}
+
 	public int getInspectionStatus() {
 		return inspectionStatus;
 	}
@@ -106,6 +124,10 @@ public class VehicleInspectionRequestDTO {
 		builder.append(vehicleId);
 		builder.append(", configuredVehicle=");
 		builder.append(configuredVehicle);
+		builder.append(", noOfTires=");
+		builder.append(noOfTires);
+		builder.append(", noOfStepneys=");
+		builder.append(noOfStepneys);
 		builder.append(", inspectionStatus=");
 		builder.append(inspectionStatus);
 		builder.append("]");
