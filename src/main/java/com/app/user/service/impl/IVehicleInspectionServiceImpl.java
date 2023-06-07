@@ -77,6 +77,41 @@ public class IVehicleInspectionServiceImpl {
 		return response;
 	}
 
+	public ServiceResponseDTO updateVehicleInspection(String inspectionId,
+			VehicleInspectionRequestDTO vehicleInspectionRequestDTO) {
+		LOGGER.info("Update Vehicle Inspection in IVehicleInspectionServiceImpl and updateVehicleInspection method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (vehicleInspectionRequestDTO != null && vehicleInspectionRequestDTO.getVehicleOdometerReading() != null) {
+			try {
+				Optional<VehicleInspectionEntity> entity = vehicleInspectionRepository.findById(inspectionId);
+				if (entity.isPresent()) {
+					VehicleInspectionEntity vehicleInspectionEntity = entity.get();
+					vehicleInspectionEntity
+							.setVehicleOdometerReading(vehicleInspectionRequestDTO.getVehicleOdometerReading());
+					vehicleInspectionEntity = vehicleInspectionRepository.save(vehicleInspectionEntity);
+					response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+					response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+					response.setResult(vehicleInspectionEntity);
+					LOGGER.info("Client data saved Successfully");
+				} else {
+					response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+					response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				}
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IVehicleInspectionServiceImpl calss in method startVehicleInspection with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
 	public ServiceResponseDTO getAllVehicleInspection(int pageNumber, int size, String sortBy) {
 		LOGGER.info(
 				"getAllVehcileInspection process start in IVehicleInspectionServiceImpl and getAllVehcileInspection method Executing ");

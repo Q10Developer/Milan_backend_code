@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,13 @@ public class VehicleInspectionController {
 			@RequestBody VehicleInspectionRequestDTO vehicleInspectionRequestDTO) {
 		LOGGER.info("Executing  startVehicleInspection() method of VehicleInspectionController");
 		return vehicleInspectionServiceImpl.startVehicleInspection(vehicleInspectionRequestDTO);
+	}
+
+	@PutMapping(value = URLConstants.UPDATE_VEHICLE_INSPECTION)
+	public ServiceResponseDTO updateVehicleInspection(@RequestParam(name = "inspectionId") String inspectionId,
+			@RequestBody VehicleInspectionRequestDTO vehicleInspectionRequestDTO) {
+		LOGGER.info("Executing  updateVehicleInspection() method of VehicleInspectionController");
+		return vehicleInspectionServiceImpl.updateVehicleInspection(inspectionId, vehicleInspectionRequestDTO);
 	}
 
 	@GetMapping(value = URLConstants.GET_ALL_VEHICLE_INSPECTION)

@@ -107,6 +107,15 @@ public class MasterController {
 		return masterServiceImpl.getVehicleDetailsById(vehicleTyreId);
 	}
 
+	@GetMapping(value = URLConstants.GET_VEHICLE_BY_MULTIPLE_FILTER)
+	public ServiceResponseDTO getVehicleDetailsByMultipleFilter(
+			@RequestParam(name = "vehicleManufacturer") Long vehicleManufacturer,
+			@RequestParam(name = "vehicleModel") Long vehicleModel,
+			@RequestParam(name = "vehicleType") Long vehicleType) {
+		LOGGER.info("Executing  getVehicleDetailsByMultipleFilter() method of MasterController");
+		return masterServiceImpl.getVehicleDetailsByMultipleFilter(vehicleManufacturer, vehicleModel, vehicleType);
+	}
+
 	@PostMapping(value = URLConstants.SAVE_TYRE)
 	public ServiceResponseDTO createTyre(@RequestBody TyreRequestDTO tyreRequestDTO) {
 		LOGGER.info("Executing  createTyre() method of MasterController");
@@ -405,7 +414,7 @@ public class MasterController {
 			@RequestParam(name = "sortBy", defaultValue = "vehicleSubTypeId") String sortBy,
 			@RequestParam(name = "vehicleTypeId", defaultValue = "0") int vehicleTypeId) {
 		LOGGER.info("Executing  getVehicleSubTypeMasterData method of MasterController");
-		return masterServiceImpl.getVehicleSubTypeMasterData(pageNumber, size, sortBy , vehicleTypeId);
+		return masterServiceImpl.getVehicleSubTypeMasterData(pageNumber, size, sortBy, vehicleTypeId);
 	}
 
 	@GetMapping(value = URLConstants.GET_VEHICLE_SUB_TYPE_MASTER_DATA_BY_ID)

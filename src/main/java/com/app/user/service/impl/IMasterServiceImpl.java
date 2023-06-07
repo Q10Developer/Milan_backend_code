@@ -372,6 +372,22 @@ public class IMasterServiceImpl {
 		}
 	}
 
+	public ServiceResponseDTO getVehicleDetailsByMultipleFilter(Long vehicleManufacturer, Long vehicleModel,
+			Long vehicleType) {
+		LOGGER.info(
+				"getVehicleDetailsById process start in IMasterServiceImpl and getVehicleDetailsById method Executing ");
+		Optional<VehicleMasterEntity> vehicleDetail = vehicleRepository
+				.findByVehicleManufacturerAndVehicleModelAndVehicleTypeAndActiveStatus(vehicleManufacturer,
+						vehicleModel, vehicleType, URLConstants.ACTIVE);
+		if (vehicleDetail.isPresent()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleDetail.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+
 	public ServiceResponseDTO saveTyreMasterData(TyreRequestDTO tyreRequestDTO) {
 		LOGGER.info("Tyre data in IMasterServiceImpl and saveTyreMasterData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();

@@ -51,24 +51,6 @@ created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 modified_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-
-
-GRANT TRIGGER ON milan_db_dev.vehicle_inspection TO 'q10analytics'@'%';
-
-DELIMITER //
-CREATE TRIGGER generate_inspection_id
-BEFORE INSERT ON vehicle_inspection
-FOR EACH ROW
-BEGIN
-  DECLARE generated_id VARCHAR(15);
-  SET generated_id = CONCAT('MTSS', SUBSTRING(MD5(RAND()), 1, 7));
-  WHILE EXISTS(SELECT 1 FROM vehicle_inspection WHERE inspection_id = generated_id) DO
-    SET generated_id = CONCAT('MTSS', SUBSTRING(MD5(RAND()), 1, 7));
-  END WHILE;
-  SET NEW.inspection_id = generated_id;
-END//
-DELIMITER ;
-
 alter table vehicle_configuration_master DROP COLUMN IF EXISTS configured_vehicle;
 ALTER TABLE vehicle_configuration_master
 ADD configured_vehicle VARCHAR(255) GENERATED ALWAYS AS (
