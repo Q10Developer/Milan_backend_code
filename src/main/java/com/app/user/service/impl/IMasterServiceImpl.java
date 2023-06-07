@@ -132,7 +132,7 @@ public class IMasterServiceImpl {
 				entity = clientMasterRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getClientId()));
+				response.setResult(new GenericResponseDTO(entity.getClientId().toString()));
 				LOGGER.info("Client data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -200,7 +200,7 @@ public class IMasterServiceImpl {
 				entity = clientMasterRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getClientId()));
+				response.setResult(new GenericResponseDTO(entity.getClientId().toString()));
 				LOGGER.info("Client data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -260,7 +260,7 @@ public class IMasterServiceImpl {
 				entity = vehicleRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getVehicleId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleId().toString()));
 				LOGGER.info(" Vehicle Tyre data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -328,7 +328,7 @@ public class IMasterServiceImpl {
 				entity = vehicleRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getVehicleId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleId().toString()));
 				LOGGER.info(" Vehicle data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -388,7 +388,7 @@ public class IMasterServiceImpl {
 				entity = tyreRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getTyreId()));
+				response.setResult(new GenericResponseDTO(entity.getTyreId().toString()));
 				LOGGER.info(" Tyre data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -456,7 +456,7 @@ public class IMasterServiceImpl {
 				entity = tyreRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getTyreId()));
+				response.setResult(new GenericResponseDTO(entity.getTyreId().toString()));
 				LOGGER.info("Tyre data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -517,7 +517,7 @@ public class IMasterServiceImpl {
 					entity = dropDownMasterRepository.save(entity);
 					response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 					response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-					response.setResult(new GenericResponseDTO(entity.getDropDownId()));
+					response.setResult(new GenericResponseDTO(entity.getDropDownId().toString()));
 					LOGGER.info(" Client data saved Successfully");
 				} else {
 					response.setStatusCode(ResponseKeysValue.DUPLICATE_DROP_DOWN_COMBINATION_CODE);
@@ -598,7 +598,7 @@ public class IMasterServiceImpl {
 				entity = dropDownMasterRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getDropDownId()));
+				response.setResult(new GenericResponseDTO(entity.getDropDownId().toString()));
 				LOGGER.info(" Drop Down data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -700,7 +700,7 @@ public class IMasterServiceImpl {
 				entity = masterDataListRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getDataId()));
+				response.setResult(new GenericResponseDTO(entity.getDataId().toString()));
 				LOGGER.info(" Master data List data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -775,7 +775,7 @@ public class IMasterServiceImpl {
 				entity = masterDataListRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getDataId()));
+				response.setResult(new GenericResponseDTO(entity.getDataId().toString()));
 				LOGGER.info(" Master Data List data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -883,7 +883,7 @@ public class IMasterServiceImpl {
 				entity = observationRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getObservationId()));
+				response.setResult(new GenericResponseDTO(entity.getObservationId().toString()));
 				LOGGER.info(" Master data List data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -952,7 +952,7 @@ public class IMasterServiceImpl {
 				entity = observationRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getObservationId()));
+				response.setResult(new GenericResponseDTO(entity.getObservationId().toString()));
 				LOGGER.info("Observation data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1015,7 +1015,7 @@ public class IMasterServiceImpl {
 				entity = vehicleManufacturerRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getVehicleManufacturerId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleManufacturerId().toString()));
 				LOGGER.info("VehicleManufacturer data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1090,7 +1090,7 @@ public class IMasterServiceImpl {
 				entity = vehicleManufacturerRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getVehicleManufacturerId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleManufacturerId().toString()));
 				LOGGER.info("  VehicleManufacturer data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1151,7 +1151,7 @@ public class IMasterServiceImpl {
 				entity = vehicleTypeRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getVehicleTypeId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleTypeId().toString()));
 				LOGGER.info(" Vehicle Type data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1222,7 +1222,7 @@ public class IMasterServiceImpl {
 				entity = vehicleTypeRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getVehicleTypeId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleTypeId().toString()));
 				LOGGER.info("  VehicleType data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1282,7 +1282,7 @@ public class IMasterServiceImpl {
 				entity = vehicleUsageRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getVehicleUsageId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleUsageId().toString()));
 				LOGGER.info(" Vehicle Usage data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1353,7 +1353,7 @@ public class IMasterServiceImpl {
 				entity = vehicleUsageRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getVehicleUsageId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleUsageId().toString()));
 				LOGGER.info("  VehicleUsage data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1417,7 +1417,7 @@ public class IMasterServiceImpl {
 				entity = vehicleSubTypeRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getVehicleSubTypeId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleSubTypeId().toString()));
 				LOGGER.info(" Master data List data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1495,7 +1495,7 @@ public class IMasterServiceImpl {
 				entity = vehicleSubTypeRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getVehicleSubTypeId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleSubTypeId().toString()));
 				LOGGER.info(" Vehicle Master Data List data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1564,7 +1564,7 @@ public class IMasterServiceImpl {
 				tireMakeEntity = tireMakeRepository.save(tireMakeEntity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(tireMakeEntity.getTireMakeId()));
+				response.setResult(new GenericResponseDTO(tireMakeEntity.getTireMakeId().toString()));
 				LOGGER.info("Tire Make data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1634,7 +1634,7 @@ public class IMasterServiceImpl {
 				entity = tireMakeRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getTireMakeId()));
+				response.setResult(new GenericResponseDTO(entity.getTireMakeId().toString()));
 				LOGGER.info("Tire Make data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1697,7 +1697,7 @@ public class IMasterServiceImpl {
 				entity = vehicleModelRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getVehicleModelId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleModelId().toString()));
 				LOGGER.info(" Master data List data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1773,7 +1773,7 @@ public class IMasterServiceImpl {
 				entity = vehicleModelRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getVehicleModelId()));
+				response.setResult(new GenericResponseDTO(entity.getVehicleModelId().toString()));
 				LOGGER.info(" Vehicle Model Master Data List data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1835,7 +1835,7 @@ public class IMasterServiceImpl {
 				entity = observationCategoryRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getObservationCategoryId()));
+				response.setResult(new GenericResponseDTO(entity.getObservationCategoryId().toString()));
 				LOGGER.info("observation Category data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1910,7 +1910,7 @@ public class IMasterServiceImpl {
 				entity = observationCategoryRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getObservationCategoryId()));
+				response.setResult(new GenericResponseDTO(entity.getObservationCategoryId().toString()));
 				LOGGER.info("ObservationCategory data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -1976,7 +1976,7 @@ public class IMasterServiceImpl {
 				entity = tireConfigurationRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getTireConfigurationId()));
+				response.setResult(new GenericResponseDTO(entity.getTireConfigurationId().toString()));
 				LOGGER.info(" Master data List data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -2056,7 +2056,7 @@ public class IMasterServiceImpl {
 				entity = tireConfigurationRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(new GenericResponseDTO(entity.getTireConfigurationId()));
+				response.setResult(new GenericResponseDTO(entity.getTireConfigurationId().toString()));
 				LOGGER.info(" Tire Configuration  Master Data List data enabled or disabled Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(

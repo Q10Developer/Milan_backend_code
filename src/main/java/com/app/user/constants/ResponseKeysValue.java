@@ -59,7 +59,7 @@ public interface ResponseKeysValue {
 
 	String WARNING_VEHICLE_DOESNT_EXIST_CODE = "100";
 	String WARNING_VEHICLE_DOESNT_EXIST_DESC = "Vehicle doesn't Exist";
-	
+
 	String WARNING_TYRE_DOESNT_EXIST_CODE = "100";
 	String WARNING_TYRE_DOESNT_EXIST_DESC = "Tyre doesn't Exist";
 
@@ -95,13 +95,13 @@ public interface ResponseKeysValue {
 	String WARNING_Observation_Master_Data_ALREADY_EXIT_DESC = "observation master data Alrady Exist";
 	String WARNING__Observation_Master_Data_ALREADY_EXIST_CODE = "100";
 	String WARNING__VehicleManufacture_Master_Data_ALREADY_EXIST_CODE = "100";
-	String WARNING_VehicleManufacture_Master_Data_ALREADY_EXIT_DESC ="vehicleManufacture master data  Alrady Exist";
+	String WARNING_VehicleManufacture_Master_Data_ALREADY_EXIT_DESC = "vehicleManufacture master data  Alrady Exist";
 	String WARNING_VEHICLE_TYPE_ALREADY_EXIST_CODE = "100";
 	String WARNING_VEHICLE_TYPE_ALREADY_EXIST_DESC = "vehicletypealreadyexit";
 	String WARNING_VEHICLE_USAGE_ALREADY_EXIST_CODE = "100";
 	String WARNING_VEHICLE_USAGE_ALREADY_EXIST_DESC = "vehicleusagealreadyexit";
 	String WARNING_VEHICLE_SUB_TYPE_DATA__ALREADY_EXIST_CODE = "100";
-	String WARNING_VEHICLE_SUB_TYPE_DATA__ALREADY_EXIST_DESC ="vehiclesubtypedataalreadyexist";
+	String WARNING_VEHICLE_SUB_TYPE_DATA__ALREADY_EXIST_DESC = "vehiclesubtypedataalreadyexist";
 	String WARNING_TIRE_MAKE_ALREADY_EXIST_CODE = "100";
 	String WARNING_TIRE_MAKE_ALREADY_EXIST_DESC = "tiremakealreadyexist";
 	String WARNING__VehicleManufacture_Master_Data_DOESNT_EXIST_CODE = "100";
@@ -109,7 +109,7 @@ public interface ResponseKeysValue {
 	String WARNING_OBSERVATION_MASTER_DATA_DOESNT_EXIST_CODE = "100";
 	String WARNING_OBSERVATION_MASTER_DATA_DOESNT_EXIT_DESC = "Observation master data doesn't Exist";
 	String WARNING_VEHICLE_TYPE_DOESNT_EXIST_CODE = "100";
-    String WARNING_VEHICLE_TYPE_DOESNT_EXIST_DESC = "vehicle type doesn't Exist";
+	String WARNING_VEHICLE_TYPE_DOESNT_EXIST_DESC = "vehicle type doesn't Exist";
 	String WARNING_VEHICLE_USAGE_DOESNT_EXIST_CODE = "100";
 	String WARNING_VEHICLE_USAGE_DOESNT_EXIST_DESC = "vehicle usage doesn't Exist";
 	String WARNING_VEHICLE_SUB_TYPE_DATA__DOESNT_EXIST_CODE = "100";
@@ -126,20 +126,9 @@ public interface ResponseKeysValue {
 	String WARNING_OBSERVATION_CATEGORY_MASTER_DATA_DOESNT_EXIT_DESC = "observationcategory master data doesn't Exist";
 	String WARNING_TIRE_CONFIGURATION_DATA_ALREADY_EXIST_CODE = "100";
 	String WARNING_TIRE_CONFIGURATION_DATA_ALREADY_EXIST_DESC = "tire configuration data already exit";
-	String WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_CODE ="100";
+	String WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_CODE = "100";
 	String WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_DESC = "tire configuration data doesn't exist";
-	
-	
-	
-	
-	
-	
-
-
-	
-
-	// String SUCCESS_STATUS_DESCRIPTION_USER_UPDATE="User details Updated
-	// Successfully";
-	// String SUCCESS_STATUS_DESCRIPTION_USER_CREATE="User Registration Success";
+	String WARNING_VEHICLE_INSPECTION_ALREADY_EXIST_CODE = "100";
+	String WARNING_VEHICLE_INSPECTION_ALREADY_EXIST_DESC = "Vehicle Inspection Already Exist";;
 
 }
