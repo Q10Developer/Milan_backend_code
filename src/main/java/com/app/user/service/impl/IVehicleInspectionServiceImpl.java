@@ -1,6 +1,13 @@
 package com.app.user.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,12 +17,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import com.app.user.constants.ResponseKeysValue;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
+import com.app.user.dto.request.VehicleInspectionDetailsRequestDTO;
 import com.app.user.dto.request.VehicleInspectionRequestDTO;
 import com.app.user.dto.response.GenericResponseDTO;
+import com.app.user.entity.VehicleInspectionDetailsEntity;
 import com.app.user.entity.VehicleInspectionEntity;
+import com.app.user.repository.VehicleInspectionDetailsRepository;
 import com.app.user.repository.VehicleInspectionRepository;
 
 @Service
@@ -24,7 +36,13 @@ public class IVehicleInspectionServiceImpl {
 	private static final Logger LOGGER = LoggerFactory.getLogger(IVehicleInspectionServiceImpl.class);
 
 	@Autowired
+	private EntityManager entityManager;
+
+	@Autowired
 	private VehicleInspectionRepository vehicleInspectionRepository;
+
+	@Autowired
+	private VehicleInspectionDetailsRepository vehicleInspectionDetailsRepository;
 
 	public ServiceResponseDTO startVehicleInspection(VehicleInspectionRequestDTO vehicleInspectionRequestDTO) {
 		LOGGER.info("Start Vehicle Inspection in IVehicleInspectionServiceImpl and startVehicleInspection method");
@@ -59,7 +77,7 @@ public class IVehicleInspectionServiceImpl {
 		return response;
 	}
 
-	public ServiceResponseDTO getAllVehcileInspection(int pageNumber, int size, String sortBy) {
+	public ServiceResponseDTO getAllVehicleInspection(int pageNumber, int size, String sortBy) {
 		LOGGER.info(
 				"getAllVehcileInspection process start in IVehicleInspectionServiceImpl and getAllVehcileInspection method Executing ");
 		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
@@ -73,13 +91,86 @@ public class IVehicleInspectionServiceImpl {
 		}
 	}
 
-	public ServiceResponseDTO getVehcileInspectionById(Long inspectionId) {
+	public ServiceResponseDTO getVehicleInspectionById(String inspectionId) {
 		LOGGER.info(
 				"getVehcileInspectionById process start in IVehicleInspectionServiceImpl and getVehcileInspectionById method Executing ");
-		Optional<VehicleInspectionEntity> clientDetail = vehicleInspectionRepository.findById(inspectionId);
-		if (!clientDetail.isEmpty()) {
+		Optional<VehicleInspectionEntity> vehicleoInspectionDetail = vehicleInspectionRepository.findById(inspectionId);
+		if (!vehicleoInspectionDetail.isEmpty()) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientDetail.get());
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleoInspectionDetail.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+
+	public ServiceResponseDTO getVehicleInspectionByClientId(Long clientId) {
+		LOGGER.info(
+				"getVehcileInspectionByClientId process start in IVehicleInspectionServiceImpl and getVehcileInspectionByClientId method Executing ");
+		List<VehicleInspectionEntity> vehicleoInspectionDetail = vehicleInspectionRepository.findByClientId(clientId);
+		if (!vehicleoInspectionDetail.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleoInspectionDetail);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+
+	public ServiceResponseDTO saveVehicleInspectionDetails(String inspectionId, int inspectionStatus,
+			List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails) {
+		LOGGER.info(
+				"Save Vehicle Inspection Details in IVehicleInspectionServiceImpl and saveVehicleInspectionDetails method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		Optional<VehicleInspectionEntity> vehicleInspectionEntity = vehicleInspectionRepository.findById(inspectionId);
+		if (vehicleInspectionEntity.isPresent()
+				&& vehicleInspectionEntity.get().getInspectionStatus() == URLConstants.DRAFT) {
+			if (!CollectionUtils.isEmpty(vehicleInspectionDetails)) {
+				try {
+					EntityTransaction transaction = entityManager.getTransaction();
+					transaction.begin();
+					List<VehicleInspectionDetailsEntity> vehicleDetailsList = new ArrayList<>();
+					BeanUtils.copyProperties(vehicleInspectionDetails, vehicleDetailsList);
+					Iterable<VehicleInspectionDetailsEntity> savedEntity = vehicleInspectionDetailsRepository
+							.saveAll(vehicleDetailsList);
+					VehicleInspectionEntity vehicleInspectionEntityObj = vehicleInspectionEntity.get();
+					vehicleInspectionEntityObj.setInspectionStatus(inspectionStatus);
+					vehicleInspectionRepository.save(vehicleInspectionEntityObj);
+					transaction.commit();
+					String idString = StreamSupport.stream(savedEntity.spliterator(), false)
+							.map(VehicleInspectionDetailsEntity::getRowId).map(String::valueOf)
+							.collect(Collectors.joining(","));
+					response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+					response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+					response.setResult(new GenericResponseDTO(idString));
+					LOGGER.info("Vehicle Inspection saved Successfully");
+				} catch (Exception ex) {
+					LOGGER.error(
+							"Exception occurred in IVehicleInspectionServiceImpl class in method saveVehicleInspectionDetails with Exception {}",
+							ex.getMessage());
+					response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+					response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+					response.setResult(ex.getMessage());
+				}
+			} else {
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+	public ServiceResponseDTO getVehicleInspectionByInspectionId(String inspectionId) {
+		LOGGER.info(
+				"getVehicleInspectionByInspectionId process start in IVehicleInspectionServiceImpl and getVehicleInspectionByInspectionId method Executing ");
+		List<VehicleInspectionDetailsEntity> vehicleInspectionDetails = vehicleInspectionDetailsRepository
+				.findByInspectionId(inspectionId);
+		if (!vehicleInspectionDetails.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleInspectionDetails);
 		} else {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
 					null);

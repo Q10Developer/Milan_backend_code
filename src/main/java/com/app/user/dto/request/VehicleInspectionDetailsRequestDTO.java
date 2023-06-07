@@ -242,7 +242,7 @@ public class VehicleInspectionDetailsRequestDTO {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("VehicleTyreInspectionRequestDTO [rowId=");
+		builder.append("VehicleInspectionDetailsRequestDTO [rowId=");
 		builder.append(rowId);
 		builder.append(", inspectionId=");
 		builder.append(inspectionId);

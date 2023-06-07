@@ -107,8 +107,11 @@ public class URLConstants {
 	public static final String CREATE_VEHICLE_INSPECTION = "/createvehicleinspection";
 	public static final String GET_ALL_VEHICLE_INSPECTION = "/getallvehicleinspection";
 	public static final String GET_VEHICLE_INSPECTION_BY_ID = "/getvehicleinspection";
-
-	public static final Integer DRAFT = 3;
+	public static final String GET_VEHICLE_INSPECTION_BY_CLIENT_ID = "/getvehicleinspectionbyclient";
+	public static final String SAVE_VEHICLE_INSPECTION_DETAILS = "/savevehicleinspectiondetails";
+	public static final String UPDATE_VEHICLE_INSPECTION_DETAILS = "/updatevehicleinspectiondetails";
+	public static final String GET_VEHICLE_INSPECTION_DETAILS = "/getvehicleinspectiondetails";
+	public static final Integer DRAFT = 2;
 	public static final Integer SUBMITTED = 1;
 
 }
