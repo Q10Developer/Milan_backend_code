@@ -129,6 +129,8 @@ public interface ResponseKeysValue {
 	String WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_CODE = "100";
 	String WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_DESC = "tire configuration data doesn't exist";
 	String WARNING_VEHICLE_INSPECTION_ALREADY_EXIST_CODE = "100";
-	String WARNING_VEHICLE_INSPECTION_ALREADY_EXIST_DESC = "Vehicle Inspection Already Exist";;
+	String WARNING_VEHICLE_INSPECTION_ALREADY_EXIST_DESC = "Vehicle Inspection Already Exist";
+	String FAILURE_INCORRECT_INSPECTION_CODE_400 = "400";
+	String FAILURE_INCORRECT_INSPECTION_DESCRIPTION_400 ="failure incorrect inspection description";
 
 }
