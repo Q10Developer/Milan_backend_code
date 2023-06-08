@@ -157,10 +157,11 @@ public class IVehicleInspectionServiceImpl {
 		LOGGER.info(
 				"Save Vehicle Inspection Details in IVehicleInspectionServiceImpl and saveVehicleInspectionDetails method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
-		Optional<VehicleInspectionEntity> vehicleInspectionEntity = vehicleInspectionRepository.findById(inspectionId);
-		if (vehicleInspectionEntity.isPresent()
-				&& vehicleInspectionEntity.get().getInspectionStatus() == URLConstants.DRAFT) {
-			if (!CollectionUtils.isEmpty(vehicleInspectionDetails)) {
+		if (!CollectionUtils.isEmpty(vehicleInspectionDetails)) {
+			Optional<VehicleInspectionEntity> vehicleInspectionEntity = vehicleInspectionRepository
+					.findById(inspectionId);
+			if (vehicleInspectionEntity.isPresent()
+					&& vehicleInspectionEntity.get().getInspectionStatus() == URLConstants.DRAFT) {
 				try {
 					EntityTransaction transaction = entityManager.getTransaction();
 					transaction.begin();
@@ -188,8 +189,8 @@ public class IVehicleInspectionServiceImpl {
 					response.setResult(ex.getMessage());
 				}
 			} else {
-				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
-				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+				response.setStatusCode(ResponseKeysValue.FAILURE_INCORRECT_INSPECTION_CODE_400);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_INCORRECT_INSPECTION_DESCRIPTION_400);
 			}
 		} else {
 			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
