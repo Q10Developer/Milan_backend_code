@@ -30,6 +30,11 @@ public class VehicleInspectionDetailsRequestDTO {
 	private Long observation;
 	private String observationLabel;
 	private Long recommendation;
+	private String recommendationLabel;
+	private String tireImageUrl;
+	private String pressureAnalysis;
+	private String leastTireThicknessAllowedAnalysis;
+	private String wearAnalysis;
 
 	public Long getRowId() {
 		return rowId;
@@ -239,6 +244,46 @@ public class VehicleInspectionDetailsRequestDTO {
 		this.recommendation = recommendation;
 	}
 
+	public String getRecommendationLabel() {
+		return recommendationLabel;
+	}
+
+	public void setRecommendationLabel(String recommendationLabel) {
+		this.recommendationLabel = recommendationLabel;
+	}
+
+	public String getTireImageUrl() {
+		return tireImageUrl;
+	}
+
+	public void setTireImageUrl(String tireImageUrl) {
+		this.tireImageUrl = tireImageUrl;
+	}
+
+	public String getPressureAnalysis() {
+		return pressureAnalysis;
+	}
+
+	public void setPressureAnalysis(String pressureAnalysis) {
+		this.pressureAnalysis = pressureAnalysis;
+	}
+
+	public String getLeastTireThicknessAllowedAnalysis() {
+		return leastTireThicknessAllowedAnalysis;
+	}
+
+	public void setLeastTireThicknessAllowedAnalysis(String leastTireThicknessAllowedAnalysis) {
+		this.leastTireThicknessAllowedAnalysis = leastTireThicknessAllowedAnalysis;
+	}
+
+	public String getWearAnalysis() {
+		return wearAnalysis;
+	}
+
+	public void setWearAnalysis(String wearAnalysis) {
+		this.wearAnalysis = wearAnalysis;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -294,6 +339,16 @@ public class VehicleInspectionDetailsRequestDTO {
 		builder.append(observationLabel);
 		builder.append(", recommendation=");
 		builder.append(recommendation);
+		builder.append(", recommendationLabel=");
+		builder.append(recommendationLabel);
+		builder.append(", tireImageUrl=");
+		builder.append(tireImageUrl);
+		builder.append(", pressureAnalysis=");
+		builder.append(pressureAnalysis);
+		builder.append(", leastTireThicknessAllowedAnalysis=");
+		builder.append(leastTireThicknessAllowedAnalysis);
+		builder.append(", wearAnalysis=");
+		builder.append(wearAnalysis);
 		builder.append("]");
 		return builder.toString();
 	}
