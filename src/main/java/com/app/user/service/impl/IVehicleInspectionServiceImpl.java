@@ -5,10 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-
+import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -34,9 +31,6 @@ import com.app.user.repository.VehicleInspectionRepository;
 public class IVehicleInspectionServiceImpl {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(IVehicleInspectionServiceImpl.class);
-
-	@Autowired
-	private EntityManager entityManager;
 
 	@Autowired
 	private VehicleInspectionRepository vehicleInspectionRepository;
@@ -152,6 +146,7 @@ public class IVehicleInspectionServiceImpl {
 		}
 	}
 
+	@Transactional
 	public ServiceResponseDTO saveVehicleInspectionDetails(String inspectionId, int inspectionStatus,
 			List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails) {
 		LOGGER.info(
@@ -163,16 +158,17 @@ public class IVehicleInspectionServiceImpl {
 			if (vehicleInspectionEntity.isPresent()
 					&& vehicleInspectionEntity.get().getInspectionStatus() == URLConstants.DRAFT) {
 				try {
-					EntityTransaction transaction = entityManager.getTransaction();
-					transaction.begin();
 					List<VehicleInspectionDetailsEntity> vehicleDetailsList = new ArrayList<>();
-					BeanUtils.copyProperties(vehicleInspectionDetails, vehicleDetailsList);
+					for (VehicleInspectionDetailsRequestDTO requestDTO : vehicleInspectionDetails) {
+						VehicleInspectionDetailsEntity entity = new VehicleInspectionDetailsEntity();
+						BeanUtils.copyProperties(requestDTO, entity);
+						vehicleDetailsList.add(entity);
+					}
 					Iterable<VehicleInspectionDetailsEntity> savedEntity = vehicleInspectionDetailsRepository
 							.saveAll(vehicleDetailsList);
 					VehicleInspectionEntity vehicleInspectionEntityObj = vehicleInspectionEntity.get();
 					vehicleInspectionEntityObj.setInspectionStatus(inspectionStatus);
 					vehicleInspectionRepository.save(vehicleInspectionEntityObj);
-					transaction.commit();
 					String idString = StreamSupport.stream(savedEntity.spliterator(), false)
 							.map(VehicleInspectionDetailsEntity::getRowId).map(String::valueOf)
 							.collect(Collectors.joining(","));

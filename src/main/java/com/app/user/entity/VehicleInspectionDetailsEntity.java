@@ -92,6 +92,21 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "recommendation", nullable = false)
 	private Long recommendation;
 
+	@Column(name = "recommendation_label", nullable = false)
+	private String recommendationLabel;
+
+	@Column(name = "tire_image_url")
+	private String tireImageUrl;
+
+	@Column(name = "pressure_analysis", updatable = false, insertable = false)
+	private String pressureAnalysis;
+
+	@Column(name = "least_tire_thickness_allowed_analysis", updatable = false, insertable = false)
+	private String leastTireThicknessAllowedAnalysis;
+
+	@Column(name = "wear_analysis", updatable = false, insertable = false)
+	private String wearAnalysis;
+
 	public Long getRowId() {
 		return rowId;
 	}
@@ -300,10 +315,50 @@ public class VehicleInspectionDetailsEntity {
 		this.recommendation = recommendation;
 	}
 
+	public String getRecommendationLabel() {
+		return recommendationLabel;
+	}
+
+	public void setRecommendationLabel(String recommendationLabel) {
+		this.recommendationLabel = recommendationLabel;
+	}
+
+	public String getTireImageUrl() {
+		return tireImageUrl;
+	}
+
+	public void setTireImageUrl(String tireImageUrl) {
+		this.tireImageUrl = tireImageUrl;
+	}
+
+	public String getPressureAnalysis() {
+		return pressureAnalysis;
+	}
+
+	public void setPressureAnalysis(String pressureAnalysis) {
+		this.pressureAnalysis = pressureAnalysis;
+	}
+
+	public String getLeastTireThicknessAllowedAnalysis() {
+		return leastTireThicknessAllowedAnalysis;
+	}
+
+	public void setLeastTireThicknessAllowedAnalysis(String leastTireThicknessAllowedAnalysis) {
+		this.leastTireThicknessAllowedAnalysis = leastTireThicknessAllowedAnalysis;
+	}
+
+	public String getWearAnalysis() {
+		return wearAnalysis;
+	}
+
+	public void setWearAnalysis(String wearAnalysis) {
+		this.wearAnalysis = wearAnalysis;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("VehicleTyreInspection [rowId=");
+		builder.append("VehicleInspectionDetailsEntity [rowId=");
 		builder.append(rowId);
 		builder.append(", inspectionId=");
 		builder.append(inspectionId);
@@ -355,6 +410,16 @@ public class VehicleInspectionDetailsEntity {
 		builder.append(observationLabel);
 		builder.append(", recommendation=");
 		builder.append(recommendation);
+		builder.append(", recommendationLabel=");
+		builder.append(recommendationLabel);
+		builder.append(", tireImageUrl=");
+		builder.append(tireImageUrl);
+		builder.append(", pressureAnalysis=");
+		builder.append(pressureAnalysis);
+		builder.append(", leastTireThicknessAllowedAnalysis=");
+		builder.append(leastTireThicknessAllowedAnalysis);
+		builder.append(", wearAnalysis=");
+		builder.append(wearAnalysis);
 		builder.append("]");
 		return builder.toString();
 	}
