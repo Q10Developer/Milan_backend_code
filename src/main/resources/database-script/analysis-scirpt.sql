@@ -21,7 +21,7 @@ BEGIN
     MAX(observation_category) AS observation_category, MAX(observation_category_label) AS observation_category_label, MAX(observation) AS observation,
     MAX(observation_label) AS observation_label, MAX(recommendation) AS recommendation, MAX(recommendation_label) AS recommendation_label,
     MAX(tire_image_url) AS tire_image_url, MAX(created_date) AS created_date, MAX(modified_date) AS modified_date, 
-	MAX(pressure_analysis) AS pressure_analysis, MAX(least_tire_thickness_allowed_analysis) AS least_tire_thickness_allowed_analysis
+	MAX(pressure_analysis) AS pressure_analysis, MAX(least_tire_thickness_allowed_analysis) AS least_tire_thickness_allowed_analysis , MAX(wear_analysis) AS wear_analysis
     FROM vehicle_inspection_details GROUP BY inspection_id');
   -- Execute the pivot query
   PREPARE stmt FROM @pivot_query;
@@ -29,23 +29,7 @@ BEGIN
   DEALLOCATE PREPARE stmt;
 END //
 
-CREATE TRIGGER insert_vehicle_inspection_details_trigger
-AFTER INSERT ON vehicle_inspection_details
-FOR EACH ROW
-BEGIN
-    CALL create_pivoted_inspection_view();
-END //
-
-CREATE TRIGGER update_vehicle_inspection_details_trigger
-AFTER UPDATE ON vehicle_inspection_details
-FOR EACH ROW
-BEGIN
-    CALL create_pivoted_inspection_view();
-END //
-
-call create_pivoted_inspection_view();
-
-ALTER TABLE vehicle_inspection_details ADD COLUMN tire_image_url VARCHAR(250) NOT NULL AFTER recommendation_label;
+ALTER TABLE vehicle_inspection_details ADD COLUMN tire_image_url VARCHAR(250) NULL AFTER recommendation_label;
 
 ALTER TABLE vehicle_inspection_details
 ADD pressure_analysis ENUM('PRESSURE OK', 'UNDER INFLATION', 'EXTREME UNDERINFLATION', 'OVER INFLATION', 'EXTREME OVERINFLATION')
@@ -67,5 +51,15 @@ GENERATED ALWAYS AS (
         WHEN rst_mm < (least_tire_thickness_allowed * 1.25) THEN 'RED'
         WHEN rst_mm < (least_tire_thickness_allowed * 1.5) THEN 'YELLOW'
         WHEN rst_mm > (least_tire_thickness_allowed * 1.5) THEN 'GREEN'
+    END
+) VIRTUAL;
+
+ALTER TABLE vehicle_inspection_details
+ADD wear_analysis ENUM('LEFT SLIDE SLOPE', 'RIGHT SLIDE SLOPE', 'CENTER WEAR')
+GENERATED ALWAYS AS (
+    CASE
+        WHEN (observation_category_label!='Normal') AND (lst_mm < ct_mm) AND (ct_mm < rst_mm) THEN 'LEFT SLIDE SLOPE'
+        WHEN (observation_category_label!='Normal') AND (lst_mm > ct_mm) AND (ct_mm > rst_mm) THEN 'RIGHT SLIDE SLOPE'
+        WHEN (observation_category_label!='Normal') AND (lst_mm > ct_mm) AND (ct_mm < rst_mm) THEN 'CENTER WEAR'
     END
 ) VIRTUAL;

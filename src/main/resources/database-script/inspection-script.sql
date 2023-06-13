@@ -13,8 +13,6 @@ alter table vehicle_inspection ADD COLUMN client_information VARCHAR(500) NOT NU
 alter table vehicle_inspection RENAME COLUMN inspection_date to inspection_date_time;
 alter table vehicle_inspection ADD COLUMN no_of_tires INT NOT NULL after configured_vehicle;
 alter table vehicle_inspection ADD COLUMN no_of_stepneys INT NOT NULL after no_of_tires;
-alter table vehicle_inspection DROP COLUMN IF EXISTS created_date;
-alter table vehicle_inspection DROP COLUMN IF EXISTS modified_date;
 alter table vehicle_inspection ADD COLUMN created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
 alter table vehicle_inspection ADD COLUMN modified_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 
@@ -22,7 +20,7 @@ create table vehicle_inspection_details
 (
 row_id BIGINT NOT NULL auto_increment primary key,
 inspection_id VARCHAR(20) NOT NULL,
-tire_position VARCHAR(10) NOT NULL,
+tire_position VARCHAR(50) NOT NULL,
 tire_type BIGINT NOT NULL,
 tire_type_label VARCHAR(50) NOT NULL,
 tire_make BIGINT NOT NULL,
@@ -51,7 +49,6 @@ created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 modified_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-alter table vehicle_configuration_master DROP COLUMN IF EXISTS configured_vehicle;
 ALTER TABLE vehicle_configuration_master
 ADD configured_vehicle VARCHAR(255) GENERATED ALWAYS AS (
     UPPER(REPLACE(CONCAT(vehicle_manufacturer_label, '-', LEFT(vehicle_model_label, 3), '-', vehicle_type_label), ' ', ''))
