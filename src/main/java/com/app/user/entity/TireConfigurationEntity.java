@@ -29,7 +29,7 @@ public class TireConfigurationEntity {
 	private int tireSize ;
 	
 	@Column(name = "tire_pattern") 
-	private int  tirePattern;
+	private String  tirePattern;
 	
 	@Column(name = "tire_thickness")
 	private float tireThickness ;
@@ -94,13 +94,13 @@ public class TireConfigurationEntity {
 
 
 
-	public int getTirePattern() {
+	public String getTirePattern() {
 		return tirePattern;
 	}
 
 
 
-	public void setTirePattern(int tirePattern) {
+	public void setTirePattern(String tirePattern) {
 		this.tirePattern = tirePattern;
 	}
 
