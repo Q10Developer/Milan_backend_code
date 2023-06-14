@@ -19,7 +19,7 @@ import com.app.user.service.CustomUserDetailsService;
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
-public class UserWebSecurity extends WebSecurityConfigurerAdapter {
+public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
