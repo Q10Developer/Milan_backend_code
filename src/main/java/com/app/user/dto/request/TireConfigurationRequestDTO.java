@@ -6,7 +6,7 @@ public class TireConfigurationRequestDTO {
 	private Long tireMakeId;
 	private String tireType;
 	private int tireSize;
-	private int tirePattern;
+	private String tirePattern;
 	private float  tireThickness;
 	private int activeStatus;
 	
@@ -46,11 +46,11 @@ public class TireConfigurationRequestDTO {
 		this.tireSize = tireSize;
 	}
 
-	public int getTirePattern() {
+	public String getTirePattern() {
 		return tirePattern;
 	}
 
-	public void setTirePattern(int tirePattern) {
+	public void setTirePattern(String tirePattern) {
 		this.tirePattern = tirePattern;
 	}
 

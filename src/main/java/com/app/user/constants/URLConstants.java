@@ -34,7 +34,6 @@ public class URLConstants {
 	public static final String ENABLE_DISABLE_VEHICLE = "/enabledisablevehicle";
 	public static final String GET_ALL_VEHICLE = "/getallvehicledata";
 	public static final String GET_VEHICLE_BY_ID = "/getvehicledata";
-	public static final String GET_VEHICLE_BY_MULTIPLE_FILTER = "/getvehiclebyfilter";
 	public static final String SAVE_TYRE = "/savetyre";
 	public static final String UPDATE_TYRE = "/updatetyre";
 	public static final String ENABLE_DISABLE_TYRE = "/enabledisabletyre";
@@ -106,7 +105,6 @@ public class URLConstants {
 	public static final String GET_TIRE_CONFIGURATION_BY_ID = "/gettireconfigurationbyid";
 	public static final String VEHICLE_INSPECTION = "/vehicleinspection";
 	public static final String CREATE_VEHICLE_INSPECTION = "/createvehicleinspection";
-	public static final String UPDATE_VEHICLE_INSPECTION = "/updatevehicleinspection";
 	public static final String GET_ALL_VEHICLE_INSPECTION = "/getallvehicleinspection";
 	public static final String GET_VEHICLE_INSPECTION_BY_ID = "/getvehicleinspection";
 	public static final String GET_VEHICLE_INSPECTION_BY_CLIENT_ID = "/getvehicleinspectionbyclient";
@@ -115,5 +113,17 @@ public class URLConstants {
 	public static final String GET_VEHICLE_INSPECTION_DETAILS = "/getvehicleinspectiondetails";
 	public static final Integer DRAFT = 2;
 	public static final Integer SUBMITTED = 1;
+	public static final String GET_VEHICLE_BY_MULTIPLE_FILTER = "/getvehiclebymultiplefilter";
+	public static final String UPDATE_VEHICLE_INSPECTION = "/updatevehicleinspection";
+	
+	public static final String OLD_VEHICLE_INSPECTION = "/oldvehicleinspection";
+	public static final String CREATE_OLD_VEHICLE_INSPECTION = "/createoldvehicleinspection";
+	public static final String UPDATE_OLD_VEHICLE_INSPECTION = "/updateoldvehicleinspection";
+	public static final String GET_ALL_OLD_VEHICLE_INSPECTION = "/getalloldvehicleinspection";
+
+	public static final String GET_OLD_VEHICLE_INSPECTION_BY_Name_And_Address_Of_Transport_Company ="/getoldvehicleinspectionbynameandaddressoftrnsportcompany";
+	public static final String GET_Old_VEHICLE_INSPECTION_BY_Id = "/getoldinspectionbyid";
+	public static final String GET_Old_VEHICLE_INSPECTION_BY_REGISTRATION_NO = "/getoldinspectiponbyregistrationno";
+	
 
 }

@@ -195,6 +195,7 @@ public class IVehicleInspectionServiceImpl {
 		return response;
 	}
 
+
 	public ServiceResponseDTO getVehicleInspectionByInspectionId(String inspectionId) {
 		LOGGER.info(
 				"getVehicleInspectionByInspectionId process start in IVehicleInspectionServiceImpl and getVehicleInspectionByInspectionId method Executing ");

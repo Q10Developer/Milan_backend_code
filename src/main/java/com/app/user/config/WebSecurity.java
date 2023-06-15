@@ -117,13 +117,17 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 						URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_TIRE_CONFIGURATION,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_CONFIGURATION_BY_ID,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_BY_MULTIPLE_FILTER,
+						
 						URLConstants.VEHICLE_INSPECTION + URLConstants.CREATE_VEHICLE_INSPECTION,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.UPDATE_VEHICLE_INSPECTION,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.GET_ALL_VEHICLE_INSPECTION,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.GET_VEHICLE_INSPECTION_BY_ID,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.GET_VEHICLE_INSPECTION_BY_CLIENT_ID,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.SAVE_VEHICLE_INSPECTION_DETAILS,
-						URLConstants.VEHICLE_INSPECTION + URLConstants.GET_VEHICLE_INSPECTION_DETAILS)
+                        URLConstants.VEHICLE_INSPECTION + URLConstants.GET_VEHICLE_INSPECTION_DETAILS)
+
+						
+
 
 				.permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);

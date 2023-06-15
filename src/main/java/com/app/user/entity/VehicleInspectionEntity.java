@@ -15,7 +15,7 @@ public class VehicleInspectionEntity {
 	@Id
 	@GeneratedValue(generator = "custom-id-generator")
 	@GenericGenerator(name = "custom-id-generator", strategy = "com.app.user.config.helper.CustomIdGenerator")
-	@Column(name = "inspection_id")
+    @Column(name = "inspection_id")
 	private String inspectionId;
 
 	@Column(name = "client_id", nullable = false)
