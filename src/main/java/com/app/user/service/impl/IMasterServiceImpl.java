@@ -912,7 +912,7 @@ public class IMasterServiceImpl {
 	}
 
 	public ServiceResponseDTO saveObservationMasterData(ObservationRequestDTO observationRequestDTO) {
-		LOGGER.info("Observation  Type Data List master data in IMasterServiceImpl and saveVehicleSubTypeData method");
+		LOGGER.info("Observation  Type Data List master data in IMasterServiceImpl and saveObservationMasterData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
 		if (observationRequestDTO != null) {
 			ObservationEntity entity = new ObservationEntity();

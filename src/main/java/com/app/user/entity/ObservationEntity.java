@@ -29,6 +29,9 @@ public class ObservationEntity {
 
 	@Column(name = "active_status")
 	private int activeStatus;
+	
+	@Column(name="registration_no")
+	private Long registrationNo;
 
 	public Long getObservationId() {
 		return observationId;
@@ -77,6 +80,15 @@ public class ObservationEntity {
 	public void setActiveStatus(int activeStatus) {
 		this.activeStatus = activeStatus;
 	}
+	
+
+	public Long getRegistrationNo() {
+		return registrationNo;
+	}
+
+	public void setRegistrationNo(Long registrationNo) {
+		this.registrationNo = registrationNo;
+	}
 
 	@Override
 	public String toString() {
@@ -93,8 +105,12 @@ public class ObservationEntity {
 		builder.append(observationCategoryType);
 		builder.append(", activeStatus=");
 		builder.append(activeStatus);
+		builder.append(", registrationNo=");
+		builder.append(registrationNo);
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 
 }
