@@ -10,15 +10,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import com.app.user.constants.ResponseKeysValue;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.OldVehicleInspectionRequestDTO;
-import com.app.user.dto.request.VehicleInspectionRequestDTO;
 import com.app.user.dto.response.GenericResponseDTO;
 import com.app.user.entity.OldVehicleInspectionEntity;
-import com.app.user.entity.VehicleInspectionEntity;
 import com.app.user.repository.OldVehicleInspectionRepository;
 
 

@@ -6,6 +6,7 @@ import com.app.user.entity.VehicleModelEntity;
 
 public interface VehicleModelRepository extends PagingAndSortingRepository<VehicleModelEntity, Long> {
 
-	List<VehicleModelEntity> findByVehicleManufacturerAndActiveStatus(Long vehicleManufacturer, int activeStatus);
+	List<VehicleModelEntity> findByVehicleManufacturerId_VehicleManufacturerIdAndActiveStatus(Long vehicleManufacturer,
+			int activeStatus);
 
 }

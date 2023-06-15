@@ -393,20 +393,11 @@ public class IMasterServiceImpl {
 		} else {
 			if (vehicleManufacturer != 0 && vehicleModel == 0 && vehicleType == 0) {
 				List<VehicleModelEntity> vehicleModelEntityList = vehicleModelRepository
-						.findByVehicleManufacturerAndActiveStatus(vehicleManufacturer, URLConstants.ACTIVE);
+						.findByVehicleManufacturerId_VehicleManufacturerIdAndActiveStatus(vehicleManufacturer,
+								URLConstants.ACTIVE);
 				if (!CollectionUtils.isEmpty(vehicleModelEntityList)) {
 					serviceResponseDTO = new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 							ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleModelEntityList);
-				} else {
-					serviceResponseDTO = new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-							ResponseKeysValue.NO_RECORDS_FOUND, null);
-				}
-			} else if (vehicleManufacturer == 0 && vehicleModel != 0 && vehicleType != 0) {
-				List<VehicleTypeEntity> vehicleTypeEntityList = vehicleTypeRepository
-						.findByVehicleModelAndActiveStatus(vehicleModel, URLConstants.ACTIVE);
-				if (!CollectionUtils.isEmpty(vehicleTypeEntityList)) {
-					serviceResponseDTO = new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-							ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleTypeEntityList);
 				} else {
 					serviceResponseDTO = new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 							ResponseKeysValue.NO_RECORDS_FOUND, null);
@@ -912,7 +903,8 @@ public class IMasterServiceImpl {
 	}
 
 	public ServiceResponseDTO saveObservationMasterData(ObservationRequestDTO observationRequestDTO) {
-		LOGGER.info("Observation  Type Data List master data in IMasterServiceImpl and saveObservationMasterData method");
+		LOGGER.info(
+				"Observation  Type Data List master data in IMasterServiceImpl and saveObservationMasterData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
 		if (observationRequestDTO != null) {
 			ObservationEntity entity = new ObservationEntity();

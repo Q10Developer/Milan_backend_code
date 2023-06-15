@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.OldVehicleInspectionRequestDTO;
-import com.app.user.dto.request.VehicleInspectionRequestDTO;
 import com.app.user.service.impl.IOldVehicleInspectionServiceImpl;
 
 @RestController

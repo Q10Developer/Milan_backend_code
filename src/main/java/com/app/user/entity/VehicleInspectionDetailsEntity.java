@@ -91,7 +91,6 @@ public class VehicleInspectionDetailsEntity {
 
 	@Column(name = "recommendation", nullable = false)
 	private Long recommendation;
-<<<<<<< Updated upstream
 
 	@Column(name = "recommendation_label", nullable = false)
 	private String recommendationLabel;
@@ -108,10 +107,6 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "wear_analysis", updatable = false, insertable = false)
 	private String wearAnalysis;
 
-=======
-	
-	
->>>>>>> Stashed changes
 	public Long getRowId() {
 		return rowId;
 	}
@@ -320,7 +315,6 @@ public class VehicleInspectionDetailsEntity {
 		this.recommendation = recommendation;
 	}
 
-<<<<<<< Updated upstream
 	public String getRecommendationLabel() {
 		return recommendationLabel;
 	}
@@ -361,10 +355,6 @@ public class VehicleInspectionDetailsEntity {
 		this.wearAnalysis = wearAnalysis;
 	}
 
-=======
-	
-	
->>>>>>> Stashed changes
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
