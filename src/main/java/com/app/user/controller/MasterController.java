@@ -109,9 +109,9 @@ public class MasterController {
 
 	@GetMapping(value = URLConstants.GET_VEHICLE_BY_MULTIPLE_FILTER)
 	public ServiceResponseDTO getVehicleDetailsByMultipleFilter(
-			@RequestParam(name = "vehicleManufacturer") Long vehicleManufacturer,
-			@RequestParam(name = "vehicleModel") Long vehicleModel,
-			@RequestParam(name = "vehicleType") Long vehicleType) {
+			@RequestParam(name = "vehicleManufacturer", required = false, defaultValue = "0") Long vehicleManufacturer,
+			@RequestParam(name = "vehicleModel", required = false, defaultValue = "0") Long vehicleModel,
+			@RequestParam(name = "vehicleType", required = false, defaultValue = "0") Long vehicleType) {
 		LOGGER.info("Executing  getVehicleDetailsByMultipleFilter() method of MasterController");
 		return masterServiceImpl.getVehicleDetailsByMultipleFilter(vehicleManufacturer, vehicleModel, vehicleType);
 	}

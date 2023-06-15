@@ -19,7 +19,7 @@ import com.app.user.service.CustomUserDetailsService;
 @SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
-public class UserWebSecurity extends WebSecurityConfigurerAdapter {
+public class WebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
@@ -86,25 +86,21 @@ public class UserWebSecurity extends WebSecurityConfigurerAdapter {
 						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_VEHICLE_TYPE_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_VEHICLE_TYPE,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_TYPE_BY_ID,
-
 						URLConstants.MASTER_SERVICE + URLConstants.SAVE_VEHICLE_USAGE_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.UPDATE_VEHICLE_USAGE_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_VEHICLE_USAGE_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_VEHICLE_USAGE,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_USAGE_BY_ID,
-
 						URLConstants.MASTER_SERVICE + URLConstants.SAVE_VEHICLE_SUB_TYPE_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.UPDATE_VEHICLE_SUB_TYPE_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_VEHICLE_SUB_TYPE_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_SUB_TYPE_MASTER_DATA,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_SUB_TYPE_MASTER_DATA_BY_ID,
-
 						URLConstants.MASTER_SERVICE + URLConstants.SAVE_TIRE_MAKE_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.UPDATE_TIRE_MAKE_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_TIRE_MAKE_USAGE_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_MAKE_TYPE_MASTER_DATA,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_MAKE_BY_ID,
-
 						URLConstants.MASTER_SERVICE + URLConstants.SAVE_VEHICLE_MODEL_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.UPDATE_VEHICLE_MODEL_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_VEHICLE_MODEL_MASTER,
@@ -115,20 +111,13 @@ public class UserWebSecurity extends WebSecurityConfigurerAdapter {
 						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_OBSERVATION_CATEGORY_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_OBSERVATION_CATEGORY,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_OBSERVATION_CATEGORY_DATA_BY_ID,
-
-						
-						URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_BY_MULTIPLE_FILTER,
-						
-
 						URLConstants.MASTER_SERVICE + URLConstants.SAVE_TIRE_CONFIGURATION_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.UPDATE_TIRE_CONFIGURATION_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_TIRE_CONFIGURATION_MASTER,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_TIRE_CONFIGURATION,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_CONFIGURATION_BY_ID,
-
+						URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_BY_MULTIPLE_FILTER,
 						
-						
-
 						URLConstants.VEHICLE_INSPECTION + URLConstants.CREATE_VEHICLE_INSPECTION,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.UPDATE_VEHICLE_INSPECTION,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.GET_ALL_VEHICLE_INSPECTION,
