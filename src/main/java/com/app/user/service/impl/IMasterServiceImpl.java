@@ -19,6 +19,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import com.app.user.constants.ResponseKeysValue;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
@@ -376,16 +378,42 @@ public class IMasterServiceImpl {
 			Long vehicleType) {
 		LOGGER.info(
 				"getVehicleDetailsById process start in IMasterServiceImpl and getVehicleDetailsById method Executing ");
-		Optional<VehicleMasterEntity> vehicleDetail = vehicleRepository
-				.findByVehicleManufacturerAndVehicleModelAndVehicleTypeAndActiveStatus(vehicleManufacturer,
-						vehicleModel, vehicleType, URLConstants.ACTIVE);
-		if (vehicleDetail.isPresent()) {
-			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleDetail.get());
+		ServiceResponseDTO serviceResponseDTO = null;
+		if (vehicleManufacturer != 0 && vehicleModel != 0 && vehicleType != 0) {
+			Optional<VehicleMasterEntity> vehicleDetail = vehicleRepository
+					.findByVehicleManufacturerAndVehicleModelAndVehicleTypeAndActiveStatus(vehicleManufacturer,
+							vehicleModel, vehicleType, URLConstants.ACTIVE);
+			if (vehicleDetail.isPresent()) {
+				serviceResponseDTO = new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+						ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleDetail.get());
+			} else {
+				serviceResponseDTO = new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+						ResponseKeysValue.NO_RECORDS_FOUND, null);
+			}
 		} else {
-			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
-					null);
+			if (vehicleManufacturer != 0 && vehicleModel == 0 && vehicleType == 0) {
+				List<VehicleModelEntity> vehicleModelEntityList = vehicleModelRepository
+						.findByVehicleManufacturerAndActiveStatus(vehicleManufacturer, URLConstants.ACTIVE);
+				if (!CollectionUtils.isEmpty(vehicleModelEntityList)) {
+					serviceResponseDTO = new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+							ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleModelEntityList);
+				} else {
+					serviceResponseDTO = new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+							ResponseKeysValue.NO_RECORDS_FOUND, null);
+				}
+			} else if (vehicleManufacturer == 0 && vehicleModel != 0 && vehicleType != 0) {
+				List<VehicleTypeEntity> vehicleTypeEntityList = vehicleTypeRepository
+						.findByVehicleModelAndActiveStatus(vehicleModel, URLConstants.ACTIVE);
+				if (!CollectionUtils.isEmpty(vehicleTypeEntityList)) {
+					serviceResponseDTO = new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+							ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleTypeEntityList);
+				} else {
+					serviceResponseDTO = new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+							ResponseKeysValue.NO_RECORDS_FOUND, null);
+				}
+			}
 		}
+		return serviceResponseDTO;
 	}
 
 	public ServiceResponseDTO saveTyreMasterData(TyreRequestDTO tyreRequestDTO) {
