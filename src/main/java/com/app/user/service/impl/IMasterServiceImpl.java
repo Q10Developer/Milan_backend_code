@@ -1457,7 +1457,7 @@ public class IMasterServiceImpl {
 				BeanUtils.copyProperties(vehicleSubTypeRequestDTO, entity);
 				vehicleTypeEntity.setVehicleTypeId(vehicleSubTypeRequestDTO.getVehicleTypeId());
 				entity.setVehicleTypeId(vehicleTypeEntity);
-				entity.setVehicleSubTypeName(vehicleSubTypeRequestDTO.getVehiclesubTypeName());
+				entity.setVehicleSubTypeName(vehicleSubTypeRequestDTO.getVehicleSubTypeName());
 				entity = vehicleSubTypeRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
@@ -1497,7 +1497,7 @@ public class IMasterServiceImpl {
 			BeanUtils.copyProperties(vehicleSubTypeRequestDTO, entity);
 			vehicleTypeEntity.setVehicleTypeId(vehicleSubTypeRequestDTO.getVehicleTypeId());
 			entity.setVehicleTypeId(vehicleTypeEntity);
-			entity.setVehicleSubTypeName(vehicleSubTypeRequestDTO.getVehiclesubTypeName());
+			entity.setVehicleSubTypeName(vehicleSubTypeRequestDTO.getVehicleSubTypeName());
 			entity.setVehicleTypeId(vehicleTypeEntity);
 			try {
 				entity = vehicleSubTypeRepository.save(entity);

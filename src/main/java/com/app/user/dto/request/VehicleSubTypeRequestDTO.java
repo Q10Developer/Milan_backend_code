@@ -1,12 +1,11 @@
 package com.app.user.dto.request;
 
 public class VehicleSubTypeRequestDTO {
-     private  Long vehicleSubTypeId;
-	private String vehiclesubTypeName;
-	private  Long vehicleTypeId;
-	private int  activeStatus;
-	
-	
+	private Long vehicleSubTypeId;
+	private String vehicleSubTypeName;
+	private Long vehicleTypeId;
+	private int activeStatus;
+
 	public VehicleSubTypeRequestDTO() {
 		// TODO Auto-generated constructor stub
 	}
@@ -19,12 +18,12 @@ public class VehicleSubTypeRequestDTO {
 		this.vehicleSubTypeId = vehicleSubTypeId;
 	}
 
-	public String getVehiclesubTypeName() {
-		return vehiclesubTypeName;
+	public String getVehicleSubTypeName() {
+		return vehicleSubTypeName;
 	}
 
-	public void setVehiclesubTypeName(String vehiclesubTypeName) {
-		this.vehiclesubTypeName = vehiclesubTypeName;
+	public void setVehicleSubTypeName(String vehicleSubTypeName) {
+		this.vehicleSubTypeName = vehicleSubTypeName;
 	}
 
 	public Long getVehicleTypeId() {
@@ -45,9 +44,8 @@ public class VehicleSubTypeRequestDTO {
 
 	@Override
 	public String toString() {
-		return "VehicleSubTypeRequestDTO [vehicleSubTypeId=" + vehicleSubTypeId + ", vehiclesubTypeName="
-				+ vehiclesubTypeName + ", vehicleTypeId=" + vehicleTypeId + ", activeStatus=" + activeStatus + "]";
+		return "VehicleSubTypeRequestDTO [vehicleSubTypeId=" + vehicleSubTypeId + ", vehicleSubTypeName="
+				+ vehicleSubTypeName + ", vehicleTypeId=" + vehicleTypeId + ", activeStatus=" + activeStatus + "]";
 	}
 
-	
 }
