@@ -27,6 +27,9 @@ public class ClientMasterEntity {
 	@Column(name = "client_last_name")
 	private String clientLasterName;
 
+	@Column(name = "client_full_name", insertable = false, updatable = false)
+	private String clientFullName;
+
 	@Column(name = "client_company_name", nullable = false)
 	private String clientCompanyName;
 
@@ -122,6 +125,14 @@ public class ClientMasterEntity {
 
 	public void setClientLasterName(String clientLasterName) {
 		this.clientLasterName = clientLasterName;
+	}
+
+	public String getClientFullName() {
+		return clientFullName;
+	}
+
+	public void setClientFullName(String clientFullName) {
+		this.clientFullName = clientFullName;
 	}
 
 	public String getClientCompanyName() {
@@ -289,6 +300,8 @@ public class ClientMasterEntity {
 		builder.append(clientMiddleName);
 		builder.append(", clientLasterName=");
 		builder.append(clientLasterName);
+		builder.append(", clientFullName=");
+		builder.append(clientFullName);
 		builder.append(", clientCompanyName=");
 		builder.append(clientCompanyName);
 		builder.append(", clientEmailId=");

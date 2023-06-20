@@ -222,9 +222,43 @@ public class IMasterServiceImpl {
 	public ServiceResponseDTO getAllClientDetails(int pageNumber, int size, String sortBy) {
 		LOGGER.info(
 				"getAllClientDetails process start in IMasterServiceImpl and getAllClientDetails method Executing ");
-		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		PageRequest pageable = null;
+		if (size != 0) {
+			pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		} else {
+			pageable = PageRequest.of(0, Integer.MAX_VALUE);
+		}
 		Page<ClientMasterEntity> clientDetailList = clientMasterRepository.findAll(pageable);
 		if (clientDetailList.getSize() > 0) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientDetailList);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+
+	public ServiceResponseDTO getAllClientDetailsByFilters(String clientFullName, String clientCompanyName,
+			String clientEmailId) {
+		LOGGER.info(
+				"getAllClientDetails process start in IMasterServiceImpl and getAllClientDetails method Executing ");
+		List<ClientMasterEntity> clientDetailList = new ArrayList<ClientMasterEntity>();
+		if (!StringUtils.isEmpty(clientFullName) && !StringUtils.isEmpty(clientCompanyName)
+				&& !StringUtils.isEmpty(clientEmailId)) {
+			clientDetailList = clientMasterRepository
+					.findByClientFullNameAndClientCompanyNameAndClientEmailIdAndClientActiveStatus(clientFullName,
+							clientCompanyName, clientEmailId, URLConstants.ACTIVE);
+		} else if (!StringUtils.isEmpty(clientFullName)) {
+			clientDetailList = clientMasterRepository.findByClientFullNameAndClientActiveStatus(clientFullName,
+					URLConstants.ACTIVE);
+		} else if (!StringUtils.isEmpty(clientCompanyName)) {
+			clientDetailList = clientMasterRepository.findByClientCompanyNameAndClientActiveStatus(clientCompanyName,
+					URLConstants.ACTIVE);
+		} else if (!StringUtils.isEmpty(clientEmailId)) {
+			clientDetailList = clientMasterRepository.findByClientEmailIdAndClientActiveStatus(clientEmailId,
+					URLConstants.ACTIVE);
+		}
+		if (CollectionUtils.isEmpty(clientDetailList)) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientDetailList);
 		} else {

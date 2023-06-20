@@ -73,6 +73,15 @@ public class MasterController {
 		return masterServiceImpl.getClientDetailsById(clientId);
 	}
 
+	@GetMapping(value = URLConstants.GET_ALL_CLIENT_BY_MULTIPLE_FILTERS)
+	public ServiceResponseDTO getAllClientDetailsByMultipleFilter(
+			@RequestParam(name = "clientFullName", required = false, defaultValue = "") String clientFullName,
+			@RequestParam(name = "clientCompanyName", required = false, defaultValue = "") String clientCompanyName,
+			@RequestParam(name = "clientEmailId", required = false, defaultValue = "") String clientEmailId) {
+		LOGGER.info("Executing  getAllClientDetailsByMultipleFilter() method of MasterController");
+		return masterServiceImpl.getAllClientDetailsByFilters(clientFullName, clientCompanyName, clientEmailId);
+	}
+
 	@PostMapping(value = URLConstants.SAVE_VEHICLE)
 	public ServiceResponseDTO createVehicle(@RequestBody VehicleRequestDTO vehicleTyreRequestDTO) {
 		LOGGER.info("Executing  createVehicle() method of MasterController");

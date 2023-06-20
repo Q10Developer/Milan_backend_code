@@ -28,6 +28,7 @@ public class URLConstants {
 	public static final String UPDATE_CLIENT = "/updateclient";
 	public static final String ENABLE_DISABLE_CLIENT = "/enabledisableclient";
 	public static final String GET_ALL_CLIENT = "/getallclientdata";
+	public static final String GET_ALL_CLIENT_BY_MULTIPLE_FILTERS = "/getallclientdatamultplefilters";
 	public static final String GET_CLIENT_BY_ID = "/getclientdata";
 	public static final String SAVE_VEHICLE = "/savevehicle";
 	public static final String UPDATE_VEHICLE = "/updatevehicle";
@@ -115,15 +116,14 @@ public class URLConstants {
 	public static final Integer SUBMITTED = 1;
 	public static final String GET_VEHICLE_BY_MULTIPLE_FILTER = "/getvehiclebymultiplefilter";
 	public static final String UPDATE_VEHICLE_INSPECTION = "/updatevehicleinspection";
-	
+
 	public static final String OLD_VEHICLE_INSPECTION = "/oldvehicleinspection";
 	public static final String CREATE_OLD_VEHICLE_INSPECTION = "/createoldvehicleinspection";
 	public static final String UPDATE_OLD_VEHICLE_INSPECTION = "/updateoldvehicleinspection";
 	public static final String GET_ALL_OLD_VEHICLE_INSPECTION = "/getalloldvehicleinspection";
 
-	public static final String GET_OLD_VEHICLE_INSPECTION_BY_Name_And_Address_Of_Transport_Company ="/getoldvehicleinspectionbynameandaddressoftrnsportcompany";
+	public static final String GET_OLD_VEHICLE_INSPECTION_BY_Name_And_Address_Of_Transport_Company = "/getoldvehicleinspectionbynameandaddressoftrnsportcompany";
 	public static final String GET_Old_VEHICLE_INSPECTION_BY_Id = "/getoldinspectionbyid";
 	public static final String GET_Old_VEHICLE_INSPECTION_BY_REGISTRATION_NO = "/getoldinspectiponbyregistrationno";
-	
 
 }
