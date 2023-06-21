@@ -24,6 +24,7 @@ public class URLConstants {
 	public static final String LOGOUT = "/logout";
 	public static final String FORGET_PASSWORD = "/fogetPassword";
 	public static final String MASTER_SERVICE = "/masterservice";
+	public static final String FILE_SERVICE = "/fileservice";
 	public static final String SAVE_CLIENT = "/saveclient";
 	public static final String UPDATE_CLIENT = "/updateclient";
 	public static final String ENABLE_DISABLE_CLIENT = "/enabledisableclient";
@@ -125,5 +126,7 @@ public class URLConstants {
 	public static final String GET_OLD_VEHICLE_INSPECTION_BY_Name_And_Address_Of_Transport_Company = "/getoldvehicleinspectionbynameandaddressoftrnsportcompany";
 	public static final String GET_Old_VEHICLE_INSPECTION_BY_Id = "/getoldinspectionbyid";
 	public static final String GET_Old_VEHICLE_INSPECTION_BY_REGISTRATION_NO = "/getoldinspectiponbyregistrationno";
+
+	public static final String UPLOAD_FILE = "/uploadfile";
 
 }
