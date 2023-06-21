@@ -35,7 +35,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().cors().disable().authorizeRequests()
-				.antMatchers("/token", URLConstants.LOGIN_SERVICE + URLConstants.LOGIN_USER,
+				.antMatchers("/static/images/**", "/static/inspection-images/**", "/token",
+						URLConstants.LOGIN_SERVICE + URLConstants.LOGIN_USER,
 						URLConstants.LOGIN_SERVICE + URLConstants.FORGOT_PASSWORD,
 						URLConstants.REGISTRATION_SERVICE + URLConstants.REGISTER_USER,
 						URLConstants.REGISTRATION_SERVICE + URLConstants.CHANGE_PASSWORD,
@@ -117,18 +118,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 						URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_TIRE_CONFIGURATION,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_CONFIGURATION_BY_ID,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_BY_MULTIPLE_FILTER,
-						
+
 						URLConstants.VEHICLE_INSPECTION + URLConstants.CREATE_VEHICLE_INSPECTION,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.UPDATE_VEHICLE_INSPECTION,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.GET_ALL_VEHICLE_INSPECTION,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.GET_VEHICLE_INSPECTION_BY_ID,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.GET_VEHICLE_INSPECTION_BY_CLIENT_ID,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.SAVE_VEHICLE_INSPECTION_DETAILS,
-                        URLConstants.VEHICLE_INSPECTION + URLConstants.GET_VEHICLE_INSPECTION_DETAILS)
-
-						
-
-
+						URLConstants.VEHICLE_INSPECTION + URLConstants.GET_VEHICLE_INSPECTION_DETAILS,
+						URLConstants.FILE_SERVICE + URLConstants.UPLOAD_FILE)
 				.permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
