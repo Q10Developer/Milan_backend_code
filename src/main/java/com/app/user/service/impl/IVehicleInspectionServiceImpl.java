@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import javax.transaction.Transactional;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -44,7 +46,7 @@ public class IVehicleInspectionServiceImpl {
 		if (vehicleInspectionRequestDTO != null) {
 			VehicleInspectionEntity entity = new VehicleInspectionEntity();
 			try {
-				if (null != vehicleInspectionRequestDTO.getInspectionId()) {
+				if (!StringUtils.isEmpty(vehicleInspectionRequestDTO.getInspectionId())) {
 					LOGGER.info("Need to do Updation (Inspection exist)");
 					return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_INSPECTION_ALREADY_EXIST_CODE,
 							ResponseKeysValue.WARNING_VEHICLE_INSPECTION_ALREADY_EXIST_DESC, null);
@@ -194,7 +196,6 @@ public class IVehicleInspectionServiceImpl {
 		}
 		return response;
 	}
-
 
 	public ServiceResponseDTO getVehicleInspectionByInspectionId(String inspectionId) {
 		LOGGER.info(
