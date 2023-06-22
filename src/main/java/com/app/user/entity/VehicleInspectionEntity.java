@@ -20,6 +20,10 @@ public class VehicleInspectionEntity {
 
 	@Column(name = "client_id", nullable = false)
 	private Long clientId;
+	
+	
+	@Column(name="client_name", nullable=false)
+	private String clientName;
 
 	@Column(name = "client_information", nullable = false)
 	private String clientInformation;
@@ -38,6 +42,25 @@ public class VehicleInspectionEntity {
 
 	@Column(name = "configured_vehicle", nullable = false)
 	private String configuredVehicle;
+	
+	@Column(name="vehicle_manufacturer", nullable=false)
+	private Long vehicleManufacturer;
+	
+	@Column(name="vehicle_manufacturer_label",nullable=false)
+	private String vehicleManufacturerLabel;
+	
+	
+	@Column(name="vehicle_model",nullable=false)
+	private Long vehicleModel;
+	
+	@Column(name="vehicle_model_label", nullable=false)
+	private String vehicleModelLabel;
+	
+	@Column(name="vehicle_type", nullable=false)
+	private Long vehicleType;
+	
+	@Column(name="vehicle_type_label", nullable=false)
+	private String vehicleTypeLabel;
 
 	@Column(name = "no_of_tires", nullable = false)
 	private Long noOfTires;
@@ -62,6 +85,14 @@ public class VehicleInspectionEntity {
 
 	public void setClientId(Long clientId) {
 		this.clientId = clientId;
+	}
+
+	public String getClientName() {
+		return clientName;
+	}
+
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
 	}
 
 	public String getClientInformation() {
@@ -112,6 +143,54 @@ public class VehicleInspectionEntity {
 		this.configuredVehicle = configuredVehicle;
 	}
 
+	public Long getVehicleManufacturer() {
+		return vehicleManufacturer;
+	}
+
+	public void setVehicleManufacturer(Long vehicleManufacturer) {
+		this.vehicleManufacturer = vehicleManufacturer;
+	}
+
+	public String getVehicleManufacturerLabel() {
+		return vehicleManufacturerLabel;
+	}
+
+	public void setVehicleManufacturerLabel(String vehicleManufacturerLabel) {
+		this.vehicleManufacturerLabel = vehicleManufacturerLabel;
+	}
+
+	public Long getVehicleModel() {
+		return vehicleModel;
+	}
+
+	public void setVehicleModel(Long vehicleModel) {
+		this.vehicleModel = vehicleModel;
+	}
+
+	public String getVehicleModelLabel() {
+		return vehicleModelLabel;
+	}
+
+	public void setVehicleModelLabel(String vehicleModelLabel) {
+		this.vehicleModelLabel = vehicleModelLabel;
+	}
+
+	public Long getVehicleType() {
+		return vehicleType;
+	}
+
+	public void setVehicleType(Long vehicleType) {
+		this.vehicleType = vehicleType;
+	}
+
+	public String getVehicleTypeLabel() {
+		return vehicleTypeLabel;
+	}
+
+	public void setVehicleTypeLabel(String vehicleTypeLabel) {
+		this.vehicleTypeLabel = vehicleTypeLabel;
+	}
+
 	public Long getNoOfTires() {
 		return noOfTires;
 	}
@@ -143,6 +222,8 @@ public class VehicleInspectionEntity {
 		builder.append(inspectionId);
 		builder.append(", clientId=");
 		builder.append(clientId);
+		builder.append(", clientName=");
+		builder.append(clientName);
 		builder.append(", clientInformation=");
 		builder.append(clientInformation);
 		builder.append(", inspectionDateTime=");
@@ -155,6 +236,18 @@ public class VehicleInspectionEntity {
 		builder.append(vehicleId);
 		builder.append(", configuredVehicle=");
 		builder.append(configuredVehicle);
+		builder.append(", vehicleManufacturer=");
+		builder.append(vehicleManufacturer);
+		builder.append(", vehicleManufacturerLabel=");
+		builder.append(vehicleManufacturerLabel);
+		builder.append(", vehicleModel=");
+		builder.append(vehicleModel);
+		builder.append(", vehicleModelLabel=");
+		builder.append(vehicleModelLabel);
+		builder.append(", vehicleType=");
+		builder.append(vehicleType);
+		builder.append(", vehicleTypeLabel=");
+		builder.append(vehicleTypeLabel);
 		builder.append(", noOfTires=");
 		builder.append(noOfTires);
 		builder.append(", noOfStepneys=");
@@ -165,4 +258,5 @@ public class VehicleInspectionEntity {
 		return builder.toString();
 	}
 
+	
 }

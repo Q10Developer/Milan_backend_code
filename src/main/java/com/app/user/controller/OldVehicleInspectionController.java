@@ -1,5 +1,7 @@
 package com.app.user.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
+import com.app.user.dto.request.OldVehicleInspectionDetailsRequestDTO;
 import com.app.user.dto.request.OldVehicleInspectionRequestDTO;
+import com.app.user.dto.request.VehicleInspectionDetailsRequestDTO;
 import com.app.user.service.impl.IOldVehicleInspectionServiceImpl;
 
 @RestController
@@ -27,6 +31,7 @@ public class OldVehicleInspectionController {
 	@Autowired
 	private IOldVehicleInspectionServiceImpl oldVehicleInspectionServiceImpl;
 	
+	
 
 	@PostMapping(value = URLConstants.CREATE_OLD_VEHICLE_INSPECTION)
 	public ServiceResponseDTO startOldVehicleInspection(
@@ -36,10 +41,10 @@ public class OldVehicleInspectionController {
 	}
 	
 	@PutMapping(value = URLConstants.UPDATE_OLD_VEHICLE_INSPECTION)
-	public ServiceResponseDTO updateOldVehicleInspection(@RequestParam(name = "srNo") Long srNo,
+	public ServiceResponseDTO updateOldVehicleInspection(@RequestParam(name = "registrationNo") Long registrationNo,
 			@RequestBody OldVehicleInspectionRequestDTO oldVehicleInspectionRequestDTO) {
 		LOGGER.info("Executing  updateOldVehicleInspection() method of OldVehicleInspectionController");
-		return oldVehicleInspectionServiceImpl.updateOldVehicleInspection(srNo, oldVehicleInspectionRequestDTO);
+		return oldVehicleInspectionServiceImpl.updateOldVehicleInspection(registrationNo, oldVehicleInspectionRequestDTO);
 	}
 	
 	@GetMapping(value = URLConstants.GET_ALL_OLD_VEHICLE_INSPECTION)
@@ -50,21 +55,30 @@ public class OldVehicleInspectionController {
 		return oldVehicleInspectionServiceImpl.getAllOldVehicleInspection(pageNumber, size, sortBy);
 	}
 	
-	
-/*	@GetMapping(value = URLConstants.GET_Old_VEHICLE_INSPECTION_BY_REGISTRATION_NO)
-	public ServiceResponseDTO getOLdVehicleInspectionByRegistrationNo(@RequestParam(name = "registrationNo") String  registrationNo) {
-		LOGGER.info("Executing  getVehcileInspectionById() method of MasterController");
-		return oldVehicleInspectionServiceImpl.getOldVehicleInspectionByRegistrationNo(registrationNo);
-	}*/
-	
-	
-	
+	@GetMapping(value = URLConstants.GET_OLD_VEHICLE_INSPECTION_BY_REGISTRATION_NO)
+	public ServiceResponseDTO getOldVehicleInspectionByRegistratioNo(@RequestParam(name = "registrationNo") Long registrationNo) {
+		LOGGER.info("Executing  getOldVehcileInspectionByRegistratioNo() method of MasterController");
+		return oldVehicleInspectionServiceImpl.getOldVehicleInspectionByRegistratioNo(registrationNo);
+	}
 
-/*	@GetMapping(value = URLConstants.GET_OLD_VEHICLE_INSPECTION_BY_Name_And_Address_Of_Transport_Company)
-	public ServiceResponseDTO getOldVehicleInspectionByNameAndAddressofTransportCompany(@RequestParam(name = "nameAndAddressofTransportCompany") String  nameAndAddressofTransportCompany) {
-		LOGGER.info("Executing  getVehcileInspectionByClientId() method of MasterController");
-		return oldVehicleInspectionServiceImpl.getOldVehicleInspectionByNameAndAddressofTransportCompany(nameAndAddressofTransportCompany);
-	}*/
+	@PostMapping(value = URLConstants.SAVE_OLD_VEHICLE_INSPECTION_DETAILS)
+	public ServiceResponseDTO saveOldVehicleInspectionDetails(@RequestParam(name = "registrationNo") Long registrationNo,
+			@RequestParam(name = "oldVehicleInspectionStatus") int oldVehicleInspectionStatus,
+			@RequestBody List<OldVehicleInspectionDetailsRequestDTO> oldVehicleInspectionDetails) {
+		LOGGER.info("Executing  saveOldVehicleInspectionDetails() method of OldVehicleInspectionController");
+		return oldVehicleInspectionServiceImpl.saveOldVehicleInspectionDetails(registrationNo,oldVehicleInspectionStatus,
+				oldVehicleInspectionDetails);
+	}
+	
+	
+	@GetMapping(value = URLConstants.GET_OLD_VEHICLE_INSPECTION_DETAILS)
+	public ServiceResponseDTO getVehicleInspectionByRegistratioNo(
+			@RequestParam(name = "registrationno") Long registrationNo) {
+		LOGGER.info("Executing  getOldVehcileInspectionByByRegistratioNo() method of OldVehicleInspectionController");
+		return oldVehicleInspectionServiceImpl.getVehicleInspectionByRegistratioNo(registrationNo);
+	}
+
+
 	
 	
 	

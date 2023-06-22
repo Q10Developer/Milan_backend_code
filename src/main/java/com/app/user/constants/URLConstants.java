@@ -123,10 +123,14 @@ public class URLConstants {
 	public static final String UPDATE_OLD_VEHICLE_INSPECTION = "/updateoldvehicleinspection";
 	public static final String GET_ALL_OLD_VEHICLE_INSPECTION = "/getalloldvehicleinspection";
 
-	public static final String GET_OLD_VEHICLE_INSPECTION_BY_Name_And_Address_Of_Transport_Company = "/getoldvehicleinspectionbynameandaddressoftrnsportcompany";
-	public static final String GET_Old_VEHICLE_INSPECTION_BY_Id = "/getoldinspectionbyid";
-	public static final String GET_Old_VEHICLE_INSPECTION_BY_REGISTRATION_NO = "/getoldinspectiponbyregistrationno";
+	
+	public static final String GET_OLD_VEHICLE_INSPECTION_BY_Id = "/getoldinspectionbyid";
+	public static final String GET_OLD_VEHICLE_INSPECTION_BY_REGISTRATION_NO = "/getoldinspectiponbyregistrationno";
 
 	public static final String UPLOAD_FILE = "/uploadfile";
+	public static final String SAVE_OLD_VEHICLE_INSPECTION_DETAILS ="/saveoldvehicleinspectiondetails" ;
+	public static final String GET_OLD_VEHICLE_INSPECTION_DETAILS = "/getoldvehicleinspectiondetails";
+	
+
 
 }
