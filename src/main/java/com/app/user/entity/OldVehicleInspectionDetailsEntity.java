@@ -6,9 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name = "old_vehicle_inspection_details")
 public class OldVehicleInspectionDetailsEntity {
 	
 	@Id
@@ -54,7 +56,7 @@ public class OldVehicleInspectionDetailsEntity {
 	private String  driverName;
 	
 	@Column(name=" driver_mob_no")
-	private  int  driverMobno;
+	private  String  driverMobno;
 	
 	
 	@Column(name=" driver_signaturet")
@@ -75,7 +77,7 @@ public class OldVehicleInspectionDetailsEntity {
 	private String  maintenanceManagerName;
 	
 	@Column(name=" maintenance_manager_mob_no")
-	private int  maintenanceManagerMobNo;
+	private String maintenanceManagerMobNo;
 	
 	
 	@Column(name="maintenance_manager_signaturet")
@@ -85,7 +87,7 @@ public class OldVehicleInspectionDetailsEntity {
 	private String  milanTireServiceAndSolution;
 	
 	@Column(name="milan_tire_service_and_solution_mob_no")
-	private int  milanTireServiceAndSolutionMobNo;
+	private String  milanTireServiceAndSolutionMobNo;
 	
 	@Column(name="milan_tire_service_and_solution_signaturet")
 	private String milanTireServiceAndSolutionSignaturet;
@@ -186,11 +188,11 @@ public class OldVehicleInspectionDetailsEntity {
 		this.driverName = driverName;
 	}
 
-	public int getDriverMobno() {
+	public String getDriverMobno() {
 		return driverMobno;
 	}
 
-	public void setDriverMobno(int driverMobno) {
+	public void setDriverMobno(String driverMobno) {
 		this.driverMobno = driverMobno;
 	}
 
@@ -234,11 +236,11 @@ public class OldVehicleInspectionDetailsEntity {
 		this.maintenanceManagerName = maintenanceManagerName;
 	}
 
-	public int getMaintenanceManagerMobNo() {
+	public String getMaintenanceManagerMobNo() {
 		return maintenanceManagerMobNo;
 	}
 
-	public void setMaintenanceManagerMobNo(int maintenanceManagerMobNo) {
+	public void setMaintenanceManagerMobNo(String maintenanceManagerMobNo) {
 		this.maintenanceManagerMobNo = maintenanceManagerMobNo;
 	}
 
@@ -258,11 +260,11 @@ public class OldVehicleInspectionDetailsEntity {
 		this.milanTireServiceAndSolution = milanTireServiceAndSolution;
 	}
 
-	public int getMilanTireServiceAndSolutionMobNo() {
+	public String getMilanTireServiceAndSolutionMobNo() {
 		return milanTireServiceAndSolutionMobNo;
 	}
 
-	public void setMilanTireServiceAndSolutionMobNo(int milanTireServiceAndSolutionMobNo) {
+	public void setMilanTireServiceAndSolutionMobNo(String milanTireServiceAndSolutionMobNo) {
 		this.milanTireServiceAndSolutionMobNo = milanTireServiceAndSolutionMobNo;
 	}
 
@@ -326,6 +328,6 @@ public class OldVehicleInspectionDetailsEntity {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 	
 }

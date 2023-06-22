@@ -5,6 +5,7 @@ import java.util.Date;
 public class VehicleInspectionDetailsRequestDTO {
 
 	private Long rowId;
+	private Long inspectionDetailIndex;
 	private String inspectionId;
 	private String tirePosition;
 	private Long tireType;
@@ -36,12 +37,26 @@ public class VehicleInspectionDetailsRequestDTO {
 	private String leastTireThicknessAllowedAnalysis;
 	private String wearAnalysis;
 
+	
+	
 	public Long getRowId() {
 		return rowId;
 	}
 
 	public void setRowId(Long rowId) {
 		this.rowId = rowId;
+	}
+
+	
+	
+	
+	
+	public Long getInspectionDetailIndex() {
+		return inspectionDetailIndex;
+	}
+
+	public void setInspectionDetailIndex(Long inspectionDetailIndex) {
+		this.inspectionDetailIndex = inspectionDetailIndex;
 	}
 
 	public String getInspectionId() {
@@ -289,6 +304,8 @@ public class VehicleInspectionDetailsRequestDTO {
 		StringBuilder builder = new StringBuilder();
 		builder.append("VehicleInspectionDetailsRequestDTO [rowId=");
 		builder.append(rowId);
+		builder.append(", inspectionDetailIndex=");
+		builder.append(inspectionDetailIndex);
 		builder.append(", inspectionId=");
 		builder.append(inspectionId);
 		builder.append(", tirePosition=");
@@ -353,4 +370,5 @@ public class VehicleInspectionDetailsRequestDTO {
 		return builder.toString();
 	}
 
+	
 }

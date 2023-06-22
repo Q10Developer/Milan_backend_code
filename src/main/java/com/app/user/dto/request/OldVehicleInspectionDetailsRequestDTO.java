@@ -16,16 +16,16 @@ public class OldVehicleInspectionDetailsRequestDTO {
     private  Long  wheelAlignmentKm;
     private  String  wheelAlignmentTechnicianObservations;
     private  String   driverName;
-    private int  driverMobNo;
+    private String  driverMobNo;
     private  String driverSignaturet;
     private Date  tyreRotationDateTime;
     private Long  tyreRotationkm;
     private String  technicianRecommendations;
     private  String  maintenanceManagerName;
-    private int  maintenanceManagerMobNo;
+    private String maintenanceManagerMobNo;
     private  String  maintenanceManagerSignaturet;
     private   String  milanTireServiceAnddSolution;
-    private  int   milanTireServiceAndSolutionMobnNo;
+    private  String   milanTireServiceAndSolutionMobnNo;
     private  String  milanTireServiceAndSolutionSignaturet;
 	public Long getRowId() {
 		return rowId;
@@ -99,10 +99,10 @@ public class OldVehicleInspectionDetailsRequestDTO {
 	public void setDriverName(String driverName) {
 		this.driverName = driverName;
 	}
-	public int getDriverMobNo() {
+	public String getDriverMobNo() {
 		return driverMobNo;
 	}
-	public void setDriverMobNo(int driverMobNo) {
+	public void setDriverMobNo(String driverMobNo) {
 		this.driverMobNo = driverMobNo;
 	}
 	public String getDriverSignaturet() {
@@ -135,10 +135,10 @@ public class OldVehicleInspectionDetailsRequestDTO {
 	public void setMaintenanceManagerName(String maintenanceManagerName) {
 		this.maintenanceManagerName = maintenanceManagerName;
 	}
-	public int getMaintenanceManagerMobNo() {
+	public String getMaintenanceManagerMobNo() {
 		return maintenanceManagerMobNo;
 	}
-	public void setMaintenanceManagerMobNo(int maintenanceManagerMobNo) {
+	public void setMaintenanceManagerMobNo(String maintenanceManagerMobNo) {
 		this.maintenanceManagerMobNo = maintenanceManagerMobNo;
 	}
 	public String getMaintenanceManagerSignaturet() {
@@ -153,10 +153,10 @@ public class OldVehicleInspectionDetailsRequestDTO {
 	public void setMilanTireServiceAnddSolution(String milanTireServiceAnddSolution) {
 		this.milanTireServiceAnddSolution = milanTireServiceAnddSolution;
 	}
-	public int getMilanTireServiceAndSolutionMobnNo() {
+	public String getMilanTireServiceAndSolutionMobnNo() {
 		return milanTireServiceAndSolutionMobnNo;
 	}
-	public void setMilanTireServiceAndSolutionMobnNo(int milanTireServiceAndSolutionMobnNo) {
+	public void setMilanTireServiceAndSolutionMobnNo(String milanTireServiceAndSolutionMobnNo) {
 		this.milanTireServiceAndSolutionMobnNo = milanTireServiceAndSolutionMobnNo;
 	}
 	public String getMilanTireServiceAndSolutionSignaturet() {
@@ -220,5 +220,17 @@ public class OldVehicleInspectionDetailsRequestDTO {
     
     
     
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
+	

@@ -16,7 +16,9 @@ public interface OldVehicleInspectionDetailsRepository  extends PagingAndSorting
 
 	
 
-	List<OldVehicleInspectionDetailsEntity> findByRegistrationNo(String registrationNo);
+	List<OldVehicleInspectionDetailsEntity> findByRegistrationNo(Long registratioNo);
+
+	
 
 	
 }

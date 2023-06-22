@@ -9,13 +9,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = " old_vehicle_inspection")
+@Table(name = "old_vehicle_inspection")
 public class OldVehicleInspectionEntity {
 	
 	@Id
 	@GeneratedValue
-	@Column(name = "sr_No")
-	private Long srNo;
+	@Column(name="registration_no")
+	private Long registrationNo;
+	
+	
+	@Column(name = "no")
+	private Long no;
 	
 	@Column(name="name_and_address_of_transport_company")
 	private  String  nameAndAddressofTransportCompany;
@@ -47,13 +51,27 @@ public class OldVehicleInspectionEntity {
 	@Column(name="old_vehicle_inspection_status")
 	private int oldVehicleInspectionStatus;
 
-	public Long getSrNo() {
-		return srNo;
+
+	public Long getRegistrationNo() {
+		return registrationNo;
 	}
 
 
-	public void setSrNo(Long srNo) {
-		this.srNo = srNo;
+	public void setRegistrationNo(Long registrationNo) {
+		this.registrationNo = registrationNo;
+	}
+
+
+
+
+
+	public Long getNo() {
+		return no;
+	}
+
+
+	public void setNo(Long no) {
+		this.no = no;
 	}
 
 
@@ -136,7 +154,6 @@ public class OldVehicleInspectionEntity {
 		this.recommendedAirPressure = recommendedAirPressure;
 	}
 
-	
 
 	public int getOldVehicleInspectionStatus() {
 		return oldVehicleInspectionStatus;
@@ -151,8 +168,10 @@ public class OldVehicleInspectionEntity {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("OldVehicleInspectionEntity [srNo=");
-		builder.append(srNo);
+		builder.append("OldVehicleInspectionEntity [registrationNo=");
+		builder.append(registrationNo);
+		builder.append(", no=");
+		builder.append(no);
 		builder.append(", nameAndAddressofTransportCompany=");
 		builder.append(nameAndAddressofTransportCompany);
 		builder.append(", mobileNo=");
@@ -174,7 +193,7 @@ public class OldVehicleInspectionEntity {
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 	
 
 }

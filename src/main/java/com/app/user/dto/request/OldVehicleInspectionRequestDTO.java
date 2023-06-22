@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class OldVehicleInspectionRequestDTO {
 	
-	private Long srNo;
+	private Long no;
 	private String  nameAndAddressofTransportCompany;
 	private String  mobileNo;
 	private Date dateRegistered;
@@ -16,11 +16,17 @@ public class OldVehicleInspectionRequestDTO {
 	private String  recommendedAirPressure;
 	private int oldVehicleInspectionStatus;
 	private String  registrationNo;
-	public Long getSrNo() {
-		return srNo;
+	
+	
+
+	
+	
+	
+	public Long getNo() {
+		return no;
 	}
-	public void setSrNo(Long srNo) {
-		this.srNo = srNo;
+	public void setNo(Long no) {
+		this.no = no;
 	}
 	public String getNameAndAddressofTransportCompany() {
 		return nameAndAddressofTransportCompany;
@@ -91,8 +97,8 @@ public class OldVehicleInspectionRequestDTO {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("OldVehicleInspectionRequestDTO [srNo=");
-		builder.append(srNo);
+		builder.append("OldVehicleInspectionRequestDTO [no=");
+		builder.append(no);
 		builder.append(", nameAndAddressofTransportCompany=");
 		builder.append(nameAndAddressofTransportCompany);
 		builder.append(", mobileNo=");

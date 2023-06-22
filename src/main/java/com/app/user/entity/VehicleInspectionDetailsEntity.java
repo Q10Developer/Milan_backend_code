@@ -17,6 +17,10 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "row_id")
 	private Long rowId;
 
+	@Column(name="inspection_detail_index",nullable =false)
+	private Long inspectionDetailIndex;
+	
+	
 	@Column(name = "inspection_id", nullable = false)
 	private String inspectionId;
 
@@ -106,6 +110,16 @@ public class VehicleInspectionDetailsEntity {
 
 	@Column(name = "wear_analysis", updatable = false, insertable = false)
 	private String wearAnalysis;
+	
+	
+	
+	public Long getInspectionDetailIndex() {
+		return inspectionDetailIndex;
+	}
+
+	public void setInspectionDetailIndex(Long inspectionDetailIndex) {
+		this.inspectionDetailIndex = inspectionDetailIndex;
+	}
 
 	public Long getRowId() {
 		return rowId;
@@ -360,6 +374,8 @@ public class VehicleInspectionDetailsEntity {
 		StringBuilder builder = new StringBuilder();
 		builder.append("VehicleInspectionDetailsEntity [rowId=");
 		builder.append(rowId);
+		builder.append(", inspectionDetailIndex=");
+		builder.append(inspectionDetailIndex);
 		builder.append(", inspectionId=");
 		builder.append(inspectionId);
 		builder.append(", tirePosition=");
@@ -424,4 +440,5 @@ public class VehicleInspectionDetailsEntity {
 		return builder.toString();
 	}
 
+	
 }
