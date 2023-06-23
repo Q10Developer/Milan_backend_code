@@ -17,10 +17,9 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "row_id")
 	private Long rowId;
 
-	@Column(name="inspection_detail_index",nullable =false)
+	@Column(name = "inspection_detail_index", nullable = false)
 	private Long inspectionDetailIndex;
-	
-	
+
 	@Column(name = "inspection_id", nullable = false)
 	private String inspectionId;
 
@@ -93,7 +92,6 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "observation_label", nullable = false)
 	private String observationLabel;
 
-
 	@Column(name = "recommendation_label", nullable = false)
 	private String recommendationLabel;
 
@@ -108,9 +106,7 @@ public class VehicleInspectionDetailsEntity {
 
 	@Column(name = "wear_analysis", updatable = false, insertable = false)
 	private String wearAnalysis;
-	
-	
-	
+
 	public Long getInspectionDetailIndex() {
 		return inspectionDetailIndex;
 	}
@@ -319,9 +315,6 @@ public class VehicleInspectionDetailsEntity {
 		this.observationLabel = observationLabel;
 	}
 
-	
-	
-
 	public String getRecommendationLabel() {
 		return recommendationLabel;
 	}
@@ -430,7 +423,4 @@ public class VehicleInspectionDetailsEntity {
 		builder.append("]");
 		return builder.toString();
 	}
-
-	
-	
 }

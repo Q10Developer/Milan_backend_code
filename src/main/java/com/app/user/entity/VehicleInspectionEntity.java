@@ -15,14 +15,13 @@ public class VehicleInspectionEntity {
 	@Id
 	@GeneratedValue(generator = "custom-id-generator")
 	@GenericGenerator(name = "custom-id-generator", strategy = "com.app.user.config.helper.CustomIdGenerator")
-    @Column(name = "inspection_id")
+	@Column(name = "inspection_id")
 	private String inspectionId;
 
 	@Column(name = "client_id", nullable = false)
 	private Long clientId;
-	
-	
-	@Column(name="client_name", nullable=false)
+
+	@Column(name = "client_name", nullable = false)
 	private String clientName;
 
 	@Column(name = "client_information", nullable = false)
@@ -42,24 +41,23 @@ public class VehicleInspectionEntity {
 
 	@Column(name = "configured_vehicle", nullable = false)
 	private String configuredVehicle;
-	
-	@Column(name="vehicle_manufacturer", nullable=false)
+
+	@Column(name = "vehicle_manufacturer", nullable = false)
 	private Long vehicleManufacturer;
-	
-	@Column(name="vehicle_manufacturer_label",nullable=false)
+
+	@Column(name = "vehicle_manufacturer_label", nullable = false)
 	private String vehicleManufacturerLabel;
-	
-	
-	@Column(name="vehicle_model",nullable=false)
+
+	@Column(name = "vehicle_model", nullable = false)
 	private Long vehicleModel;
-	
-	@Column(name="vehicle_model_label", nullable=false)
+
+	@Column(name = "vehicle_model_label", nullable = false)
 	private String vehicleModelLabel;
-	
-	@Column(name="vehicle_type", nullable=false)
+
+	@Column(name = "vehicle_type", nullable = false)
 	private Long vehicleType;
-	
-	@Column(name="vehicle_type_label", nullable=false)
+
+	@Column(name = "vehicle_type_label", nullable = false)
 	private String vehicleTypeLabel;
 
 	@Column(name = "no_of_tires", nullable = false)
@@ -258,5 +256,4 @@ public class VehicleInspectionEntity {
 		return builder.toString();
 	}
 
-	
 }

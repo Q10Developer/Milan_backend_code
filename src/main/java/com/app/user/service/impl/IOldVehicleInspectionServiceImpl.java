@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import javax.transaction.Transactional;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -17,45 +16,40 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-
 import com.app.user.constants.ResponseKeysValue;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.OldVehicleInspectionDetailsRequestDTO;
 import com.app.user.dto.request.OldVehicleInspectionRequestDTO;
-import com.app.user.dto.request.VehicleInspectionDetailsRequestDTO;
 import com.app.user.dto.response.GenericResponseDTO;
 import com.app.user.entity.OldVehicleInspectionDetailsEntity;
 import com.app.user.entity.OldVehicleInspectionEntity;
-import com.app.user.entity.VehicleInspectionDetailsEntity;
-import com.app.user.entity.VehicleInspectionEntity;
 import com.app.user.repository.OldVehicleInspectionDetailsRepository;
 import com.app.user.repository.OldVehicleInspectionRepository;
 
-
-
 @Service
 public class IOldVehicleInspectionServiceImpl {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(IVehicleInspectionServiceImpl.class);
-	
+
 	@Autowired
 	private OldVehicleInspectionRepository oldVehicleInspectionRepository;
-	        
+
 	@Autowired
-	private  OldVehicleInspectionDetailsRepository 	oldVehicleInspectionDetailsRepository;
-	
+	private OldVehicleInspectionDetailsRepository oldVehicleInspectionDetailsRepository;
+
 	public ServiceResponseDTO startOldVehicleInspection(OldVehicleInspectionRequestDTO oldVehicleInspectionRequestDTO) {
-		LOGGER.info("Start Vehicle Inspection in IOldVehicleInspectionServiceImpl and startOLdVehicleInspection method");
+		LOGGER.info(
+				"Start Vehicle Inspection in IOldVehicleInspectionServiceImpl and startOLdVehicleInspection method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
-		if (oldVehicleInspectionRequestDTO  != null) {
+		if (oldVehicleInspectionRequestDTO != null) {
 			OldVehicleInspectionEntity entity = new OldVehicleInspectionEntity();
 			try {
 				if (null != oldVehicleInspectionRequestDTO.getNo()) {
 					LOGGER.info("Need to do Updation (OldVehicleInspection exist)");
 					return new ServiceResponseDTO(ResponseKeysValue.WARNING_OLD_VEHICLE_INSPECTION_ALREADY_EXIST_CODE,
 							ResponseKeysValue.WARNING_OLD_VEHICLE_INSPECTION_ALREADY_EXIST_DESC, null);
-				}                              
+				}
 				oldVehicleInspectionRequestDTO.setOldVehicleInspectionStatus(URLConstants.DRAFT);
 				BeanUtils.copyProperties(oldVehicleInspectionRequestDTO, entity);
 				entity = oldVehicleInspectionRepository.save(entity);
@@ -77,18 +71,18 @@ public class IOldVehicleInspectionServiceImpl {
 		}
 		return response;
 	}
-	
+
 	public ServiceResponseDTO updateOldVehicleInspection(Long registrationNo,
 			OldVehicleInspectionRequestDTO oldVehicleInspectionRequestDTO) {
-		LOGGER.info("Update Vehicle Inspection in IOldVehicleInspectionServiceImpl and updateOldVehicleInspection method");
+		LOGGER.info(
+				"Update Vehicle Inspection in IOldVehicleInspectionServiceImpl and updateOldVehicleInspection method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
 		if (oldVehicleInspectionRequestDTO != null && oldVehicleInspectionRequestDTO.getOdometerReading() != null) {
 			try {
 				Optional<OldVehicleInspectionEntity> entity = oldVehicleInspectionRepository.findById(registrationNo);
 				if (entity.isPresent()) {
 					OldVehicleInspectionEntity oldVehicleInspectionEntity = entity.get();
-					oldVehicleInspectionEntity
-							.setOdometerReading(oldVehicleInspectionRequestDTO.getOdometerReading());
+					oldVehicleInspectionEntity.setOdometerReading(oldVehicleInspectionRequestDTO.getOdometerReading());
 					oldVehicleInspectionEntity = oldVehicleInspectionRepository.save(oldVehicleInspectionEntity);
 					response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 					response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
@@ -125,15 +119,15 @@ public class IOldVehicleInspectionServiceImpl {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
 					null);
 		}
-	
+
 	}
-	
-	
-	public ServiceResponseDTO getOldVehicleInspectionByRegistratioNo(	Long registrationNo) {
+
+	public ServiceResponseDTO getOldVehicleInspectionByRegistratioNo(Long registrationNo) {
 		LOGGER.info(
 				"getOldVehcileInspectionByRegistratioNo process start in IoldVehicleInspectionServiceImpl and getOldVehcileInspectionByRegistratioNo  method Executing ");
-		Optional<OldVehicleInspectionEntity> oldVehicleoInspectionDetail = oldVehicleInspectionRepository.findById(registrationNo);
-		if (! oldVehicleoInspectionDetail.isEmpty()) {
+		Optional<OldVehicleInspectionEntity> oldVehicleoInspectionDetail = oldVehicleInspectionRepository
+				.findById(registrationNo);
+		if (!oldVehicleoInspectionDetail.isEmpty()) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, oldVehicleoInspectionDetail.get());
 		} else {
@@ -141,9 +135,9 @@ public class IOldVehicleInspectionServiceImpl {
 					null);
 		}
 	}
-	
+
 	@Transactional
-	public ServiceResponseDTO saveOldVehicleInspectionDetails(Long registrationNo , int oldVehicleInspectionStatus,
+	public ServiceResponseDTO saveOldVehicleInspectionDetails(Long registrationNo, int oldVehicleInspectionStatus,
 			List<OldVehicleInspectionDetailsRequestDTO> oldVehicleInspectionDetails) {
 		LOGGER.info(
 				"Save Old Vehicle Inspection Details in IOldVehicleInspectionServiceImpl and saveOldVehicleInspectionDetails method");
@@ -191,10 +185,6 @@ public class IOldVehicleInspectionServiceImpl {
 		return response;
 	}
 
-
-		
-	
-	
 	public ServiceResponseDTO getVehicleInspectionByRegistratioNo(Long registratioNo) {
 		LOGGER.info(
 				"getOldVehicleInspectionByRegistratioNo process start in IOldVehicleInspectionServiceImpl and getOldVehicleInspectionByInspectionId method Executing ");
@@ -208,14 +198,5 @@ public class IOldVehicleInspectionServiceImpl {
 					null);
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
-	

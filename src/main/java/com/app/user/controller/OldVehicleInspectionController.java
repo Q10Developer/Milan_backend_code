@@ -17,7 +17,6 @@ import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.OldVehicleInspectionDetailsRequestDTO;
 import com.app.user.dto.request.OldVehicleInspectionRequestDTO;
-import com.app.user.dto.request.VehicleInspectionDetailsRequestDTO;
 import com.app.user.service.impl.IOldVehicleInspectionServiceImpl;
 
 @RestController
