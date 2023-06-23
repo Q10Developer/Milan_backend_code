@@ -93,8 +93,6 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "observation_label", nullable = false)
 	private String observationLabel;
 
-	@Column(name = "recommendation", nullable = false)
-	private Long recommendation;
 
 	@Column(name = "recommendation_label", nullable = false)
 	private String recommendationLabel;
@@ -321,13 +319,8 @@ public class VehicleInspectionDetailsEntity {
 		this.observationLabel = observationLabel;
 	}
 
-	public Long getRecommendation() {
-		return recommendation;
-	}
-
-	public void setRecommendation(Long recommendation) {
-		this.recommendation = recommendation;
-	}
+	
+	
 
 	public String getRecommendationLabel() {
 		return recommendationLabel;
@@ -424,8 +417,6 @@ public class VehicleInspectionDetailsEntity {
 		builder.append(observation);
 		builder.append(", observationLabel=");
 		builder.append(observationLabel);
-		builder.append(", recommendation=");
-		builder.append(recommendation);
 		builder.append(", recommendationLabel=");
 		builder.append(recommendationLabel);
 		builder.append(", tireImageUrl=");
@@ -440,5 +431,6 @@ public class VehicleInspectionDetailsEntity {
 		return builder.toString();
 	}
 
+	
 	
 }
