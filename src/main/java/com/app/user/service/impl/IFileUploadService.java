@@ -35,8 +35,6 @@ public class IFileUploadService {
 		ServiceResponseDTO response = null;
 		try {
 			String uniqueFileName = Utils.generateUniqueFileName(uniqueKey, file.getOriginalFilename());
-			//String parentPath = new File("").getAbsolutePath();
-			//String uploadPath = parentPath + File.separator + ".." + File.separator + uploadDirectory;
 			String uploadFilesPath = uploadDirectory + File.separator + key;
 			File uploadFilesDir = new File(uploadFilesPath);
 			if (!uploadFilesDir.exists()) {

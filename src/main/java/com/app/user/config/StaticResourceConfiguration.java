@@ -14,6 +14,6 @@ public class StaticResourceConfiguration implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/static/inspection-images/**")
-				.addResourceLocations("file:" + uploadDirectory + "/inspection-files/");
+				.addResourceLocations("file:" + uploadDirectory + "/inspection-tires/");
 	}
 }
