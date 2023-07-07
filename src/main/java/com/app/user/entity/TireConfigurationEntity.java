@@ -26,7 +26,7 @@ public class TireConfigurationEntity {
 	private String tireType;
 	
 	@Column(name = "tire_size")
-	private int tireSize ;
+	private String tireSize ;
 	
 	@Column(name = "tire_pattern") 
 	private String  tirePattern;
@@ -82,13 +82,13 @@ public class TireConfigurationEntity {
 
 
 
-	public int getTireSize() {
+	public String getTireSize() {
 		return tireSize;
 	}
 
 
 
-	public void setTireSize(int tireSize) {
+	public void setTireSize(String tireSize) {
 		this.tireSize = tireSize;
 	}
 
@@ -132,9 +132,23 @@ public class TireConfigurationEntity {
 
 	@Override
 	public String toString() {
-		return "TireConfigurationEntity [tireConfigurationId=" + tireConfigurationId + ", tireMakeId=" + tireMakeId
-				+ ", tireType=" + tireType + ", tireSize=" + tireSize + ", tirePattern=" + tirePattern
-				+ ", tireThickness=" + tireThickness + ", activeStatus=" + activeStatus + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("TireConfigurationEntity [tireConfigurationId=");
+		builder.append(tireConfigurationId);
+		builder.append(", tireMakeId=");
+		builder.append(tireMakeId);
+		builder.append(", tireType=");
+		builder.append(tireType);
+		builder.append(", tireSize=");
+		builder.append(tireSize);
+		builder.append(", tirePattern=");
+		builder.append(tirePattern);
+		builder.append(", tireThickness=");
+		builder.append(tireThickness);
+		builder.append(", activeStatus=");
+		builder.append(activeStatus);
+		builder.append("]");
+		return builder.toString();
 	}
 
 
