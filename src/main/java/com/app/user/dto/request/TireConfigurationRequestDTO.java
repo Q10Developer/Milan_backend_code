@@ -5,13 +5,12 @@ public class TireConfigurationRequestDTO {
 	private Long tireConfigurationId;
 	private Long tireMakeId;
 	private String tireType;
-	private int tireSize;
+	private String tireSize;
 	private String tirePattern;
 	private float  tireThickness;
 	private int activeStatus;
 	
 	public TireConfigurationRequestDTO() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getTireConfigurationId() {
@@ -38,11 +37,11 @@ public class TireConfigurationRequestDTO {
 		this.tireType = tireType;
 	}
 
-	public int getTireSize() {
+	public String getTireSize() {
 		return tireSize;
 	}
 
-	public void setTireSize(int tireSize) {
+	public void setTireSize(String tireSize) {
 		this.tireSize = tireSize;
 	}
 
@@ -72,12 +71,26 @@ public class TireConfigurationRequestDTO {
 
 	@Override
 	public String toString() {
-		return "TireConfigurationRequestDTO [tireConfigurationId=" + tireConfigurationId + ", tireMakeId=" + tireMakeId
-				+ ", tireType=" + tireType + ", tireSize=" + tireSize + ", tirePattern=" + tirePattern
-				+ ", tireThickness=" + tireThickness + ", activeStatus=" + activeStatus + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("TireConfigurationRequestDTO [tireConfigurationId=");
+		builder.append(tireConfigurationId);
+		builder.append(", tireMakeId=");
+		builder.append(tireMakeId);
+		builder.append(", tireType=");
+		builder.append(tireType);
+		builder.append(", tireSize=");
+		builder.append(tireSize);
+		builder.append(", tirePattern=");
+		builder.append(tirePattern);
+		builder.append(", tireThickness=");
+		builder.append(tireThickness);
+		builder.append(", activeStatus=");
+		builder.append(activeStatus);
+		builder.append("]");
+		return builder.toString();
 	}
-
 	
 	
 	
-}
+	
+	}
