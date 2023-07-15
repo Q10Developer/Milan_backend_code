@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -31,6 +32,7 @@ import com.app.user.dto.request.ObservationCategoryRequestDTO;
 import com.app.user.dto.request.ObservationRequestDTO;
 import com.app.user.dto.request.TireConfigurationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
+import com.app.user.dto.request.TirePatternRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
 import com.app.user.dto.request.VehicleManufacturerRequestDTO;
 import com.app.user.dto.request.VehicleModelRequestDTO;
@@ -46,6 +48,7 @@ import com.app.user.entity.ObservationCategoryEntity;
 import com.app.user.entity.ObservationEntity;
 import com.app.user.entity.TireConfigurationEntity;
 import com.app.user.entity.TireMakeEntity;
+import com.app.user.entity.TirePatternEntity;
 import com.app.user.entity.TyreMasterEntity;
 import com.app.user.entity.VehicleManufacturerEntity;
 import com.app.user.entity.VehicleMasterEntity;
@@ -60,6 +63,7 @@ import com.app.user.repository.ObservatioRepository;
 import com.app.user.repository.ObservationCategoryRepository;
 import com.app.user.repository.TireConfigurationRepository;
 import com.app.user.repository.TireMakeRepository;
+import com.app.user.repository.TirePatternReposistory;
 import com.app.user.repository.TyreRepository;
 import com.app.user.repository.VehicleManufacturerRepository;
 import com.app.user.repository.VehicleModelRepository;
@@ -117,6 +121,9 @@ public class IMasterServiceImpl {
 
 	@Autowired
 	private TireConfigurationRepository tireConfigurationRepository;
+	
+	@Autowired
+	private TirePatternReposistory  tirePatternRepository;
 
 	public ServiceResponseDTO saveClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO) {
 		LOGGER.info("client master data in IMasterServiceImpl and saveClientMasterData method");
@@ -2162,7 +2169,9 @@ public class IMasterServiceImpl {
 				"getTireConfigurationById process start in IMasterServiceImpl and getTireConfigurationById method Executing ");
 		Optional<TireConfigurationEntity> tireConfigurationDetails = tireConfigurationRepository
 				.findById(tireConfigurationId);
-		if (!tireConfigurationDetails.isEmpty()) {
+	
+		if (!tireConfigurationDetails.isEmpty())
+		{
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, tireConfigurationDetails.get());
 		} else {
@@ -2170,5 +2179,183 @@ public class IMasterServiceImpl {
 					null);
 		}
 	}
+
+	
+	
+	public ServiceResponseDTO saveTirePattern(TirePatternRequestDTO tirePatternRequestDTO) {
+		LOGGER.info(
+				"Tire Pattern Data List master data in IMasterServiceImpl and saveTirePattern method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (tirePatternRequestDTO != null) {
+			TirePatternEntity entity = new TirePatternEntity();
+			TireMakeEntity tireMakeEntity = new TireMakeEntity();
+			try {
+				if (null != tirePatternRequestDTO.getTirePatternId()) {
+					LOGGER.info(" Need to do Updation (TirePattern Type Data exist) ");
+					return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_PATTERN_DATA_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_TIRE_PATTERN_DATA_ALREADY_EXIST_DESC, null);
+				}
+				tirePatternRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+				BeanUtils.copyProperties(tirePatternRequestDTO, entity);
+				tireMakeEntity.setTireMakeId(tirePatternRequestDTO.getTireMakeId());
+				entity.setTireMakeId(tireMakeEntity);
+				entity.setTirePattern(tirePatternRequestDTO.getTirePattern());
+		        entity = tirePatternRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
+				response.setResult(new GenericResponseDTO(entity.getTirePatternId().toString()));
+				LOGGER.info(" Master data List data saved Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method saveTirePattern with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+
+	public ServiceResponseDTO updateTirePatternMaster(TirePatternRequestDTO tirePatternRequestDTO,
+			Long tirePatternId) {
+		LOGGER.info(
+				"TirePatternMaster Data List master data in IMasterServiceImpl and updateTirePattern method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (tirePatternRequestDTO != null) {
+			Optional<TirePatternEntity> tirePatternEntity = tirePatternRepository.findById(tirePatternId);
+			if (tirePatternEntity.isEmpty()) {
+				LOGGER.info(" Invalid Tire  master Data for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_PATTERN_DATA__DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_TIRE_PATTERN_DATA_DOESNT_EXIST_DESC, null);
+			}
+			TirePatternEntity entity = new TirePatternEntity();
+			TireMakeEntity tireMakeEntity = new TireMakeEntity();
+			tirePatternRequestDTO.setTirePatternId(tirePatternId);
+			tirePatternRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+			BeanUtils.copyProperties(tirePatternRequestDTO, entity);
+			tireMakeEntity.setTireMakeId(tirePatternRequestDTO.getTireMakeId());
+			entity.setTireMakeId(tireMakeEntity);
+			entity.setTirePattern(tirePatternRequestDTO.getTirePattern());
+			
+			try {
+				entity = tirePatternRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(entity);
+				LOGGER.info("TirePattern Data List data update Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method updateTirePatternData with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	
+
+	
+	public ServiceResponseDTO enableDisableTirePatternMaster(
+			TirePatternRequestDTO tirePatternRequestDTO, Long tirePatternId) {
+		LOGGER.info(
+				"TirePattern  Master Data  master data in IMasterServiceImpl and  enableDisableTirePattern method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (tirePatternRequestDTO != null) {
+			Optional<TirePatternEntity> tirePatternEntity = tirePatternRepository
+					.findById(tirePatternId);
+			if (tirePatternEntity.isEmpty()) {
+				LOGGER.info(" Invalid  Tire Pattern Master Data List for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_PATTERN_DATA__DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_TIRE_PATTERN_DATA_DOESNT_EXIST_DESC, null);
+
+			}
+			TirePatternEntity entity = tirePatternEntity.get();
+			entity.setActiveStatus(tirePatternRequestDTO.getActiveStatus());
+			try {
+				entity = tirePatternRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(new GenericResponseDTO(entity.getTirePatternId().toString()));
+				LOGGER.info(" Tire Pattern  Master Data List data enabled or disabled Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method enableDisableTirePatternMaster  with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	     
+	
+	public ServiceResponseDTO getAllTirePattern(int pageNumber, int size, String sortBy) {
+		LOGGER.info(
+				"getAllTirePattern process start in IMasterServiceImpl and getTirePattern method Executing ");
+		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		Page<TirePatternEntity> tirePattern = tirePatternRepository.findAll(pageable);
+		if (tirePattern.getSize() > 0) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, tirePattern);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+
+	public ServiceResponseDTO getTirePatternById(Long tirePatternId) {
+		LOGGER.info(
+				"getTirePatternById process start in IMasterServiceImpl and getTirePatternById method Executing ");
+		Optional<TirePatternEntity> tirePatternDetails = tirePatternRepository
+				.findById(tirePatternId);
+	
+		if (!tirePatternDetails.isEmpty())
+		{
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, tirePatternDetails.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+	
+	
+	public ServiceResponseDTO getTireMakeById(Long tireMakeId) {
+		LOGGER.info("getTireMakeDataById  process start in IMasterServiceImpl ");
+		Optional<TirePatternEntity> tirePatternEntity = tirePatternRepository.findById(tireMakeId);
+		if (!tirePatternEntity.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, tirePatternEntity.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

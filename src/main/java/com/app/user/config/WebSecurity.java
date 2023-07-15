@@ -118,8 +118,17 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 						URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_TIRE_CONFIGURATION,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_CONFIGURATION_BY_ID,
 						URLConstants.MASTER_SERVICE + URLConstants.GET_VEHICLE_BY_MULTIPLE_FILTER,
-
 						
+						URLConstants.MASTER_SERVICE + URLConstants.SAVE_TIRE_PATTERN,
+						URLConstants.MASTER_SERVICE + URLConstants.UPDATE_TIRE_PATTERN,
+						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_TIRE_MASTER,
+						URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_TIRE_PATTERN,
+						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_PATTERN_BY_ID,
+						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_PATERN_MAKE_BY_ID,
+						
+						
+
+						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_PATTERN,
 						
 						URLConstants.VEHICLE_INSPECTION + URLConstants.CREATE_VEHICLE_INSPECTION,
 						URLConstants.VEHICLE_INSPECTION + URLConstants.UPDATE_VEHICLE_INSPECTION,
@@ -135,6 +144,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 						URLConstants.OLD_VEHICLE_INSPECTION + URLConstants.GET_OLD_VEHICLE_INSPECTION_BY_REGISTRATION_NO,
 						URLConstants.OLD_VEHICLE_INSPECTION+ URLConstants.SAVE_OLD_VEHICLE_INSPECTION_DETAILS,
 						URLConstants.OLD_VEHICLE_INSPECTION+ URLConstants.GET_OLD_VEHICLE_INSPECTION_DETAILS,
+						
+						
 						
 						URLConstants.FILE_SERVICE + URLConstants.UPLOAD_FILE)
 				.permitAll().anyRequest().authenticated().and().sessionManagement()

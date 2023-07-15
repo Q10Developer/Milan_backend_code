@@ -135,6 +135,11 @@ public interface ResponseKeysValue {
 	String FAILURE_INCORRECT_INSPECTION_CODE = "400";
 	String WARNING_OLD_VEHICLE_INSPECTION_ALREADY_EXIST_CODE ="100";
 	String WARNING_OLD_VEHICLE_INSPECTION_ALREADY_EXIST_DESC = "old vehicle inspection already exist";
+	String WARNING_TIRE_PATTERN_DATA_ALREADY_EXIST_CODE = "100";
+	
+	String WARNING_TIRE_PATTERN_DATA_ALREADY_EXIST_DESC = "tire pattern data already exist";
+	String WARNING_TIRE_PATTERN_DATA__DOESNT_EXIST_CODE = "100";
+	String WARNING_TIRE_PATTERN_DATA_DOESNT_EXIST_DESC = "tire  pattern data doesn't Exist ";
 
 	
 

@@ -20,6 +20,7 @@ import com.app.user.dto.request.ObservationCategoryRequestDTO;
 import com.app.user.dto.request.ObservationRequestDTO;
 import com.app.user.dto.request.TireConfigurationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
+import com.app.user.dto.request.TirePatternRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
 import com.app.user.dto.request.VehicleManufacturerRequestDTO;
 import com.app.user.dto.request.VehicleModelRequestDTO;
@@ -27,6 +28,7 @@ import com.app.user.dto.request.VehicleRequestDTO;
 import com.app.user.dto.request.VehicleSubTypeRequestDTO;
 import com.app.user.dto.request.VehicleTypeRequestDTO;
 import com.app.user.dto.request.VehicleUsageRequestDTO;
+import com.app.user.entity.TireMakeEntity;
 import com.app.user.service.impl.IMasterServiceImpl;
 
 @RestController
@@ -582,5 +584,60 @@ public class MasterController {
 		LOGGER.info("Executing  getTireConfigurationDetail() method of MasterController");
 		return masterServiceImpl.getTireConfigurationById(tireConfigurationId);
 	}
+	
+	
+	@PostMapping(value = URLConstants.SAVE_TIRE_PATTERN)
+	public ServiceResponseDTO saveTirePatternMaster(
+			@RequestBody TirePatternRequestDTO tirePatternRequestDTO) {
+		LOGGER.info("Executing saveTirePattternmaster() method of MasterController");
+		return masterServiceImpl.saveTirePattern(tirePatternRequestDTO);
+	}
 
+	
+	@PutMapping(value = URLConstants.UPDATE_TIRE_PATTERN)
+	public ServiceResponseDTO updateTirePattern(
+			@RequestParam(name = "tirepatternId") Long tirePatternId,
+			@RequestBody TirePatternRequestDTO tirePatternRequestDTO) {
+		LOGGER.info("Executing  updateTirePatternMaster() method of MasterController");
+		return masterServiceImpl.updateTirePatternMaster(tirePatternRequestDTO, tirePatternId);
+	}
+	
+	
+	@PutMapping(value = URLConstants.ENABLE_DISABLE_TIRE_MASTER)
+	public ServiceResponseDTO enableDisableTirePatternMaster(
+			@RequestParam(name = "tirePatternId") Long tirePatternId,
+			@RequestBody TirePatternRequestDTO tirePatternRequestDTO) {
+		LOGGER.info("Executing  enableDisabletirePatternMaster() method of MasterController");
+		return masterServiceImpl.enableDisableTirePatternMaster(tirePatternRequestDTO, tirePatternId);
+	}
+	
+
+	@GetMapping(value = URLConstants.GET_ALL_TIRE_PATTERN)
+	public ServiceResponseDTO getAllTirePattern(
+			@RequestParam(name = "page", defaultValue = "0") int pageNumber,
+			@RequestParam(name = "size", defaultValue = "10") int size,
+			@RequestParam(name = "sortBy", defaultValue = "tirePatternId") String sortBy) {
+		LOGGER.info("Executing  getAllTirePatternDetails() method of MasterController");
+		return masterServiceImpl.getAllTirePattern(pageNumber, size, sortBy);
+	}
+	
+	
+	
+	@GetMapping(value = URLConstants.GET_TIRE_PATTERN_BY_ID)
+	public ServiceResponseDTO getTirePatternById(
+			@RequestParam(name = "tirePatternId") Long tirePatternId) {
+		LOGGER.info("Executing  getTirePatternDetail() method of MasterController");
+		return masterServiceImpl.getTirePatternById(tirePatternId);
+	}
+	
+	
+	@GetMapping(value = URLConstants.GET_TIRE_PATERN_MAKE_BY_ID)
+	public ServiceResponseDTO getTireMakebyIdDetails(@RequestParam(name = "tireMakeId") Long tireMakeId) {
+		LOGGER.info("Executing  getTireMakebyIdDetails() method of MasterController");
+		return masterServiceImpl.getTireMakeById(tireMakeId);
+	}
+	
+	
+	
+	
 }

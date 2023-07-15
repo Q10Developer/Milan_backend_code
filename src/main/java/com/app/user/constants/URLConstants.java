@@ -130,6 +130,14 @@ public class URLConstants {
 	public static final String UPLOAD_FILE = "/uploadfile";
 	public static final String SAVE_OLD_VEHICLE_INSPECTION_DETAILS ="/saveoldvehicleinspectiondetails" ;
 	public static final String GET_OLD_VEHICLE_INSPECTION_DETAILS = "/getoldvehicleinspectiondetails";
+	public static final String GET_TIRE_PATTERN = "/gettirepattern";
+	public static final String SAVE_TIRE_PATTERN = "/savetirepattern";
+	public static final String UPDATE_TIRE_PATTERN = "/updatetirepattern";
+	public static final String ENABLE_DISABLE_TIRE_MASTER = "/enabledisabletiremaster";
+	public static final String GET_ALL_TIRE_PATTERN ="/getalltirepattern";
+	public static final String GET_TIRE_PATTERN_BY_ID ="/gettirepatternbyid";
+	public static final String GET_TIRE_MAKE_ID ="/gettiremakeid";
+	public static final String GET_TIRE_PATERN_MAKE_BY_ID ="/gettirepatternmakebyid";
 	
 
 
