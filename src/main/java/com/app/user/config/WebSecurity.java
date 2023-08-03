@@ -127,6 +127,12 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_PATERN_MAKE_BY_ID,
 						
 						
+						URLConstants.MASTER_SERVICE + URLConstants.SAVE_CLIENT_SERVICE_LOCATION,
+						URLConstants.MASTER_SERVICE + URLConstants.UPDATE_CLIENT_SERVICE_LOCATION,
+						URLConstants.MASTER_SERVICE + URLConstants.ENABLE_DISABLE_CLIENT_SERVICE_LOCATION,
+						URLConstants.MASTER_SERVICE + URLConstants.GET_ALL_CLIENT_SERVICE_LOCATION,
+						URLConstants.MASTER_SERVICE + URLConstants.GET_CLIENT_SERVICE_LOCATION_BY_ID,
+						
 
 						URLConstants.MASTER_SERVICE + URLConstants.GET_TIRE_PATTERN,
 						

@@ -138,6 +138,11 @@ public class URLConstants {
 	public static final String GET_TIRE_PATTERN_BY_ID ="/gettirepatternbyid";
 	public static final String GET_TIRE_MAKE_ID ="/gettiremakeid";
 	public static final String GET_TIRE_PATERN_MAKE_BY_ID ="/gettirepatternmakebyid";
+	public static final String SAVE_CLIENT_SERVICE_LOCATION = "/saveclientservicelocation";
+	public static final String UPDATE_CLIENT_SERVICE_LOCATION = "/updateclientservicelocation";
+	public static final String ENABLE_DISABLE_CLIENT_SERVICE_LOCATION = "/enabledisableclientservicelocation";
+	public static final String GET_ALL_CLIENT_SERVICE_LOCATION = "/getallclientservicelocation";
+	public static final String GET_CLIENT_SERVICE_LOCATION_BY_ID = "/getclientservicelocationbyid";
 	
 
 

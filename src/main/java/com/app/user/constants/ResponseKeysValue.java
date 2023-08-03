@@ -140,6 +140,13 @@ public interface ResponseKeysValue {
 	String WARNING_TIRE_PATTERN_DATA_ALREADY_EXIST_DESC = "tire pattern data already exist";
 	String WARNING_TIRE_PATTERN_DATA__DOESNT_EXIST_CODE = "100";
 	String WARNING_TIRE_PATTERN_DATA_DOESNT_EXIST_DESC = "tire  pattern data doesn't Exist ";
+	String WARNING_CLIENT_SERVICE_LOCATION_ALREADY_EXIST_CODE = "100";
+
+	String WARNING_CLIENT_SERVICE_LOCATION_ALREADY_EXIST_DESC = "client service location alrady exist";
+	String WARNING_CLIENT_SERVICE_LOCATION_DATA__DOESNT_EXIST_CODE = "100";
+	String WARNING_CLIENT_SERVICE_LOCATION_DATA__DOESNT_EXIST_DESC = "client service location data doesn't exist";
+	
+	
 
 	
 

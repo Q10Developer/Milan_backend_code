@@ -1,5 +1,9 @@
 package com.app.user.dto.request;
 
+import java.util.List;
+
+import com.app.user.entity.ClientServiceLocationEntity;
+
 public class ClientMasterRequestDTO {
 
 	private Long clientId;
@@ -12,7 +16,7 @@ public class ClientMasterRequestDTO {
 	private String clientWebsite;
 	private Long clientMobileNo;
 	private String clientPhoneNo;
-	private Long gstRegistrationType;
+	private int gstRegistrationType;
 	private String clientGstNumber;
 	private String clientPanNumber;
 	private String clientBillingAddress;
@@ -26,6 +30,7 @@ public class ClientMasterRequestDTO {
 	private String clientServiceCountry;
 	private String clientServicePincode;
 	private int clientActiveStatus;
+	private List<ClientServiceLocationEntity> serviceLocations;
 
 	public Long getClientId() {
 		return clientId;
@@ -107,11 +112,11 @@ public class ClientMasterRequestDTO {
 		this.clientPhoneNo = clientPhoneNo;
 	}
 
-	public Long getGstRegistrationType() {
+	public int getGstRegistrationType() {
 		return gstRegistrationType;
 	}
 
-	public void setGstRegistrationType(Long gstRegistrationType) {
+	public void setGstRegistrationType(int gstRegistrationType) {
 		this.gstRegistrationType = gstRegistrationType;
 	}
 
@@ -218,6 +223,16 @@ public class ClientMasterRequestDTO {
 	public void setClientActiveStatus(int clientActiveStatus) {
 		this.clientActiveStatus = clientActiveStatus;
 	}
+	
+	
+
+	public List<ClientServiceLocationEntity> getServiceLocations() {
+		return serviceLocations;
+	}
+
+	public void setServiceLocations(List<ClientServiceLocationEntity> serviceLocations) {
+		this.serviceLocations = serviceLocations;
+	}
 
 	@Override
 	public String toString() {
@@ -270,6 +285,8 @@ public class ClientMasterRequestDTO {
 		builder.append(clientServicePincode);
 		builder.append(", clientActiveStatus=");
 		builder.append(clientActiveStatus);
+		builder.append(", serviceLocations=");
+		builder.append(serviceLocations);
 		builder.append("]");
 		return builder.toString();
 	}

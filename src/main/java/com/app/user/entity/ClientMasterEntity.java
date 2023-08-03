@@ -1,9 +1,13 @@
 package com.app.user.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -46,7 +50,7 @@ public class ClientMasterEntity {
 	private String clientPhoneNo;
 
 	@Column(name = "client_gst_registration_type")
-	private int gstRegistrationType;
+	private Long gstRegistrationType;
 
 	@Column(name = "client_gst_number")
 	private String clientGstNumber;
@@ -54,6 +58,7 @@ public class ClientMasterEntity {
 	@Column(name = "client_pan_number")
 	private String clientPanNumber;
 
+	
 	@Column(name = "client_billing_address")
 	private String clientBillingAddress;
 
@@ -69,6 +74,8 @@ public class ClientMasterEntity {
 	@Column(name = "client_billing_pincode")
 	private String clientBillingPincode;
 
+	
+	
 	@Column(name = "client_service_address")
 	private String clientServiceAddress;
 
@@ -86,6 +93,18 @@ public class ClientMasterEntity {
 
 	@Column(name = "client_active_status")
 	private int clientActiveStatus;
+	
+	
+	 @OneToMany(mappedBy = "clientId", cascade = CascadeType.ALL)
+	    private List<ClientServiceLocationEntity> serviceLocations;
+	
+    public List<ClientServiceLocationEntity> getServiceLocations() {
+		return serviceLocations;
+	}
+
+	public void setServiceLocations(List<ClientServiceLocationEntity> serviceLocations) {
+		this.serviceLocations = serviceLocations;
+	}
 
 	public Long getClientId() {
 		return clientId;
@@ -175,12 +194,12 @@ public class ClientMasterEntity {
 		this.clientPhoneNo = clientPhoneNo;
 	}
 
-	public int getGstRegistrationType() {
+	public Long getGstRegistrationType() {
 		return gstRegistrationType;
 	}
 
-	public void setGstRegistrationType(int gstRegistrationType) {
-		this.gstRegistrationType = gstRegistrationType;
+	public void setGstRegistrationType(Long gstRegistrationType) {
+		this.gstRegistrationType = gstRegistrationType ;
 	}
 
 	public String getClientGstNumber() {
@@ -340,8 +359,12 @@ public class ClientMasterEntity {
 		builder.append(clientServicePincode);
 		builder.append(", clientActiveStatus=");
 		builder.append(clientActiveStatus);
+		builder.append(", serviceLocations=");
+		builder.append(serviceLocations);
 		builder.append("]");
 		return builder.toString();
 	}
+
+     
 
 }

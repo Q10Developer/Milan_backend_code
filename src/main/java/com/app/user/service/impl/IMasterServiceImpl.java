@@ -5,11 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +31,7 @@ import com.app.user.constants.ResponseKeysValue;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ClientMasterRequestDTO;
+import com.app.user.dto.request.ClientServiceLocationRequestDTO;
 import com.app.user.dto.request.DropDownMasterDTO;
 import com.app.user.dto.request.MasterDataRequestDTO;
 import com.app.user.dto.request.ObservationCategoryRequestDTO;
@@ -34,6 +40,7 @@ import com.app.user.dto.request.TireConfigurationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
 import com.app.user.dto.request.TirePatternRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
+import com.app.user.dto.request.VehicleInspectionDetailsRequestDTO;
 import com.app.user.dto.request.VehicleManufacturerRequestDTO;
 import com.app.user.dto.request.VehicleModelRequestDTO;
 import com.app.user.dto.request.VehicleRequestDTO;
@@ -42,6 +49,7 @@ import com.app.user.dto.request.VehicleTypeRequestDTO;
 import com.app.user.dto.request.VehicleUsageRequestDTO;
 import com.app.user.dto.response.GenericResponseDTO;
 import com.app.user.entity.ClientMasterEntity;
+import com.app.user.entity.ClientServiceLocationEntity;
 import com.app.user.entity.DropDownEntity;
 import com.app.user.entity.MasterDataListEntity;
 import com.app.user.entity.ObservationCategoryEntity;
@@ -50,6 +58,8 @@ import com.app.user.entity.TireConfigurationEntity;
 import com.app.user.entity.TireMakeEntity;
 import com.app.user.entity.TirePatternEntity;
 import com.app.user.entity.TyreMasterEntity;
+import com.app.user.entity.VehicleInspectionDetailsEntity;
+import com.app.user.entity.VehicleInspectionEntity;
 import com.app.user.entity.VehicleManufacturerEntity;
 import com.app.user.entity.VehicleMasterEntity;
 import com.app.user.entity.VehicleModelEntity;
@@ -57,6 +67,7 @@ import com.app.user.entity.VehicleSubTypeEntity;
 import com.app.user.entity.VehicleTypeEntity;
 import com.app.user.entity.VehicleUsageEntity;
 import com.app.user.repository.ClientMasterRepository;
+import com.app.user.repository.ClientServiceLocationReposistory;
 import com.app.user.repository.DropDownMasterRepository;
 import com.app.user.repository.MasterDataListRepository;
 import com.app.user.repository.ObservatioRepository;
@@ -124,8 +135,12 @@ public class IMasterServiceImpl {
 	
 	@Autowired
 	private TirePatternReposistory  tirePatternRepository;
+	
+	
+	@Autowired 
+	private ClientServiceLocationReposistory clientServiceLocationReposistory;
 
-	public ServiceResponseDTO saveClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO) {
+	/*public ServiceResponseDTO saveClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO) {
 		LOGGER.info("client master data in IMasterServiceImpl and saveClientMasterData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
 		if (clientMasterRequestDTO != null) {
@@ -156,7 +171,7 @@ public class IMasterServiceImpl {
 			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
 		}
 		return response;
-	}
+	}*/
 
 	public ServiceResponseDTO updateClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO, Long clientId) {
 		LOGGER.info("client master data in IMasterServiceImpl and updateClientMasterData method");
@@ -2348,14 +2363,251 @@ public class IMasterServiceImpl {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+/*	@Transactional
+	public ServiceResponseDTO saveClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO,
+	        List<ClientServiceLocationRequestDTO> clientServiceLocationDetails) {
+	    LOGGER.info("Saving client master data in IMasterServiceImpl and saveClientMasterData method");
+	    ServiceResponseDTO response = new ServiceResponseDTO();
 
-}
+	    if (clientMasterRequestDTO != null && clientServiceLocationDetails != null) {
+	        try {
+	            
+	            ClientMasterEntity clientMasterEntity = new ClientMasterEntity();
+	            clientMasterEntity.setClientActiveStatus(URLConstants.ACTIVE);
+	            BeanUtils.copyProperties(clientMasterRequestDTO, clientMasterEntity);
+	            
+	            
+	            
+	            List<ClientServiceLocationEntity> serviceLocationEntities = new ArrayList<>();
+
+	            for (ClientServiceLocationRequestDTO serviceLocationDTO : clientServiceLocationDetails) {
+	                ClientServiceLocationEntity serviceLocationEntity = new ClientServiceLocationEntity();
+	                BeanUtils.copyProperties(serviceLocationDTO, serviceLocationEntity);
+	                serviceLocationEntity.setClientId(clientMasterEntity);
+
+	                serviceLocationEntities.add(serviceLocationEntity);
+	            }
+
+	            
+	            clientMasterEntity.setServiceLocations(serviceLocationEntities);
+	            clientMasterRepository.save(clientMasterEntity);
+
+	            response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
+	            response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
+	            response.setResult(new GenericResponseDTO(clientMasterEntity.getClientId().toString()));
+
+	            LOGGER.info("Client master data and service locations saved successfully");
+	        } catch (Exception ex) {
+	            LOGGER.error("Exception occurred in IMasterServiceImpl class in method saveClientMasterData with Exception: {}",
+	                    ex.getMessage());
+	            response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+	            response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+	            response.setResult(ex.getMessage());
+	        }
+	    } else {
+	        response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+	        response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+	    }
+	    return response;
+	}
+*/
+	
+	public ServiceResponseDTO updateClientServiceLocation(ClientServiceLocationRequestDTO clientServiceLocationRequestDTO,
+			Long clientServiceLocationId) {
+		LOGGER.info(
+				"Client Service Location  Data List master data in IMasterServiceImpl and updateClientServiceLocation method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if ( clientServiceLocationRequestDTO!= null  ) {
+			Optional<ClientServiceLocationEntity> clientServiceLocationEntity = clientServiceLocationReposistory
+					.findById(clientServiceLocationId);
+			if (clientServiceLocationEntity.isEmpty()) {
+				LOGGER.info(" Invalid Client Service master master Data for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_CLIENT_SERVICE_LOCATION_DATA__DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_CLIENT_SERVICE_LOCATION_DATA__DOESNT_EXIST_DESC, null);
+			}
+			
+			ClientServiceLocationEntity entity = new ClientServiceLocationEntity();
+			ClientMasterEntity clientMasterEntity = new ClientMasterEntity();
+			clientServiceLocationRequestDTO.setClientServiceLocationId(clientServiceLocationId);
+			clientServiceLocationRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+			BeanUtils.copyProperties(clientServiceLocationRequestDTO, entity);
+			clientMasterEntity.setClientId(clientServiceLocationRequestDTO.getClientId());
+			entity.setClientId(clientMasterEntity);
+			entity.setClientServiceAddress(clientServiceLocationRequestDTO.getClientServiceAddress());
+			entity.setClientId(clientMasterEntity);
+			try {
+				entity = clientServiceLocationReposistory.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(entity);
+				LOGGER.info("CLient SErvice Location Master Data List data update Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method clientServiceLocationReposistory with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	
+	
+	
+	public ServiceResponseDTO enableDisableClientServiceLocation(ClientServiceLocationRequestDTO clientServiceLocationRequestDTO,
+			Long clientServiceLocationId
+			 ) {
+		LOGGER.info(
+				"ClientServiceLocation  Master Data  master data in IMasterServiceImpl and  enableDisableClientService method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (  clientServiceLocationRequestDTO!= null  ) {
+			Optional<ClientServiceLocationEntity> clientServiceLocationEntity = clientServiceLocationReposistory
+					.findById(clientServiceLocationId);
+			if (clientServiceLocationEntity.isEmpty()) {
+				LOGGER.info(" Invalid  ClientServiceLOcation  Master Data List for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_CLIENT_SERVICE_LOCATION_DATA__DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_CLIENT_SERVICE_LOCATION_DATA__DOESNT_EXIST_DESC, null);
+
+			}
+			ClientServiceLocationEntity entity = clientServiceLocationEntity.get();
+			entity.setActiveStatus( clientServiceLocationRequestDTO.getActiveStatus());
+			try {
+				entity = clientServiceLocationReposistory.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(new GenericResponseDTO(entity.getClientServiceLocationId().toString()));
+				LOGGER.info(" Client Service location  Master Data List data enabled or disabled Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method enableDisableClientServiceLocation  with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+	
+	
+	
+	public ServiceResponseDTO getAllClientServiceLocationDetails(int pageNumber, int size, String sortBy) {
+		LOGGER.info(
+				"getAllClientServiceLocationDetails process start in IMasterServiceImpl and getAllClientServiceLocationDetails method Executing ");
+		PageRequest pageable = null;
+		if (size != 0) {
+			pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		} else {
+			pageable = PageRequest.of(0, Integer.MAX_VALUE);
+		}
+		Page<ClientServiceLocationEntity> clientServiceLocationDetailList = clientServiceLocationReposistory.findAll(pageable);
+		if (clientServiceLocationDetailList.getSize() > 0) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientServiceLocationDetailList);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+	
+	
+	public ServiceResponseDTO getClientServiceLocationDetailsById(Long clientServiceLocationId) {
+		LOGGER.info(
+				"getClientServiceLocationDetailsById process start in IMasterServiceImpl and  method Executing getClientServiceLocationDetailsById");
+		Optional<ClientServiceLocationEntity> clientServiceLocationDetail = clientServiceLocationReposistory.findById(clientServiceLocationId);
+		if (!clientServiceLocationDetail.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientServiceLocationDetail.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+	
+	
+	
+	
+/*	public ServiceResponseDTO saveClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO,
+	        List<ClientServiceLocationRequestDTO> clientServiceLocationDetails) {
+	    LOGGER.info("Saving client master data with service locations");
+	    ServiceResponseDTO response = new ServiceResponseDTO();
+
+	    if (clientMasterRequestDTO != null && clientServiceLocationDetails != null) {
+	        try {
+	            if (clientMasterRequestDTO.getClientId() != null) {
+	                LOGGER.info("ClientServiceLocation data already exists. Need to perform an update.");
+	                return new ServiceResponseDTO(ResponseKeysValue.WARNING_CLIENT_SERVICE_LOCATION_ALREADY_EXIST_CODE,
+	                        ResponseKeysValue.WARNING_CLIENT_SERVICE_LOCATION_ALREADY_EXIST_DESC, null);
+	            }
+
+	       ClientMasterEntity  clientMasterEntity = new ClientMasterEntity();
+	            clientMasterEntity.setClientActiveStatus(URLConstants.ACTIVE);
+	            clientMasterEntity.setClientTitle(clientMasterRequestDTO.getClientTitle());
+	            clientMasterEntity.setClientFirstName(clientMasterRequestDTO.getClientFirstName());
+	            clientMasterEntity.setClientMiddleName(clientMasterRequestDTO.getClientMiddleName());
+	            clientMasterEntity.setClientLasterName(clientMasterRequestDTO.getClientLasterName());
+	            clientMasterEntity.setClientCompanyName(clientMasterRequestDTO.getClientCompanyName());
+	            clientMasterEntity.setClientEmailId(clientMasterRequestDTO.getClientEmailId());
+	            clientMasterEntity.setClientWebsite(clientMasterRequestDTO.getClientWebsite());
+	            clientMasterEntity.setClientMobileNo(clientMasterRequestDTO.getClientMobileNo());
+	            clientMasterEntity.setClientPhoneNo(clientMasterRequestDTO.getClientPhoneNo());
+	         //   clientMasterEntity.setGstRegistrationType(clientMasterRequestDTO.getGstRegistrationType());
+	            clientMasterEntity.setClientGstNumber(clientMasterRequestDTO.getClientGstNumber());
+	            clientMasterEntity.setClientPanNumber(clientMasterRequestDTO.getClientPanNumber());
+	            clientMasterEntity.setClientBillingAddress(clientMasterRequestDTO.getClientBillingAddress());
+	            clientMasterEntity.setClientBillingState(clientMasterRequestDTO.getClientBillingState());
+	            clientMasterEntity.setClientBillingCity(clientMasterRequestDTO.getClientBillingCity());
+	            clientMasterEntity.setClientBillingCountry(clientMasterRequestDTO.getClientBillingCountry());
+	            clientMasterEntity.setClientBillingPincode(clientMasterRequestDTO.getClientBillingPincode());
+
+
+	            List<ClientServiceLocationEntity> serviceLocations = new ArrayList<>();
+
+	            for (ClientServiceLocationRequestDTO locationRequest : clientServiceLocationDetails) {
+	                ClientServiceLocationEntity locationEntity = new ClientServiceLocationEntity();
+
+	                locationEntity.setClientServiceAddress(locationRequest.getClientServiceAddress());
+	                locationEntity.setClientServicePincode(locationRequest.getClientServicePincode());
+	                locationEntity.setClientServiceCity(locationRequest.getClientServiceCity());
+	                locationEntity.setClientServiceState(locationRequest.getClientServiceState());
+	                locationEntity.setClientServiceCountry(locationRequest.getClientServiceCountry());
+	                locationEntity.setActiveStatus(locationRequest.getActiveStatus());
+	                
+	                
+	                locationEntity.setClientMasterEntity(clientMasterEntity);
+	                serviceLocations.add(locationEntity);
+	            }
+
+	            clientMasterEntity.setServiceLocations(serviceLocations);
+	            clientMasterRepository.save(clientMasterEntity);
+
+	            response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
+	            response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
+	            response.setResult(new GenericResponseDTO(clientMasterEntity.getClientId().toString()));
+	            LOGGER.info("Client master data with service locations saved successfully");
+	        } catch (Exception ex) {
+	            LOGGER.error("Exception occurred in IMasterServiceImpl class while saving client master data with service locations: {}", ex.getMessage());
+	            response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+	            response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+	            response.setResult(ex.getMessage());
+	        }
+	    } else {
+	        response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+	        response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+	    }
+	    return response;
+	}
+
+	
+	*/
+	
+	
+	

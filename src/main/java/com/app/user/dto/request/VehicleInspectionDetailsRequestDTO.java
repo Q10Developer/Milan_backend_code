@@ -18,11 +18,12 @@ public class VehicleInspectionDetailsRequestDTO {
 	private int leastTireThicknessAllowed;
 	private Integer odometerReadingWhenFitted;
 	private String tirePattern;
+	private String tireSize;
 	private Date tireRemovalDate;
 	private Integer odometerReadingWhenRemoved;
 	private int recoPressure;
 	private int obsPressure;
-	private int otdMm;
+	private int otdMm;    
 	private int lstMm;
 	private int ctMm;
 	private int rstMm;
@@ -35,6 +36,14 @@ public class VehicleInspectionDetailsRequestDTO {
 	private String pressureAnalysis;
 	private String leastTireThicknessAllowedAnalysis;
 	private String wearAnalysis;
+	
+	
+	public String getTireSize() {
+		return tireSize;
+	}
+	public void setTireSize(String tireSize) {
+		this.tireSize = tireSize;
+	}
 	public Long getRowId() {
 		return rowId;
 	}
@@ -221,7 +230,8 @@ public class VehicleInspectionDetailsRequestDTO {
 	public void setWearAnalysis(String wearAnalysis) {
 		this.wearAnalysis = wearAnalysis;
 	}
-	@Override
+	
+	 @Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("VehicleInspectionDetailsRequestDTO [rowId=");
@@ -252,6 +262,8 @@ public class VehicleInspectionDetailsRequestDTO {
 		builder.append(odometerReadingWhenFitted);
 		builder.append(", tirePattern=");
 		builder.append(tirePattern);
+		builder.append(", tireSize=");
+		builder.append(tireSize);
 		builder.append(", tireRemovalDate=");
 		builder.append(tireRemovalDate);
 		builder.append(", odometerReadingWhenRemoved=");
@@ -289,6 +301,9 @@ public class VehicleInspectionDetailsRequestDTO {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
+	
 
 	
 	
