@@ -1,6 +1,5 @@
 package com.app.user.controller;
 
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ClientMasterRequestDTO;
-import com.app.user.dto.request.ClientServiceLocationRequestDTO;
 import com.app.user.dto.request.DropDownMasterDTO;
 import com.app.user.dto.request.MasterDataRequestDTO;
 import com.app.user.dto.request.ObservationCategoryRequestDTO;
@@ -43,8 +41,7 @@ public class MasterController {
 	private IMasterServiceImpl masterServiceImpl;
 
 	@PostMapping(value = URLConstants.SAVE_CLIENT)
-	public ServiceResponseDTO createClient(@RequestBody ClientMasterRequestDTO clientMasterRequestDTO,
-			@RequestBody List<ClientServiceLocationRequestDTO> clientServiceLocationDetails) {
+	public ServiceResponseDTO createClient(@RequestBody ClientMasterRequestDTO clientMasterRequestDTO) {
 		LOGGER.info("Executing  createClient() method of MasterController");
 		return masterServiceImpl.saveClientMasterData(clientMasterRequestDTO);
 	}
