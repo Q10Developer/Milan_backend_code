@@ -8,8 +8,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.app.user.dto.request.ClientServiceLocationRequestDTO;
-
 @Entity
 @Table(name = "client_service_location_master")
 public class ClientServiceLocationEntity {
@@ -126,16 +124,5 @@ public class ClientServiceLocationEntity {
 		builder.append(activeStatus);
 		builder.append("]");
 		return builder.toString();
-	}
-
-	public static ClientServiceLocationEntity fromDTO(ClientServiceLocationRequestDTO clientServiceLocationRequestDTO) {
-		ClientServiceLocationEntity entity = new ClientServiceLocationEntity();
-		entity.setClientServiceLocationId(clientServiceLocationRequestDTO.getClientServiceLocationId());
-		entity.setClientServiceAddress(clientServiceLocationRequestDTO.getClientServiceAddress());
-		entity.setClientServicePincode(clientServiceLocationRequestDTO.getClientServicePincode());
-		entity.setClientServiceCity(clientServiceLocationRequestDTO.getClientServiceCity());
-		entity.setClientServiceState(clientServiceLocationRequestDTO.getClientServiceState());
-		entity.setClientServiceCountry(clientServiceLocationRequestDTO.getClientServiceCountry());
-		return entity;
 	}
 }

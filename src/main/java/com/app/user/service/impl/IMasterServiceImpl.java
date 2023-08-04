@@ -21,6 +21,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+
+import com.app.user.config.ResourceNotFoundException;
 import com.app.user.constants.ResponseKeysValue;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
@@ -41,6 +43,7 @@ import com.app.user.dto.request.VehicleSubTypeRequestDTO;
 import com.app.user.dto.request.VehicleTypeRequestDTO;
 import com.app.user.dto.request.VehicleUsageRequestDTO;
 import com.app.user.dto.response.GenericResponseDTO;
+import com.app.user.entity.ClientDataMapper;
 import com.app.user.entity.ClientMasterEntity;
 import com.app.user.entity.ClientServiceLocationEntity;
 import com.app.user.entity.DropDownEntity;
@@ -58,7 +61,7 @@ import com.app.user.entity.VehicleSubTypeEntity;
 import com.app.user.entity.VehicleTypeEntity;
 import com.app.user.entity.VehicleUsageEntity;
 import com.app.user.repository.ClientMasterRepository;
-import com.app.user.repository.ClientServiceLocationReposistory;
+import com.app.user.repository.ClientServiceLocationRepository;
 import com.app.user.repository.DropDownMasterRepository;
 import com.app.user.repository.MasterDataListRepository;
 import com.app.user.repository.ObservatioRepository;
@@ -84,6 +87,9 @@ public class IMasterServiceImpl {
 
 	@Autowired
 	private ClientMasterRepository clientMasterRepository;
+
+	@Autowired
+	private ClientServiceLocationRepository clientServiceLocationRepository;
 
 	@Autowired
 	private VehicleRepository vehicleRepository;
@@ -128,7 +134,10 @@ public class IMasterServiceImpl {
 	private TirePatternReposistory tirePatternRepository;
 
 	@Autowired
-	private ClientServiceLocationReposistory clientServiceLocationReposistory;
+	private ClientServiceLocationRepository clientServiceLocationReposistory;
+
+	@Autowired
+	private ClientDataMapper clientDataMapper;
 
 	@Transactional
 	public ServiceResponseDTO saveClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO) {
@@ -143,14 +152,24 @@ public class IMasterServiceImpl {
 							ResponseKeysValue.WARNING_CLIENT_ALREADY_EXIST_DESC, null);
 				}
 				clientMasterRequestDTO.setClientActiveStatus(URLConstants.ACTIVE);
-				entity = ClientMasterEntity.fromDTO(clientMasterRequestDTO);
+				entity = clientDataMapper.fromClientDataDTOToEntity(clientMasterRequestDTO);
 				List<ClientServiceLocationRequestDTO> serviceLocationDTOs = clientMasterRequestDTO
 						.getServiceLocations();
 				if (!CollectionUtils.isEmpty(serviceLocationDTOs)) {
 					List<ClientServiceLocationEntity> serviceLocations = new ArrayList<>();
 					for (ClientServiceLocationRequestDTO locationDTO : serviceLocationDTOs) {
-						ClientServiceLocationEntity serviceLocationEntity = ClientServiceLocationEntity
-								.fromDTO(locationDTO);
+						ClientServiceLocationEntity serviceLocationEntity;
+						if (locationDTO.getClientServiceLocationId() != null
+								&& locationDTO.getClientServiceLocationId() != 0) {
+							serviceLocationEntity = clientServiceLocationRepository
+									.findById(locationDTO.getClientServiceLocationId())
+									.orElseThrow(() -> new ResourceNotFoundException("Client Service Location with ID "
+											+ locationDTO.getClientServiceLocationId() + " not found"));
+						} else {
+							serviceLocationEntity = new ClientServiceLocationEntity();
+						}
+						serviceLocationEntity = clientDataMapper.fromClientServiceLocationDTOToEntity(locationDTO);
+						serviceLocationEntity.setActiveStatus(URLConstants.ACTIVE);
 						serviceLocationEntity.setClientId(entity);
 						serviceLocations.add(serviceLocationEntity);
 					}
@@ -188,15 +207,15 @@ public class IMasterServiceImpl {
 			}
 			clientMasterRequestDTO.setClientId(clientId);
 			clientMasterRequestDTO.setClientActiveStatus(URLConstants.ACTIVE);
-			ClientMasterEntity entity = ClientMasterEntity.fromDTO(clientMasterRequestDTO);
+			ClientMasterEntity entity = clientDataMapper.fromClientDataDTOToEntity(clientMasterRequestDTO);
 			try {
 				List<ClientServiceLocationRequestDTO> serviceLocationDTOs = clientMasterRequestDTO
 						.getServiceLocations();
 				if (serviceLocationDTOs != null) {
 					List<ClientServiceLocationEntity> updatedServiceLocations = new ArrayList<>();
 					for (ClientServiceLocationRequestDTO locationDTO : serviceLocationDTOs) {
-						ClientServiceLocationEntity serviceLocationEntity = ClientServiceLocationEntity
-								.fromDTO(locationDTO);
+						ClientServiceLocationEntity serviceLocationEntity = clientDataMapper
+								.fromClientServiceLocationDTOToEntity(locationDTO);
 						serviceLocationEntity.setClientId(entity);
 						updatedServiceLocations.add(serviceLocationEntity);
 					}

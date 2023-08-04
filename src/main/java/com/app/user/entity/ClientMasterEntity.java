@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.app.user.dto.request.ClientMasterRequestDTO;
-
 @Entity
 @Table(name = "client_master")
 public class ClientMasterEntity {
@@ -296,30 +294,6 @@ public class ClientMasterEntity {
 		builder.append(serviceLocations);
 		builder.append("]");
 		return builder.toString();
-	}
-
-	public static ClientMasterEntity fromDTO(ClientMasterRequestDTO clientMasterRequestDTO) {
-		ClientMasterEntity entity = new ClientMasterEntity();
-		entity.setClientId(clientMasterRequestDTO.getClientId());
-		entity.setClientTitle(clientMasterRequestDTO.getClientTitle());
-		entity.setClientFirstName(clientMasterRequestDTO.getClientFirstName());
-		entity.setClientMiddleName(clientMasterRequestDTO.getClientMiddleName());
-		entity.setClientLastName(clientMasterRequestDTO.getClientLastName());
-		entity.setClientCompanyName(clientMasterRequestDTO.getClientCompanyName());
-		entity.setClientEmailId(clientMasterRequestDTO.getClientEmailId());
-		entity.setClientWebsite(clientMasterRequestDTO.getClientWebsite());
-		entity.setClientMobileNo(clientMasterRequestDTO.getClientMobileNo());
-		entity.setClientPhoneNo(clientMasterRequestDTO.getClientPhoneNo());
-		entity.setGstRegistrationType(clientMasterRequestDTO.getGstRegistrationType());
-		entity.setClientGstNumber(clientMasterRequestDTO.getClientGstNumber());
-		entity.setClientPanNumber(clientMasterRequestDTO.getClientPanNumber());
-		entity.setClientBillingAddress(clientMasterRequestDTO.getClientBillingAddress());
-		entity.setClientBillingState(clientMasterRequestDTO.getClientBillingState());
-		entity.setClientBillingCity(clientMasterRequestDTO.getClientBillingCity());
-		entity.setClientBillingCountry(clientMasterRequestDTO.getClientBillingCountry());
-		entity.setClientBillingPincode(clientMasterRequestDTO.getClientBillingPincode());
-		entity.setClientActiveStatus(clientMasterRequestDTO.getClientActiveStatus());
-		return entity;
 	}
 
 }
