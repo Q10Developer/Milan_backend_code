@@ -1,7 +1,6 @@
 package com.app.user.controller;
 
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +24,12 @@ import com.app.user.dto.request.TireConfigurationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
 import com.app.user.dto.request.TirePatternRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
-import com.app.user.dto.request.VehicleInspectionDetailsRequestDTO;
 import com.app.user.dto.request.VehicleManufacturerRequestDTO;
 import com.app.user.dto.request.VehicleModelRequestDTO;
 import com.app.user.dto.request.VehicleRequestDTO;
 import com.app.user.dto.request.VehicleSubTypeRequestDTO;
 import com.app.user.dto.request.VehicleTypeRequestDTO;
 import com.app.user.dto.request.VehicleUsageRequestDTO;
-import com.app.user.entity.TireMakeEntity;
 import com.app.user.service.impl.IMasterServiceImpl;
 
 @RestController
@@ -46,12 +43,10 @@ public class MasterController {
 	private IMasterServiceImpl masterServiceImpl;
 
 	@PostMapping(value = URLConstants.SAVE_CLIENT)
-	public ServiceResponseDTO createClient(@RequestBody  ClientMasterRequestDTO clientMasterRequestDTO,
-		@RequestBody List<ClientServiceLocationRequestDTO> clientServiceLocationDetails
-			)
-			 {
+	public ServiceResponseDTO createClient(@RequestBody ClientMasterRequestDTO clientMasterRequestDTO,
+			@RequestBody List<ClientServiceLocationRequestDTO> clientServiceLocationDetails) {
 		LOGGER.info("Executing  createClient() method of MasterController");
-		return masterServiceImpl.saveClientMasterData(clientMasterRequestDTO,clientServiceLocationDetails);
+		return masterServiceImpl.saveClientMasterData(clientMasterRequestDTO);
 	}
 
 	@PutMapping(value = URLConstants.UPDATE_CLIENT)
@@ -80,6 +75,13 @@ public class MasterController {
 	public ServiceResponseDTO getClientDetail(@RequestParam(name = "clientId") Long clientId) {
 		LOGGER.info("Executing  getClientDetail() method of MasterController");
 		return masterServiceImpl.getClientDetailsById(clientId);
+	}
+
+	@GetMapping(value = URLConstants.GET_CLIENT_SERVICE_LOCATION_BY_ID)
+	public ServiceResponseDTO getClientServiceLocationDetail(
+			@RequestParam(name = "clientServiceLocationId") Long clientServiceLocationId) {
+		LOGGER.info("Executing  getClientServiceLocationDetail() method of MasterController");
+		return masterServiceImpl.getClientServiceLocationDetailsById(clientServiceLocationId);
 	}
 
 	@GetMapping(value = URLConstants.GET_ALL_CLIENT_BY_MULTIPLE_FILTERS)
@@ -591,100 +593,45 @@ public class MasterController {
 		LOGGER.info("Executing  getTireConfigurationDetail() method of MasterController");
 		return masterServiceImpl.getTireConfigurationById(tireConfigurationId);
 	}
-	
-	
+
 	@PostMapping(value = URLConstants.SAVE_TIRE_PATTERN)
-	public ServiceResponseDTO saveTirePatternMaster(
-			@RequestBody TirePatternRequestDTO tirePatternRequestDTO) {
+	public ServiceResponseDTO saveTirePatternMaster(@RequestBody TirePatternRequestDTO tirePatternRequestDTO) {
 		LOGGER.info("Executing saveTirePattternmaster() method of MasterController");
 		return masterServiceImpl.saveTirePattern(tirePatternRequestDTO);
 	}
 
-	
 	@PutMapping(value = URLConstants.UPDATE_TIRE_PATTERN)
-	public ServiceResponseDTO updateTirePattern(
-			@RequestParam(name = "tirepatternId") Long tirePatternId,
+	public ServiceResponseDTO updateTirePattern(@RequestParam(name = "tirepatternId") Long tirePatternId,
 			@RequestBody TirePatternRequestDTO tirePatternRequestDTO) {
 		LOGGER.info("Executing  updateTirePatternMaster() method of MasterController");
 		return masterServiceImpl.updateTirePatternMaster(tirePatternRequestDTO, tirePatternId);
 	}
-	
-	
+
 	@PutMapping(value = URLConstants.ENABLE_DISABLE_TIRE_MASTER)
-	public ServiceResponseDTO enableDisableTirePatternMaster(
-			@RequestParam(name = "tirePatternId") Long tirePatternId,
+	public ServiceResponseDTO enableDisableTirePatternMaster(@RequestParam(name = "tirePatternId") Long tirePatternId,
 			@RequestBody TirePatternRequestDTO tirePatternRequestDTO) {
 		LOGGER.info("Executing  enableDisabletirePatternMaster() method of MasterController");
 		return masterServiceImpl.enableDisableTirePatternMaster(tirePatternRequestDTO, tirePatternId);
 	}
-	
 
 	@GetMapping(value = URLConstants.GET_ALL_TIRE_PATTERN)
-	public ServiceResponseDTO getAllTirePattern(
-			@RequestParam(name = "page", defaultValue = "0") int pageNumber,
+	public ServiceResponseDTO getAllTirePattern(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
 			@RequestParam(name = "size", defaultValue = "10") int size,
 			@RequestParam(name = "sortBy", defaultValue = "tirePatternId") String sortBy) {
 		LOGGER.info("Executing  getAllTirePatternDetails() method of MasterController");
 		return masterServiceImpl.getAllTirePattern(pageNumber, size, sortBy);
 	}
-	
-	
-	
+
 	@GetMapping(value = URLConstants.GET_TIRE_PATTERN_BY_ID)
-	public ServiceResponseDTO getTirePatternById(
-			@RequestParam(name = "tirePatternId") Long tirePatternId) {
+	public ServiceResponseDTO getTirePatternById(@RequestParam(name = "tirePatternId") Long tirePatternId) {
 		LOGGER.info("Executing  getTirePatternDetail() method of MasterController");
 		return masterServiceImpl.getTirePatternById(tirePatternId);
 	}
-	
-	
+
 	@GetMapping(value = URLConstants.GET_TIRE_PATERN_MAKE_BY_ID)
 	public ServiceResponseDTO getTireMakebyIdDetails(@RequestParam(name = "tireMakeId") Long tireMakeId) {
 		LOGGER.info("Executing  getTireMakebyIdDetails() method of MasterController");
 		return masterServiceImpl.getTireMakeById(tireMakeId);
 	}
-	
-	/*@PostMapping(value = URLConstants.SAVE_CLIENT_SERVICE_LOCATION)
-	public ServiceResponseDTO createClientServiceLocation(@RequestBody ClientServiceLocationRequestDTO clientServiceLocationRequestDTO
-	 ) {
-		LOGGER.info("Executing  createClientServiceLocation() method of MasterController");
-		return masterServiceImpl.saveClientServiceLocationMasterData(clientServiceLocationRequestDTO);
-	}
-	*/
-	
-	
-	@PutMapping(value = URLConstants.UPDATE_CLIENT_SERVICE_LOCATION)
-	public ServiceResponseDTO updateClientServiceLocation(@RequestParam(name = "clientServiceLocationId") Long clientServiceLocationId,
-			@RequestBody ClientServiceLocationRequestDTO clientServiceLocationRequestDTO) {
-		LOGGER.info("Executing  updateClientServiceLocation() method of MasterController");
-		return masterServiceImpl.updateClientServiceLocation(clientServiceLocationRequestDTO,clientServiceLocationId);
-	}
-	
-	@PutMapping(value = URLConstants.ENABLE_DISABLE_CLIENT_SERVICE_LOCATION)
-	public ServiceResponseDTO enableDisableClientServiceLocationMaster(
-			@RequestParam(name = "clientServiceLocationId") Long clientServiceLocationId,
-			@RequestBody ClientServiceLocationRequestDTO clientServiceLocationRequestDTO) {
-		LOGGER.info("Executing  enableDisableClientServiceLocationMaster() method of MasterController");
-		return masterServiceImpl.enableDisableClientServiceLocation(clientServiceLocationRequestDTO,clientServiceLocationId);
-	}
-	
-	
-	@GetMapping(value = URLConstants.GET_ALL_CLIENT_SERVICE_LOCATION)
-	public ServiceResponseDTO getAllClientServiceLocationDetails(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
-			@RequestParam(name = "size", defaultValue = "10") int size,
-			@RequestParam(name = "sortBy", defaultValue = "clientServiceLocationId") String sortBy) {
-		LOGGER.info("Executing  getAllClientServiceLocationDetails() method of MasterController");
-		return masterServiceImpl.getAllClientServiceLocationDetails(pageNumber, size, sortBy);
-	}
-	
-	@GetMapping(value = URLConstants.GET_CLIENT_SERVICE_LOCATION_BY_ID)
-	public ServiceResponseDTO getClientServiceLocationDetail(@RequestParam(name = "clientServiceLocationId") Long clientServiceLocationId) {
-		LOGGER.info("Executing  getClientServiceLocationDetail() method of MasterController");
-		return masterServiceImpl.getClientServiceLocationDetailsById(clientServiceLocationId);
-	}
-	
-	
-	
-	
-	
+
 }

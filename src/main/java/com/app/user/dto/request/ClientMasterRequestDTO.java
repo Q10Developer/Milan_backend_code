@@ -2,15 +2,13 @@ package com.app.user.dto.request;
 
 import java.util.List;
 
-import com.app.user.entity.ClientServiceLocationEntity;
-
 public class ClientMasterRequestDTO {
 
 	private Long clientId;
 	private String clientTitle;
 	private String clientFirstName;
 	private String clientMiddleName;
-	private String clientLasterName;
+	private String clientLastName;
 	private String clientCompanyName;
 	private String clientEmailId;
 	private String clientWebsite;
@@ -24,13 +22,8 @@ public class ClientMasterRequestDTO {
 	private String clientBillingCity;
 	private String clientBillingCountry;
 	private String clientBillingPincode;
-	private String clientServiceAddress;
-	private String clientServiceState;
-	private String clientServiceCity;
-	private String clientServiceCountry;
-	private String clientServicePincode;
 	private int clientActiveStatus;
-	private List<ClientServiceLocationEntity> serviceLocations;
+	private List<ClientServiceLocationRequestDTO> serviceLocations;
 
 	public Long getClientId() {
 		return clientId;
@@ -64,12 +57,12 @@ public class ClientMasterRequestDTO {
 		this.clientMiddleName = clientMiddleName;
 	}
 
-	public String getClientLasterName() {
-		return clientLasterName;
+	public String getClientLastName() {
+		return clientLastName;
 	}
 
-	public void setClientLasterName(String clientLasterName) {
-		this.clientLasterName = clientLasterName;
+	public void setClientLasterName(String clientLastName) {
+		this.clientLastName = clientLastName;
 	}
 
 	public String getClientCompanyName() {
@@ -176,46 +169,6 @@ public class ClientMasterRequestDTO {
 		this.clientBillingPincode = clientBillingPincode;
 	}
 
-	public String getClientServiceAddress() {
-		return clientServiceAddress;
-	}
-
-	public void setClientServiceAddress(String clientServiceAddress) {
-		this.clientServiceAddress = clientServiceAddress;
-	}
-
-	public String getClientServiceState() {
-		return clientServiceState;
-	}
-
-	public void setClientServiceState(String clientServiceState) {
-		this.clientServiceState = clientServiceState;
-	}
-
-	public String getClientServiceCity() {
-		return clientServiceCity;
-	}
-
-	public void setClientServiceCity(String clientServiceCity) {
-		this.clientServiceCity = clientServiceCity;
-	}
-
-	public String getClientServiceCountry() {
-		return clientServiceCountry;
-	}
-
-	public void setClientServiceCountry(String clientServiceCountry) {
-		this.clientServiceCountry = clientServiceCountry;
-	}
-
-	public String getClientServicePincode() {
-		return clientServicePincode;
-	}
-
-	public void setClientServicePincode(String clientServicePincode) {
-		this.clientServicePincode = clientServicePincode;
-	}
-
 	public int getClientActiveStatus() {
 		return clientActiveStatus;
 	}
@@ -223,14 +176,12 @@ public class ClientMasterRequestDTO {
 	public void setClientActiveStatus(int clientActiveStatus) {
 		this.clientActiveStatus = clientActiveStatus;
 	}
-	
-	
 
-	public List<ClientServiceLocationEntity> getServiceLocations() {
+	public List<ClientServiceLocationRequestDTO> getServiceLocations() {
 		return serviceLocations;
 	}
 
-	public void setServiceLocations(List<ClientServiceLocationEntity> serviceLocations) {
+	public void setServiceLocations(List<ClientServiceLocationRequestDTO> serviceLocations) {
 		this.serviceLocations = serviceLocations;
 	}
 
@@ -245,8 +196,8 @@ public class ClientMasterRequestDTO {
 		builder.append(clientFirstName);
 		builder.append(", clientMiddleName=");
 		builder.append(clientMiddleName);
-		builder.append(", clientLasterName=");
-		builder.append(clientLasterName);
+		builder.append(", clientLastName=");
+		builder.append(clientLastName);
 		builder.append(", clientCompanyName=");
 		builder.append(clientCompanyName);
 		builder.append(", clientEmailId=");
@@ -273,16 +224,6 @@ public class ClientMasterRequestDTO {
 		builder.append(clientBillingCountry);
 		builder.append(", clientBillingPincode=");
 		builder.append(clientBillingPincode);
-		builder.append(", clientServiceAddress=");
-		builder.append(clientServiceAddress);
-		builder.append(", clientServiceState=");
-		builder.append(clientServiceState);
-		builder.append(", clientServiceCity=");
-		builder.append(clientServiceCity);
-		builder.append(", clientServiceCountry=");
-		builder.append(clientServiceCountry);
-		builder.append(", clientServicePincode=");
-		builder.append(clientServicePincode);
 		builder.append(", clientActiveStatus=");
 		builder.append(clientActiveStatus);
 		builder.append(", serviceLocations=");
@@ -290,5 +231,4 @@ public class ClientMasterRequestDTO {
 		builder.append("]");
 		return builder.toString();
 	}
-
 }
