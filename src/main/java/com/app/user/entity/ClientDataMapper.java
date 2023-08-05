@@ -7,9 +7,11 @@ import com.app.user.dto.request.ClientServiceLocationRequestDTO;
 @Component
 public class ClientDataMapper {
 
-	public ClientMasterEntity fromClientDataDTOToEntity(ClientMasterRequestDTO clientMasterRequestDTO) {
-		ClientMasterEntity entity = new ClientMasterEntity();
-		entity.setClientId(clientMasterRequestDTO.getClientId());
+	public ClientMasterEntity fromClientDataDTOToEntity(ClientMasterRequestDTO clientMasterRequestDTO,
+			ClientMasterEntity entity) {
+		if (clientMasterRequestDTO.getClientId() != null && clientMasterRequestDTO.getClientId() != 0) {
+			entity.setClientId(clientMasterRequestDTO.getClientId());
+		}
 		entity.setClientTitle(clientMasterRequestDTO.getClientTitle());
 		entity.setClientFirstName(clientMasterRequestDTO.getClientFirstName());
 		entity.setClientMiddleName(clientMasterRequestDTO.getClientMiddleName());
@@ -32,8 +34,7 @@ public class ClientDataMapper {
 	}
 
 	public ClientServiceLocationEntity fromClientServiceLocationDTOToEntity(
-			ClientServiceLocationRequestDTO clientServiceLocationRequestDTO) {
-		ClientServiceLocationEntity entity = new ClientServiceLocationEntity();
+			ClientServiceLocationRequestDTO clientServiceLocationRequestDTO, ClientServiceLocationEntity entity) {
 		if (clientServiceLocationRequestDTO.getClientServiceLocationId() != null
 				&& clientServiceLocationRequestDTO.getClientServiceLocationId() != 0) {
 			entity.setClientServiceLocationId(clientServiceLocationRequestDTO.getClientServiceLocationId());

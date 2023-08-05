@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,7 +156,8 @@ public class IMasterServiceImpl {
 							ResponseKeysValue.WARNING_CLIENT_ALREADY_EXIST_DESC, null);
 				}
 				clientMasterRequestDTO.setClientActiveStatus(URLConstants.ACTIVE);
-				entity = clientDataMapper.fromClientDataDTOToEntity(clientMasterRequestDTO);
+				ClientMasterEntity clientMasterEntity = new ClientMasterEntity();
+				entity = clientDataMapper.fromClientDataDTOToEntity(clientMasterRequestDTO, clientMasterEntity);
 				List<ClientServiceLocationRequestDTO> serviceLocationDTOs = clientMasterRequestDTO
 						.getServiceLocations();
 				if (!CollectionUtils.isEmpty(serviceLocationDTOs)) {
@@ -168,7 +173,8 @@ public class IMasterServiceImpl {
 						} else {
 							serviceLocationEntity = new ClientServiceLocationEntity();
 						}
-						serviceLocationEntity = clientDataMapper.fromClientServiceLocationDTOToEntity(locationDTO);
+						serviceLocationEntity = clientDataMapper.fromClientServiceLocationDTOToEntity(locationDTO,
+								serviceLocationEntity);
 						serviceLocationEntity.setActiveStatus(URLConstants.ACTIVE);
 						serviceLocationEntity.setClientId(entity);
 						serviceLocations.add(serviceLocationEntity);
@@ -195,47 +201,59 @@ public class IMasterServiceImpl {
 		return response;
 	}
 
+	@Transactional
 	public ServiceResponseDTO updateClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO, Long clientId) {
 		LOGGER.info("client master data in IMasterServiceImpl and updateClientMasterData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
 		if (clientMasterRequestDTO != null) {
-			Optional<ClientMasterEntity> clientMasterEntity = clientMasterRepository.findById(clientId);
-			if (clientMasterEntity.isEmpty()) {
-				LOGGER.info("Invalid client for updation ");
+			Optional<ClientMasterEntity> clientMasterEntityOptional = clientMasterRepository.findById(clientId);
+			if (clientMasterEntityOptional.isEmpty()) {
+				LOGGER.info("Invalid client for updation");
 				return new ServiceResponseDTO(ResponseKeysValue.WARNING_CLIENT_DOESNT_EXIST_CODE,
 						ResponseKeysValue.WARNING_CLIENT_DOESNT_EXIST_DESC, null);
 			}
 			clientMasterRequestDTO.setClientId(clientId);
-			clientMasterRequestDTO.setClientActiveStatus(URLConstants.ACTIVE);
-			ClientMasterEntity entity = clientDataMapper.fromClientDataDTOToEntity(clientMasterRequestDTO);
-			try {
-				List<ClientServiceLocationRequestDTO> serviceLocationDTOs = clientMasterRequestDTO
-						.getServiceLocations();
-				if (serviceLocationDTOs != null) {
-					List<ClientServiceLocationEntity> updatedServiceLocations = new ArrayList<>();
-					for (ClientServiceLocationRequestDTO locationDTO : serviceLocationDTOs) {
-						ClientServiceLocationEntity serviceLocationEntity = clientDataMapper
-								.fromClientServiceLocationDTOToEntity(locationDTO);
-						serviceLocationEntity.setClientId(entity);
-						updatedServiceLocations.add(serviceLocationEntity);
+			ClientMasterEntity existingClientMasterEntity = clientMasterEntityOptional.get();
+			existingClientMasterEntity = clientDataMapper.fromClientDataDTOToEntity(clientMasterRequestDTO,
+					existingClientMasterEntity);
+			List<ClientServiceLocationRequestDTO> serviceLocationDTOs = clientMasterRequestDTO.getServiceLocations();
+			List<ClientServiceLocationEntity> existingServiceLocations = existingClientMasterEntity
+					.getServiceLocations();
+			for (ClientServiceLocationEntity existingLocation : existingServiceLocations) {
+				boolean found = false;
+				if (!ObjectUtils.isEmpty(serviceLocationDTOs)) {
+					for (ClientServiceLocationRequestDTO updatedLocation : serviceLocationDTOs) {
+						Long existingLocationId = existingLocation.getClientServiceLocationId();
+						Long updatedLocationId = updatedLocation.getClientServiceLocationId();
+						if (existingLocationId != null && existingLocationId.equals(updatedLocationId)) {
+							found = true;
+							break;
+						}
 					}
-					entity.setServiceLocations(updatedServiceLocations);
-				} else {
-					entity.getServiceLocations().clear();
 				}
-				entity = clientMasterRepository.save(entity);
-				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
-				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(entity);
-				LOGGER.info("Client data update Successfully");
-			} catch (Exception ex) {
-				LOGGER.error(
-						"Exception occur in IMasterServiceImpl calss in method updateClientMasterData with Exception {}",
-						ex.getMessage());
-				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
-				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
-				response.setResult(ex.getMessage());
+				if (!found) {
+					existingLocation.setActiveStatus(URLConstants.IN_ACTIVE);
+				}
 			}
+			if (serviceLocationDTOs != null) {
+				for (ClientServiceLocationRequestDTO locationDTO : serviceLocationDTOs) {
+					ClientServiceLocationEntity serviceLocationEntity = new ClientServiceLocationEntity();
+					serviceLocationEntity = clientDataMapper.fromClientServiceLocationDTOToEntity(locationDTO,
+							serviceLocationEntity);
+					serviceLocationEntity.setClientId(existingClientMasterEntity);
+					serviceLocationEntity.setActiveStatus(URLConstants.ACTIVE);
+					existingServiceLocations.add(serviceLocationEntity);
+				}
+			}
+			existingClientMasterEntity = clientMasterRepository.save(existingClientMasterEntity);
+			List<ClientServiceLocationEntity> finalClientLocationEntity = existingClientMasterEntity
+					.getServiceLocations().stream().filter(location -> location.getActiveStatus() == 1)
+					.collect(Collectors.toList());
+			existingClientMasterEntity.setServiceLocations(finalClientLocationEntity);
+			response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+			response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+			response.setResult(existingClientMasterEntity);
+			LOGGER.info("Client data update Successfully");
 		} else {
 			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
 			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
@@ -285,7 +303,8 @@ public class IMasterServiceImpl {
 		} else {
 			pageable = PageRequest.of(0, Integer.MAX_VALUE);
 		}
-		Page<ClientMasterEntity> clientDetailList = clientMasterRepository.findAll(pageable);
+		Page<ClientMasterEntity> clientDetailList = clientMasterRepository
+				.findAllActiveClientsWithServiceLocationStatus(URLConstants.ACTIVE, URLConstants.ACTIVE, pageable);
 		if (clientDetailList.getSize() > 0) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientDetailList);
@@ -327,7 +346,9 @@ public class IMasterServiceImpl {
 	public ServiceResponseDTO getClientDetailsById(Long clientId) {
 		LOGGER.info(
 				"getClientDetailsById process start in IMasterServiceImpl and getClientDetailsById method Executing ");
-		Optional<ClientMasterEntity> clientDetail = clientMasterRepository.findById(clientId);
+		Optional<ClientMasterEntity> clientDetail = clientMasterRepository
+				.findByClientIdAndActiveStatusAndServiceLocationStatus(clientId, URLConstants.ACTIVE,
+						URLConstants.ACTIVE);
 		if (!clientDetail.isEmpty()) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientDetail.get());

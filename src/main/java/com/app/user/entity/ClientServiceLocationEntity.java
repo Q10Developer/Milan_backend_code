@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "client_service_location_master")
 public class ClientServiceLocationEntity {
@@ -19,6 +21,7 @@ public class ClientServiceLocationEntity {
 
 	@ManyToOne
 	@JoinColumn(name = " client_id")
+	@JsonBackReference
 	private ClientMasterEntity clientId;
 
 	@Column(name = "client_service_address")

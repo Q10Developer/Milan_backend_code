@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "client_master")
 public class ClientMasterEntity {
@@ -77,6 +79,7 @@ public class ClientMasterEntity {
 	private int clientActiveStatus;
 
 	@OneToMany(mappedBy = "clientId", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<ClientServiceLocationEntity> serviceLocations;
 
 	public Long getClientId() {
