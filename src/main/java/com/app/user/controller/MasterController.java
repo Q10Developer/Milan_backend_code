@@ -74,11 +74,10 @@ public class MasterController {
 		return masterServiceImpl.getClientDetailsById(clientId);
 	}
 
-	@GetMapping(value = URLConstants.GET_CLIENT_SERVICE_LOCATION_BY_ID)
-	public ServiceResponseDTO getClientServiceLocationDetail(
-			@RequestParam(name = "clientServiceLocationId") Long clientServiceLocationId) {
+	@GetMapping(value = URLConstants.GET_CLIENT_SERVICE_LOCATION_BY_CLIENT_ID)
+	public ServiceResponseDTO getClientServiceLocationDetail(@RequestParam(name = "clientId") Long clientId) {
 		LOGGER.info("Executing  getClientServiceLocationDetail() method of MasterController");
-		return masterServiceImpl.getClientServiceLocationDetailsById(clientServiceLocationId);
+		return masterServiceImpl.getClientServiceLocationDetailsByClientId(clientId);
 	}
 
 	@GetMapping(value = URLConstants.GET_ALL_CLIENT_BY_MULTIPLE_FILTERS)

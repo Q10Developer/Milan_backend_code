@@ -358,14 +358,14 @@ public class IMasterServiceImpl {
 		}
 	}
 
-	public ServiceResponseDTO getClientServiceLocationDetailsById(Long clientServiceLocationId) {
+	public ServiceResponseDTO getClientServiceLocationDetailsByClientId(Long clientId) {
 		LOGGER.info(
-				"getClientServiceLocationDetailsById process start in IMasterServiceImpl and  method Executing getClientServiceLocationDetailsById");
-		Optional<ClientServiceLocationEntity> clientServiceLocationDetail = clientServiceLocationReposistory
-				.findById(clientServiceLocationId);
+				"getClientServiceLocationDetailsByClientId process start in IMasterServiceImpl and  method Executing getClientServiceLocationDetailsByClientId");
+		List<ClientServiceLocationEntity> clientServiceLocationDetail = clientServiceLocationReposistory
+				.findByClientId_ClientIdAndActiveStatus(clientId, 1);
 		if (!clientServiceLocationDetail.isEmpty()) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientServiceLocationDetail.get());
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientServiceLocationDetail);
 		} else {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
 					null);
