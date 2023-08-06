@@ -334,8 +334,8 @@ public class IMasterServiceImpl {
 			clientDetailList = clientMasterRepository.findByClientEmailIdAndClientActiveStatus(clientEmailId,
 					URLConstants.ACTIVE, URLConstants.ACTIVE);
 		} else if (clientId != null) {
-			clientDetailList = clientMasterRepository.findByClientIdAndClientActiveStatus(clientId,
-					URLConstants.ACTIVE);
+			clientDetailList.add(clientMasterRepository.findByClientIdAndActiveStatusAndServiceLocationStatus(clientId,
+					URLConstants.ACTIVE, URLConstants.ACTIVE).get());
 		}
 		if (!CollectionUtils.isEmpty(clientDetailList)) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,

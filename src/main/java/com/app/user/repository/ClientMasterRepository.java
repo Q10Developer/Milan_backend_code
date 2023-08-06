@@ -54,6 +54,4 @@ public interface ClientMasterRepository extends PagingAndSortingRepository<Clien
 			@Param("clientActiveStatus") int clientActiveStatus,
 			@Param("serviceLocationActiveStatus") int serviceLocationActiveStatus);
 
-	List<ClientMasterEntity> findByClientIdAndClientActiveStatus(Long clientId, int clientActiveStatus);
-
 }
