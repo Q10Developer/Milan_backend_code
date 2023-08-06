@@ -20,6 +20,7 @@ import com.app.user.dto.request.ObservationCategoryRequestDTO;
 import com.app.user.dto.request.ObservationRequestDTO;
 import com.app.user.dto.request.TireConfigurationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
+import com.app.user.dto.request.TirePatternRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
 import com.app.user.dto.request.VehicleManufacturerRequestDTO;
 import com.app.user.dto.request.VehicleModelRequestDTO;
@@ -73,13 +74,20 @@ public class MasterController {
 		return masterServiceImpl.getClientDetailsById(clientId);
 	}
 
+	@GetMapping(value = URLConstants.GET_CLIENT_SERVICE_LOCATION_BY_CLIENT_ID)
+	public ServiceResponseDTO getClientServiceLocationDetail(@RequestParam(name = "clientId") Long clientId) {
+		LOGGER.info("Executing  getClientServiceLocationDetail() method of MasterController");
+		return masterServiceImpl.getClientServiceLocationDetailsByClientId(clientId);
+	}
+
 	@GetMapping(value = URLConstants.GET_ALL_CLIENT_BY_MULTIPLE_FILTERS)
 	public ServiceResponseDTO getAllClientDetailsByMultipleFilter(
 			@RequestParam(name = "clientFullName", required = false, defaultValue = "") String clientFullName,
 			@RequestParam(name = "clientCompanyName", required = false, defaultValue = "") String clientCompanyName,
-			@RequestParam(name = "clientEmailId", required = false, defaultValue = "") String clientEmailId) {
+			@RequestParam(name = "clientEmailId", required = false, defaultValue = "") String clientEmailId,
+			@RequestParam(name= "clientId",required = false,  defaultValue ="") Long clientId) {
 		LOGGER.info("Executing  getAllClientDetailsByMultipleFilter() method of MasterController");
-		return masterServiceImpl.getAllClientDetailsByFilters(clientFullName, clientCompanyName, clientEmailId);
+		return masterServiceImpl.getAllClientDetailsByFilters(clientFullName, clientCompanyName, clientEmailId,clientId);
 	}
 
 	@PostMapping(value = URLConstants.SAVE_VEHICLE)
@@ -581,6 +589,46 @@ public class MasterController {
 			@RequestParam(name = "tireConfigurationId") Long tireConfigurationId) {
 		LOGGER.info("Executing  getTireConfigurationDetail() method of MasterController");
 		return masterServiceImpl.getTireConfigurationById(tireConfigurationId);
+	}
+
+	@PostMapping(value = URLConstants.SAVE_TIRE_PATTERN)
+	public ServiceResponseDTO saveTirePatternMaster(@RequestBody TirePatternRequestDTO tirePatternRequestDTO) {
+		LOGGER.info("Executing saveTirePattternmaster() method of MasterController");
+		return masterServiceImpl.saveTirePattern(tirePatternRequestDTO);
+	}
+
+	@PutMapping(value = URLConstants.UPDATE_TIRE_PATTERN)
+	public ServiceResponseDTO updateTirePattern(@RequestParam(name = "tirepatternId") Long tirePatternId,
+			@RequestBody TirePatternRequestDTO tirePatternRequestDTO) {
+		LOGGER.info("Executing  updateTirePatternMaster() method of MasterController");
+		return masterServiceImpl.updateTirePatternMaster(tirePatternRequestDTO, tirePatternId);
+	}
+
+	@PutMapping(value = URLConstants.ENABLE_DISABLE_TIRE_MASTER)
+	public ServiceResponseDTO enableDisableTirePatternMaster(@RequestParam(name = "tirePatternId") Long tirePatternId,
+			@RequestBody TirePatternRequestDTO tirePatternRequestDTO) {
+		LOGGER.info("Executing  enableDisabletirePatternMaster() method of MasterController");
+		return masterServiceImpl.enableDisableTirePatternMaster(tirePatternRequestDTO, tirePatternId);
+	}
+
+	@GetMapping(value = URLConstants.GET_ALL_TIRE_PATTERN)
+	public ServiceResponseDTO getAllTirePattern(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
+			@RequestParam(name = "size", defaultValue = "10") int size,
+			@RequestParam(name = "sortBy", defaultValue = "tirePatternId") String sortBy) {
+		LOGGER.info("Executing  getAllTirePatternDetails() method of MasterController");
+		return masterServiceImpl.getAllTirePattern(pageNumber, size, sortBy);
+	}
+
+	@GetMapping(value = URLConstants.GET_TIRE_PATTERN_BY_ID)
+	public ServiceResponseDTO getTirePatternById(@RequestParam(name = "tirePatternId") Long tirePatternId) {
+		LOGGER.info("Executing  getTirePatternDetail() method of MasterController");
+		return masterServiceImpl.getTirePatternById(tirePatternId);
+	}
+
+	@GetMapping(value = URLConstants.GET_TIRE_PATERN_MAKE_BY_ID)
+	public ServiceResponseDTO getTireMakebyIdDetails(@RequestParam(name = "tireMakeId") Long tireMakeId) {
+		LOGGER.info("Executing  getTireMakebyIdDetails() method of MasterController");
+		return masterServiceImpl.getTireMakeById(tireMakeId);
 	}
 
 }

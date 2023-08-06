@@ -1,10 +1,16 @@
 package com.app.user.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "client_master")
@@ -25,7 +31,7 @@ public class ClientMasterEntity {
 	private String clientMiddleName;
 
 	@Column(name = "client_last_name")
-	private String clientLasterName;
+	private String clientLastName;
 
 	@Column(name = "client_full_name", insertable = false, updatable = false)
 	private String clientFullName;
@@ -46,7 +52,7 @@ public class ClientMasterEntity {
 	private String clientPhoneNo;
 
 	@Column(name = "client_gst_registration_type")
-	private int gstRegistrationType;
+	private Integer gstRegistrationType;
 
 	@Column(name = "client_gst_number")
 	private String clientGstNumber;
@@ -69,23 +75,12 @@ public class ClientMasterEntity {
 	@Column(name = "client_billing_pincode")
 	private String clientBillingPincode;
 
-	@Column(name = "client_service_address")
-	private String clientServiceAddress;
-
-	@Column(name = "client_service_state")
-	private String clientServiceState;
-
-	@Column(name = "client_service_city")
-	private String clientServiceCity;
-
-	@Column(name = "client_service_country")
-	private String clientServiceCountry;
-
-	@Column(name = "client_service_pincode")
-	private String clientServicePincode;
-
 	@Column(name = "client_active_status")
 	private int clientActiveStatus;
+
+	@OneToMany(mappedBy = "clientId", cascade = CascadeType.ALL)
+	@JsonManagedReference
+	private List<ClientServiceLocationEntity> serviceLocations;
 
 	public Long getClientId() {
 		return clientId;
@@ -119,12 +114,12 @@ public class ClientMasterEntity {
 		this.clientMiddleName = clientMiddleName;
 	}
 
-	public String getClientLasterName() {
-		return clientLasterName;
+	public String getClientLastName() {
+		return clientLastName;
 	}
 
-	public void setClientLasterName(String clientLasterName) {
-		this.clientLasterName = clientLasterName;
+	public void setClientLastName(String clientLastName) {
+		this.clientLastName = clientLastName;
 	}
 
 	public String getClientFullName() {
@@ -175,11 +170,11 @@ public class ClientMasterEntity {
 		this.clientPhoneNo = clientPhoneNo;
 	}
 
-	public int getGstRegistrationType() {
+	public Integer getGstRegistrationType() {
 		return gstRegistrationType;
 	}
 
-	public void setGstRegistrationType(int gstRegistrationType) {
+	public void setGstRegistrationType(Integer gstRegistrationType) {
 		this.gstRegistrationType = gstRegistrationType;
 	}
 
@@ -239,52 +234,20 @@ public class ClientMasterEntity {
 		this.clientBillingPincode = clientBillingPincode;
 	}
 
-	public String getClientServiceAddress() {
-		return clientServiceAddress;
-	}
-
-	public void setClientServiceAddress(String clientServiceAddress) {
-		this.clientServiceAddress = clientServiceAddress;
-	}
-
-	public String getClientServiceState() {
-		return clientServiceState;
-	}
-
-	public void setClientServiceState(String clientServiceState) {
-		this.clientServiceState = clientServiceState;
-	}
-
-	public String getClientServiceCity() {
-		return clientServiceCity;
-	}
-
-	public void setClientServiceCity(String clientServiceCity) {
-		this.clientServiceCity = clientServiceCity;
-	}
-
-	public String getClientServiceCountry() {
-		return clientServiceCountry;
-	}
-
-	public void setClientServiceCountry(String clientServiceCountry) {
-		this.clientServiceCountry = clientServiceCountry;
-	}
-
-	public String getClientServicePincode() {
-		return clientServicePincode;
-	}
-
-	public void setClientServicePincode(String clientServicePincode) {
-		this.clientServicePincode = clientServicePincode;
-	}
-
 	public int getClientActiveStatus() {
 		return clientActiveStatus;
 	}
 
 	public void setClientActiveStatus(int clientActiveStatus) {
 		this.clientActiveStatus = clientActiveStatus;
+	}
+
+	public List<ClientServiceLocationEntity> getServiceLocations() {
+		return serviceLocations;
+	}
+
+	public void setServiceLocations(List<ClientServiceLocationEntity> serviceLocations) {
+		this.serviceLocations = serviceLocations;
 	}
 
 	@Override
@@ -298,8 +261,8 @@ public class ClientMasterEntity {
 		builder.append(clientFirstName);
 		builder.append(", clientMiddleName=");
 		builder.append(clientMiddleName);
-		builder.append(", clientLasterName=");
-		builder.append(clientLasterName);
+		builder.append(", clientLastName=");
+		builder.append(clientLastName);
 		builder.append(", clientFullName=");
 		builder.append(clientFullName);
 		builder.append(", clientCompanyName=");
@@ -328,18 +291,10 @@ public class ClientMasterEntity {
 		builder.append(clientBillingCountry);
 		builder.append(", clientBillingPincode=");
 		builder.append(clientBillingPincode);
-		builder.append(", clientServiceAddress=");
-		builder.append(clientServiceAddress);
-		builder.append(", clientServiceState=");
-		builder.append(clientServiceState);
-		builder.append(", clientServiceCity=");
-		builder.append(clientServiceCity);
-		builder.append(", clientServiceCountry=");
-		builder.append(clientServiceCountry);
-		builder.append(", clientServicePincode=");
-		builder.append(clientServicePincode);
 		builder.append(", clientActiveStatus=");
 		builder.append(clientActiveStatus);
+		builder.append(", serviceLocations=");
+		builder.append(serviceLocations);
 		builder.append("]");
 		return builder.toString();
 	}

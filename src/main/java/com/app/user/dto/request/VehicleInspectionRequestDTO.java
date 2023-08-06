@@ -6,6 +6,8 @@ public class VehicleInspectionRequestDTO {
 
 	private String inspectionId;
 	private Long clientId;
+	private Long clientServiceLocationId;
+    private String clientServiceAddress;
 	private String clientInformation;
 	private String clientName;
 	private Date inspectionDateTime;
@@ -23,6 +25,25 @@ public class VehicleInspectionRequestDTO {
 	private Long noOfStepneys;
 	private int inspectionStatus;
 	
+	
+	
+	
+	
+	
+	
+	
+	public Long getClientServiceLocationId() {
+		return clientServiceLocationId;
+	}
+	public void setClientServiceLocationId(Long clientServiceLocationId) {
+		this.clientServiceLocationId = clientServiceLocationId;
+	}
+	public String getClientServiceAddress() {
+		return clientServiceAddress;
+	}
+	public void setClientServiceAddress(String clientServiceAddress) {
+		this.clientServiceAddress = clientServiceAddress;
+	}
 	public String getInspectionId() {
 		return inspectionId;
 		
@@ -139,6 +160,10 @@ public class VehicleInspectionRequestDTO {
 		builder.append(inspectionId);
 		builder.append(", clientId=");
 		builder.append(clientId);
+		builder.append(", clientServiceLocationId=");
+		builder.append(clientServiceLocationId);
+		builder.append(", clientServiceAddress=");
+		builder.append(clientServiceAddress);
 		builder.append(", clientInformation=");
 		builder.append(clientInformation);
 		builder.append(", clientName=");
@@ -174,7 +199,9 @@ public class VehicleInspectionRequestDTO {
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
+	
+	
 	
 	
 }

@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,18 +23,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import com.app.user.config.ResourceNotFoundException;
 import com.app.user.constants.ResponseKeysValue;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ClientMasterRequestDTO;
+import com.app.user.dto.request.ClientServiceLocationRequestDTO;
 import com.app.user.dto.request.DropDownMasterDTO;
 import com.app.user.dto.request.MasterDataRequestDTO;
 import com.app.user.dto.request.ObservationCategoryRequestDTO;
 import com.app.user.dto.request.ObservationRequestDTO;
 import com.app.user.dto.request.TireConfigurationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
+import com.app.user.dto.request.TirePatternRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
 import com.app.user.dto.request.VehicleManufacturerRequestDTO;
 import com.app.user.dto.request.VehicleModelRequestDTO;
@@ -39,13 +47,16 @@ import com.app.user.dto.request.VehicleSubTypeRequestDTO;
 import com.app.user.dto.request.VehicleTypeRequestDTO;
 import com.app.user.dto.request.VehicleUsageRequestDTO;
 import com.app.user.dto.response.GenericResponseDTO;
+import com.app.user.entity.ClientDataMapper;
 import com.app.user.entity.ClientMasterEntity;
+import com.app.user.entity.ClientServiceLocationEntity;
 import com.app.user.entity.DropDownEntity;
 import com.app.user.entity.MasterDataListEntity;
 import com.app.user.entity.ObservationCategoryEntity;
 import com.app.user.entity.ObservationEntity;
 import com.app.user.entity.TireConfigurationEntity;
 import com.app.user.entity.TireMakeEntity;
+import com.app.user.entity.TirePatternEntity;
 import com.app.user.entity.TyreMasterEntity;
 import com.app.user.entity.VehicleManufacturerEntity;
 import com.app.user.entity.VehicleMasterEntity;
@@ -54,12 +65,14 @@ import com.app.user.entity.VehicleSubTypeEntity;
 import com.app.user.entity.VehicleTypeEntity;
 import com.app.user.entity.VehicleUsageEntity;
 import com.app.user.repository.ClientMasterRepository;
+import com.app.user.repository.ClientServiceLocationRepository;
 import com.app.user.repository.DropDownMasterRepository;
 import com.app.user.repository.MasterDataListRepository;
 import com.app.user.repository.ObservatioRepository;
 import com.app.user.repository.ObservationCategoryRepository;
 import com.app.user.repository.TireConfigurationRepository;
 import com.app.user.repository.TireMakeRepository;
+import com.app.user.repository.TirePatternReposistory;
 import com.app.user.repository.TyreRepository;
 import com.app.user.repository.VehicleManufacturerRepository;
 import com.app.user.repository.VehicleModelRepository;
@@ -78,6 +91,9 @@ public class IMasterServiceImpl {
 
 	@Autowired
 	private ClientMasterRepository clientMasterRepository;
+
+	@Autowired
+	private ClientServiceLocationRepository clientServiceLocationRepository;
 
 	@Autowired
 	private VehicleRepository vehicleRepository;
@@ -118,11 +134,21 @@ public class IMasterServiceImpl {
 	@Autowired
 	private TireConfigurationRepository tireConfigurationRepository;
 
+	@Autowired
+	private TirePatternReposistory tirePatternRepository;
+
+	@Autowired
+	private ClientServiceLocationRepository clientServiceLocationReposistory;
+
+	@Autowired
+	private ClientDataMapper clientDataMapper;
+
+	@Transactional
 	public ServiceResponseDTO saveClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO) {
 		LOGGER.info("client master data in IMasterServiceImpl and saveClientMasterData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
 		if (clientMasterRequestDTO != null) {
-			ClientMasterEntity entity = new ClientMasterEntity();
+			ClientMasterEntity entity = null;
 			try {
 				if (null != clientMasterRequestDTO.getClientId()) {
 					LOGGER.info("Need to do Updation (Client exist)");
@@ -130,7 +156,31 @@ public class IMasterServiceImpl {
 							ResponseKeysValue.WARNING_CLIENT_ALREADY_EXIST_DESC, null);
 				}
 				clientMasterRequestDTO.setClientActiveStatus(URLConstants.ACTIVE);
-				BeanUtils.copyProperties(clientMasterRequestDTO, entity);
+				ClientMasterEntity clientMasterEntity = new ClientMasterEntity();
+				entity = clientDataMapper.fromClientDataDTOToEntity(clientMasterRequestDTO, clientMasterEntity);
+				List<ClientServiceLocationRequestDTO> serviceLocationDTOs = clientMasterRequestDTO
+						.getServiceLocations();
+				if (!CollectionUtils.isEmpty(serviceLocationDTOs)) {
+					List<ClientServiceLocationEntity> serviceLocations = new ArrayList<>();
+					for (ClientServiceLocationRequestDTO locationDTO : serviceLocationDTOs) {
+						ClientServiceLocationEntity serviceLocationEntity;
+						if (locationDTO.getClientServiceLocationId() != null
+								&& locationDTO.getClientServiceLocationId() != 0) {
+							serviceLocationEntity = clientServiceLocationRepository
+									.findById(locationDTO.getClientServiceLocationId())
+									.orElseThrow(() -> new ResourceNotFoundException("Client Service Location with ID "
+											+ locationDTO.getClientServiceLocationId() + " not found"));
+						} else {
+							serviceLocationEntity = new ClientServiceLocationEntity();
+						}
+						serviceLocationEntity = clientDataMapper.fromClientServiceLocationDTOToEntity(locationDTO,
+								serviceLocationEntity);
+						serviceLocationEntity.setActiveStatus(URLConstants.ACTIVE);
+						serviceLocationEntity.setClientId(entity);
+						serviceLocations.add(serviceLocationEntity);
+					}
+					entity.setServiceLocations(serviceLocations);
+				}
 				entity = clientMasterRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
@@ -151,34 +201,59 @@ public class IMasterServiceImpl {
 		return response;
 	}
 
+	@Transactional
 	public ServiceResponseDTO updateClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO, Long clientId) {
 		LOGGER.info("client master data in IMasterServiceImpl and updateClientMasterData method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
 		if (clientMasterRequestDTO != null) {
-			Optional<ClientMasterEntity> clientMasterEntity = clientMasterRepository.findById(clientId);
-			if (clientMasterEntity.isEmpty()) {
-				LOGGER.info("Invalid client for updation ");
+			Optional<ClientMasterEntity> clientMasterEntityOptional = clientMasterRepository.findById(clientId);
+			if (clientMasterEntityOptional.isEmpty()) {
+				LOGGER.info("Invalid client for updation");
 				return new ServiceResponseDTO(ResponseKeysValue.WARNING_CLIENT_DOESNT_EXIST_CODE,
 						ResponseKeysValue.WARNING_CLIENT_DOESNT_EXIST_DESC, null);
 			}
-			ClientMasterEntity entity = new ClientMasterEntity();
 			clientMasterRequestDTO.setClientId(clientId);
-			clientMasterRequestDTO.setClientActiveStatus(URLConstants.ACTIVE);
-			BeanUtils.copyProperties(clientMasterRequestDTO, entity);
-			try {
-				entity = clientMasterRepository.save(entity);
-				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
-				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
-				response.setResult(entity);
-				LOGGER.info("Client data update Successfully");
-			} catch (Exception ex) {
-				LOGGER.error(
-						"Exception occur in IMasterServiceImpl calss in method updateClientMasterData with Exception {}",
-						ex.getMessage());
-				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
-				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
-				response.setResult(ex.getMessage());
+			ClientMasterEntity existingClientMasterEntity = clientMasterEntityOptional.get();
+			existingClientMasterEntity = clientDataMapper.fromClientDataDTOToEntity(clientMasterRequestDTO,
+					existingClientMasterEntity);
+			List<ClientServiceLocationRequestDTO> serviceLocationDTOs = clientMasterRequestDTO.getServiceLocations();
+			List<ClientServiceLocationEntity> existingServiceLocations = existingClientMasterEntity
+					.getServiceLocations();
+			for (ClientServiceLocationEntity existingLocation : existingServiceLocations) {
+				boolean found = false;
+				if (!ObjectUtils.isEmpty(serviceLocationDTOs)) {
+					for (ClientServiceLocationRequestDTO updatedLocation : serviceLocationDTOs) {
+						Long existingLocationId = existingLocation.getClientServiceLocationId();
+						Long updatedLocationId = updatedLocation.getClientServiceLocationId();
+						if (existingLocationId != null && existingLocationId.equals(updatedLocationId)) {
+							found = true;
+							break;
+						}
+					}
+				}
+				if (!found) {
+					existingLocation.setActiveStatus(URLConstants.IN_ACTIVE);
+				}
 			}
+			if (serviceLocationDTOs != null) {
+				for (ClientServiceLocationRequestDTO locationDTO : serviceLocationDTOs) {
+					ClientServiceLocationEntity serviceLocationEntity = new ClientServiceLocationEntity();
+					serviceLocationEntity = clientDataMapper.fromClientServiceLocationDTOToEntity(locationDTO,
+							serviceLocationEntity);
+					serviceLocationEntity.setClientId(existingClientMasterEntity);
+					serviceLocationEntity.setActiveStatus(URLConstants.ACTIVE);
+					existingServiceLocations.add(serviceLocationEntity);
+				}
+			}
+			existingClientMasterEntity = clientMasterRepository.save(existingClientMasterEntity);
+			List<ClientServiceLocationEntity> finalClientLocationEntity = existingClientMasterEntity
+					.getServiceLocations().stream().filter(location -> location.getActiveStatus() == 1)
+					.collect(Collectors.toList());
+			existingClientMasterEntity.setServiceLocations(finalClientLocationEntity);
+			response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+			response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+			response.setResult(existingClientMasterEntity);
+			LOGGER.info("Client data update Successfully");
 		} else {
 			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
 			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
@@ -228,7 +303,8 @@ public class IMasterServiceImpl {
 		} else {
 			pageable = PageRequest.of(0, Integer.MAX_VALUE);
 		}
-		Page<ClientMasterEntity> clientDetailList = clientMasterRepository.findAll(pageable);
+		Page<ClientMasterEntity> clientDetailList = clientMasterRepository
+				.findAllActiveClientsWithServiceLocationStatus(URLConstants.ACTIVE, URLConstants.ACTIVE, pageable);
 		if (clientDetailList.getSize() > 0) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientDetailList);
@@ -239,7 +315,7 @@ public class IMasterServiceImpl {
 	}
 
 	public ServiceResponseDTO getAllClientDetailsByFilters(String clientFullName, String clientCompanyName,
-			String clientEmailId) {
+			String clientEmailId,Long clientId) {
 		LOGGER.info(
 				"getAllClientDetails process start in IMasterServiceImpl and getAllClientDetails method Executing ");
 		List<ClientMasterEntity> clientDetailList = new ArrayList<ClientMasterEntity>();
@@ -257,6 +333,9 @@ public class IMasterServiceImpl {
 		} else if (!StringUtils.isEmpty(clientEmailId)) {
 			clientDetailList = clientMasterRepository.findByClientEmailIdAndClientActiveStatus(clientEmailId,
 					URLConstants.ACTIVE);
+		}  else if (clientId != null) {
+			clientDetailList = clientMasterRepository.findByClientIdAndClientActiveStatus( clientId,
+					URLConstants.ACTIVE);
 		}
 		if (CollectionUtils.isEmpty(clientDetailList)) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
@@ -265,15 +344,32 @@ public class IMasterServiceImpl {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
 					null);
 		}
-	}
+		}
+	
 
 	public ServiceResponseDTO getClientDetailsById(Long clientId) {
 		LOGGER.info(
 				"getClientDetailsById process start in IMasterServiceImpl and getClientDetailsById method Executing ");
-		Optional<ClientMasterEntity> clientDetail = clientMasterRepository.findById(clientId);
+		Optional<ClientMasterEntity> clientDetail = clientMasterRepository
+				.findByClientIdAndActiveStatusAndServiceLocationStatus(clientId, URLConstants.ACTIVE,
+						URLConstants.ACTIVE);
 		if (!clientDetail.isEmpty()) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientDetail.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+
+	public ServiceResponseDTO getClientServiceLocationDetailsByClientId(Long clientId) {
+		LOGGER.info(
+				"getClientServiceLocationDetailsByClientId process start in IMasterServiceImpl and  method Executing getClientServiceLocationDetailsByClientId");
+		List<ClientServiceLocationEntity> clientServiceLocationDetail = clientServiceLocationReposistory
+				.findByClientId_ClientIdAndActiveStatus(clientId, 1);
+		if (!clientServiceLocationDetail.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientServiceLocationDetail);
 		} else {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
 					null);
@@ -2162,6 +2258,7 @@ public class IMasterServiceImpl {
 				"getTireConfigurationById process start in IMasterServiceImpl and getTireConfigurationById method Executing ");
 		Optional<TireConfigurationEntity> tireConfigurationDetails = tireConfigurationRepository
 				.findById(tireConfigurationId);
+
 		if (!tireConfigurationDetails.isEmpty()) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, tireConfigurationDetails.get());
@@ -2171,4 +2268,152 @@ public class IMasterServiceImpl {
 		}
 	}
 
+	public ServiceResponseDTO saveTirePattern(TirePatternRequestDTO tirePatternRequestDTO) {
+		LOGGER.info("Tire Pattern Data List master data in IMasterServiceImpl and saveTirePattern method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (tirePatternRequestDTO != null) {
+			TirePatternEntity entity = new TirePatternEntity();
+			TireMakeEntity tireMakeEntity = new TireMakeEntity();
+			try {
+				if (null != tirePatternRequestDTO.getTirePatternId()) {
+					LOGGER.info(" Need to do Updation (TirePattern Type Data exist) ");
+					return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_PATTERN_DATA_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_TIRE_PATTERN_DATA_ALREADY_EXIST_DESC, null);
+				}
+				tirePatternRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+				BeanUtils.copyProperties(tirePatternRequestDTO, entity);
+				tireMakeEntity.setTireMakeId(tirePatternRequestDTO.getTireMakeId());
+				entity.setTireMakeId(tireMakeEntity);
+				entity.setTirePattern(tirePatternRequestDTO.getTirePattern());
+				entity = tirePatternRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
+				response.setResult(new GenericResponseDTO(entity.getTirePatternId().toString()));
+				LOGGER.info(" Master data List data saved Successfully");
+			} catch (Exception ex) {
+				LOGGER.error("Exception occur in IMasterServiceImpl calss in method saveTirePattern with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+	public ServiceResponseDTO updateTirePatternMaster(TirePatternRequestDTO tirePatternRequestDTO, Long tirePatternId) {
+		LOGGER.info("TirePatternMaster Data List master data in IMasterServiceImpl and updateTirePattern method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (tirePatternRequestDTO != null) {
+			Optional<TirePatternEntity> tirePatternEntity = tirePatternRepository.findById(tirePatternId);
+			if (tirePatternEntity.isEmpty()) {
+				LOGGER.info(" Invalid Tire  master Data for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_PATTERN_DATA__DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_TIRE_PATTERN_DATA_DOESNT_EXIST_DESC, null);
+			}
+			TirePatternEntity entity = new TirePatternEntity();
+			TireMakeEntity tireMakeEntity = new TireMakeEntity();
+			tirePatternRequestDTO.setTirePatternId(tirePatternId);
+			tirePatternRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+			BeanUtils.copyProperties(tirePatternRequestDTO, entity);
+			tireMakeEntity.setTireMakeId(tirePatternRequestDTO.getTireMakeId());
+			entity.setTireMakeId(tireMakeEntity);
+			entity.setTirePattern(tirePatternRequestDTO.getTirePattern());
+
+			try {
+				entity = tirePatternRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(entity);
+				LOGGER.info("TirePattern Data List data update Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method updateTirePatternData with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+	public ServiceResponseDTO enableDisableTirePatternMaster(TirePatternRequestDTO tirePatternRequestDTO,
+			Long tirePatternId) {
+		LOGGER.info("TirePattern  Master Data  master data in IMasterServiceImpl and  enableDisableTirePattern method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (tirePatternRequestDTO != null) {
+			Optional<TirePatternEntity> tirePatternEntity = tirePatternRepository.findById(tirePatternId);
+			if (tirePatternEntity.isEmpty()) {
+				LOGGER.info(" Invalid  Tire Pattern Master Data List for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_PATTERN_DATA__DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_TIRE_PATTERN_DATA_DOESNT_EXIST_DESC, null);
+
+			}
+			TirePatternEntity entity = tirePatternEntity.get();
+			entity.setActiveStatus(tirePatternRequestDTO.getActiveStatus());
+			try {
+				entity = tirePatternRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(new GenericResponseDTO(entity.getTirePatternId().toString()));
+				LOGGER.info(" Tire Pattern  Master Data List data enabled or disabled Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method enableDisableTirePatternMaster  with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+	public ServiceResponseDTO getAllTirePattern(int pageNumber, int size, String sortBy) {
+		LOGGER.info("getAllTirePattern process start in IMasterServiceImpl and getTirePattern method Executing ");
+		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		Page<TirePatternEntity> tirePattern = tirePatternRepository.findAll(pageable);
+		if (tirePattern.getSize() > 0) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, tirePattern);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+
+	public ServiceResponseDTO getTirePatternById(Long tirePatternId) {
+		LOGGER.info("getTirePatternById process start in IMasterServiceImpl and getTirePatternById method Executing ");
+		Optional<TirePatternEntity> tirePatternDetails = tirePatternRepository.findById(tirePatternId);
+
+		if (!tirePatternDetails.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, tirePatternDetails.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+
+	public ServiceResponseDTO getTireMakeById(Long tireMakeId) {
+		LOGGER.info("getTireMakeDataById  process start in IMasterServiceImpl ");
+		Optional<TirePatternEntity> tirePatternEntity = tirePatternRepository.findById(tireMakeId);
+		if (!tirePatternEntity.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, tirePatternEntity.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
 }

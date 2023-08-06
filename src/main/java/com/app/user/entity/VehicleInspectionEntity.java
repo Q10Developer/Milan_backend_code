@@ -21,9 +21,17 @@ public class VehicleInspectionEntity {
 	@Column(name = "client_id", nullable = false)
 	private Long clientId;
 
+	@Column(name = "client_service_location_id")
+	private Long clientServiceLocationId;
+	
 	@Column(name = "client_name", nullable = false)
 	private String clientName;
 
+	
+	@Column(name = "client_service_address")
+	private String clientServiceAddress;
+	
+	
 	@Column(name = "client_information", nullable = false)
 	private String clientInformation;
 
@@ -68,6 +76,24 @@ public class VehicleInspectionEntity {
 
 	@Column(name = "inspection_status", nullable = false)
 	private int inspectionStatus;
+
+	
+	
+	public Long getClientServiceLocationId() {
+		return clientServiceLocationId;
+	}
+
+	public void setClientServiceLocationId(Long clientServiceLocationId) {
+		this.clientServiceLocationId = clientServiceLocationId;
+	}
+
+	public String getClientServiceAddress() {
+		return clientServiceAddress;
+	}
+
+	public void setClientServiceAddress(String clientServiceAddress) {
+		this.clientServiceAddress = clientServiceAddress;
+	}
 
 	public String getInspectionId() {
 		return inspectionId;
@@ -220,8 +246,12 @@ public class VehicleInspectionEntity {
 		builder.append(inspectionId);
 		builder.append(", clientId=");
 		builder.append(clientId);
+		builder.append(", clientServiceLocationId=");
+		builder.append(clientServiceLocationId);
 		builder.append(", clientName=");
 		builder.append(clientName);
+		builder.append(", clientServiceAddress=");
+		builder.append(clientServiceAddress);
 		builder.append(", clientInformation=");
 		builder.append(clientInformation);
 		builder.append(", inspectionDateTime=");
@@ -256,4 +286,5 @@ public class VehicleInspectionEntity {
 		return builder.toString();
 	}
 
+	
 }

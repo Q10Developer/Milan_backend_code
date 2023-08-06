@@ -123,14 +123,20 @@ public class URLConstants {
 	public static final String UPDATE_OLD_VEHICLE_INSPECTION = "/updateoldvehicleinspection";
 	public static final String GET_ALL_OLD_VEHICLE_INSPECTION = "/getalloldvehicleinspection";
 
-	
 	public static final String GET_OLD_VEHICLE_INSPECTION_BY_Id = "/getoldinspectionbyid";
 	public static final String GET_OLD_VEHICLE_INSPECTION_BY_REGISTRATION_NO = "/getoldinspectiponbyregistrationno";
 
 	public static final String UPLOAD_FILE = "/uploadfile";
-	public static final String SAVE_OLD_VEHICLE_INSPECTION_DETAILS ="/saveoldvehicleinspectiondetails" ;
+	public static final String SAVE_OLD_VEHICLE_INSPECTION_DETAILS = "/saveoldvehicleinspectiondetails";
 	public static final String GET_OLD_VEHICLE_INSPECTION_DETAILS = "/getoldvehicleinspectiondetails";
-	
-
+	public static final String GET_TIRE_PATTERN = "/gettirepattern";
+	public static final String SAVE_TIRE_PATTERN = "/savetirepattern";
+	public static final String UPDATE_TIRE_PATTERN = "/updatetirepattern";
+	public static final String ENABLE_DISABLE_TIRE_MASTER = "/enabledisabletiremaster";
+	public static final String GET_ALL_TIRE_PATTERN = "/getalltirepattern";
+	public static final String GET_TIRE_PATTERN_BY_ID = "/gettirepatternbyid";
+	public static final String GET_TIRE_MAKE_ID = "/gettiremakeid";
+	public static final String GET_TIRE_PATERN_MAKE_BY_ID = "/gettirepatternmakebyid";
+	public static final String GET_CLIENT_SERVICE_LOCATION_BY_CLIENT_ID = "/getclientservicelocationbyclientId";
 
 }
