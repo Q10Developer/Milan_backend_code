@@ -323,18 +323,18 @@ public class IMasterServiceImpl {
 				&& !StringUtils.isEmpty(clientEmailId)) {
 			clientDetailList = clientMasterRepository
 					.findByClientFullNameAndClientCompanyNameAndClientEmailIdAndClientActiveStatus(clientFullName,
-							clientCompanyName, clientEmailId, URLConstants.ACTIVE);
+							clientCompanyName, clientEmailId, URLConstants.ACTIVE, URLConstants.ACTIVE);
 		} else if (!StringUtils.isEmpty(clientFullName)) {
 			clientDetailList = clientMasterRepository.findByClientFullNameAndClientActiveStatus(clientFullName,
-					URLConstants.ACTIVE);
+					URLConstants.ACTIVE, URLConstants.ACTIVE);
 		} else if (!StringUtils.isEmpty(clientCompanyName)) {
 			clientDetailList = clientMasterRepository.findByClientCompanyNameAndClientActiveStatus(clientCompanyName,
-					URLConstants.ACTIVE);
+					URLConstants.ACTIVE, URLConstants.ACTIVE);
 		} else if (!StringUtils.isEmpty(clientEmailId)) {
 			clientDetailList = clientMasterRepository.findByClientEmailIdAndClientActiveStatus(clientEmailId,
-					URLConstants.ACTIVE);
+					URLConstants.ACTIVE, URLConstants.ACTIVE);
 		}
-		if (CollectionUtils.isEmpty(clientDetailList)) {
+		if (!CollectionUtils.isEmpty(clientDetailList)) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientDetailList);
 		} else {
