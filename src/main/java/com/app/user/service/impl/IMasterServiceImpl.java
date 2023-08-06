@@ -315,7 +315,7 @@ public class IMasterServiceImpl {
 	}
 
 	public ServiceResponseDTO getAllClientDetailsByFilters(String clientFullName, String clientCompanyName,
-			String clientEmailId) {
+			String clientEmailId, Long clientId) {
 		LOGGER.info(
 				"getAllClientDetails process start in IMasterServiceImpl and getAllClientDetails method Executing ");
 		List<ClientMasterEntity> clientDetailList = new ArrayList<ClientMasterEntity>();
@@ -333,6 +333,9 @@ public class IMasterServiceImpl {
 		} else if (!StringUtils.isEmpty(clientEmailId)) {
 			clientDetailList = clientMasterRepository.findByClientEmailIdAndClientActiveStatus(clientEmailId,
 					URLConstants.ACTIVE, URLConstants.ACTIVE);
+		} else if (clientId != null) {
+			clientDetailList = clientMasterRepository.findByClientIdAndClientActiveStatus(clientId,
+					URLConstants.ACTIVE);
 		}
 		if (!CollectionUtils.isEmpty(clientDetailList)) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
