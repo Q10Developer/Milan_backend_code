@@ -85,9 +85,10 @@ public class MasterController {
 			@RequestParam(name = "clientFullName", required = false, defaultValue = "") String clientFullName,
 			@RequestParam(name = "clientCompanyName", required = false, defaultValue = "") String clientCompanyName,
 			@RequestParam(name = "clientEmailId", required = false, defaultValue = "") String clientEmailId,
-			@RequestParam(name= "clientId",required = false,  defaultValue ="") Long clientId) {
+			@RequestParam(name = "clientId", required = false, defaultValue = "") Long clientId) {
 		LOGGER.info("Executing  getAllClientDetailsByMultipleFilter() method of MasterController");
-		return masterServiceImpl.getAllClientDetailsByFilters(clientFullName, clientCompanyName, clientEmailId,clientId);
+		return masterServiceImpl.getAllClientDetailsByFilters(clientFullName, clientCompanyName, clientEmailId,
+				clientId);
 	}
 
 	@PostMapping(value = URLConstants.SAVE_VEHICLE)

@@ -315,7 +315,7 @@ public class IMasterServiceImpl {
 	}
 
 	public ServiceResponseDTO getAllClientDetailsByFilters(String clientFullName, String clientCompanyName,
-			String clientEmailId,Long clientId) {
+			String clientEmailId, Long clientId) {
 		LOGGER.info(
 				"getAllClientDetails process start in IMasterServiceImpl and getAllClientDetails method Executing ");
 		List<ClientMasterEntity> clientDetailList = new ArrayList<ClientMasterEntity>();
@@ -323,29 +323,28 @@ public class IMasterServiceImpl {
 				&& !StringUtils.isEmpty(clientEmailId)) {
 			clientDetailList = clientMasterRepository
 					.findByClientFullNameAndClientCompanyNameAndClientEmailIdAndClientActiveStatus(clientFullName,
-							clientCompanyName, clientEmailId, URLConstants.ACTIVE);
+							clientCompanyName, clientEmailId, URLConstants.ACTIVE, URLConstants.ACTIVE);
 		} else if (!StringUtils.isEmpty(clientFullName)) {
 			clientDetailList = clientMasterRepository.findByClientFullNameAndClientActiveStatus(clientFullName,
-					URLConstants.ACTIVE);
+					URLConstants.ACTIVE, URLConstants.ACTIVE);
 		} else if (!StringUtils.isEmpty(clientCompanyName)) {
 			clientDetailList = clientMasterRepository.findByClientCompanyNameAndClientActiveStatus(clientCompanyName,
-					URLConstants.ACTIVE);
+					URLConstants.ACTIVE, URLConstants.ACTIVE);
 		} else if (!StringUtils.isEmpty(clientEmailId)) {
 			clientDetailList = clientMasterRepository.findByClientEmailIdAndClientActiveStatus(clientEmailId,
-					URLConstants.ACTIVE);
-		}  else if (clientId != null) {
-			clientDetailList = clientMasterRepository.findByClientIdAndClientActiveStatus( clientId,
-					URLConstants.ACTIVE);
+					URLConstants.ACTIVE, URLConstants.ACTIVE);
+		} else if (clientId != null) {
+			clientDetailList.add(clientMasterRepository.findByClientIdAndActiveStatusAndServiceLocationStatus(clientId,
+					URLConstants.ACTIVE, URLConstants.ACTIVE).get());
 		}
-		if (CollectionUtils.isEmpty(clientDetailList)) {
+		if (!CollectionUtils.isEmpty(clientDetailList)) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientDetailList);
 		} else {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
 					null);
 		}
-		}
-	
+	}
 
 	public ServiceResponseDTO getClientDetailsById(Long clientId) {
 		LOGGER.info(

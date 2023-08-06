@@ -98,11 +98,9 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "tire_image_url")
 	private String tireImageUrl;
 
-	@Column(name="tire_size")
+	@Column(name = "tire_size")
 	private String tireSize;
-	
-	
-	
+
 	@Column(name = "pressure_analysis", updatable = false, insertable = false)
 	private String pressureAnalysis;
 
@@ -112,11 +110,9 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "wear_analysis", updatable = false, insertable = false)
 	private String wearAnalysis;
 
-	
-	
 	public String getTireSize() {
 		return tireSize;
-	}    
+	}
 
 	public void setTireSize(String tireSize) {
 		this.tireSize = tireSize;
@@ -442,4 +438,3 @@ public class VehicleInspectionDetailsEntity {
 	}
 
 }
-	
