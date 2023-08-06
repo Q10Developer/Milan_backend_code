@@ -39,6 +39,8 @@ public interface ClientMasterRepository extends PagingAndSortingRepository<Clien
 			@Param("clientActiveStatus") int clientActiveStatus,
 			@Param("serviceLocationActiveStatus") int serviceLocationActiveStatus);
 
+	List<ClientMasterEntity> findByClientEmailIdAndClientActiveStatus(String clientEmailId, int clientActiveStatus);
+
 	@Query(value = "SELECT DISTINCT c FROM ClientMasterEntity c LEFT JOIN FETCH c.serviceLocations sl WHERE c.clientActiveStatus = :clientActiveStatus "
 			+ "AND (sl.activeStatus = :serviceLocationActiveStatus OR sl.activeStatus IS NULL)", countQuery = "SELECT COUNT(DISTINCT c) FROM ClientMasterEntity c LEFT JOIN c.serviceLocations sl WHERE c.clientActiveStatus = :clientActiveStatus "
 					+ "AND (sl.activeStatus = :serviceLocationActiveStatus OR sl.activeStatus IS NULL)")
@@ -51,5 +53,7 @@ public interface ClientMasterRepository extends PagingAndSortingRepository<Clien
 	Optional<ClientMasterEntity> findByClientIdAndActiveStatusAndServiceLocationStatus(@Param("clientId") Long clientId,
 			@Param("clientActiveStatus") int clientActiveStatus,
 			@Param("serviceLocationActiveStatus") int serviceLocationActiveStatus);
+
+	List<ClientMasterEntity> findByClientIdAndClientActiveStatus(Long clientId, int clientActiveStatus);
 
 }
