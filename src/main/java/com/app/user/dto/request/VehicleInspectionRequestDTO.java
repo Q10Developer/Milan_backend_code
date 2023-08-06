@@ -6,10 +6,10 @@ public class VehicleInspectionRequestDTO {
 
 	private String inspectionId;
 	private Long clientId;
-	private Long clientServiceLocationId;
-	private String clientServiceLocationAddress;
 	private String clientInformation;
 	private String clientName;
+	private Long clientServiceLocationId;
+	private String clientServiceLocationAddress;
 	private Date inspectionDateTime;
 	private String vehicleRegNumber;
 	private Integer vehicleOdometerReading;
@@ -25,25 +25,8 @@ public class VehicleInspectionRequestDTO {
 	private Long noOfStepneys;
 	private int inspectionStatus;
 
-	public Long getClientServiceLocationId() {
-		return clientServiceLocationId;
-	}
-
-	public void setClientServiceLocationId(Long clientServiceLocationId) {
-		this.clientServiceLocationId = clientServiceLocationId;
-	}
-
-	public String getClientServiceLocationAddress() {
-		return clientServiceLocationAddress;
-	}
-
-	public void setClientServiceLocationAddress(String clientServiceLocationAddress) {
-		this.clientServiceLocationAddress = clientServiceLocationAddress;
-	}
-
 	public String getInspectionId() {
 		return inspectionId;
-
 	}
 
 	public void setInspectionId(String inspectionId) {
@@ -72,6 +55,22 @@ public class VehicleInspectionRequestDTO {
 
 	public void setClientName(String clientName) {
 		this.clientName = clientName;
+	}
+
+	public Long getClientServiceLocationId() {
+		return clientServiceLocationId;
+	}
+
+	public void setClientServiceLocationId(Long clientServiceLocationId) {
+		this.clientServiceLocationId = clientServiceLocationId;
+	}
+
+	public String getClientServiceLocationAddress() {
+		return clientServiceLocationAddress;
+	}
+
+	public void setClientServiceLocationAddress(String clientServiceLocationAddress) {
+		this.clientServiceLocationAddress = clientServiceLocationAddress;
 	}
 
 	public Date getInspectionDateTime() {
@@ -193,14 +192,14 @@ public class VehicleInspectionRequestDTO {
 		builder.append(inspectionId);
 		builder.append(", clientId=");
 		builder.append(clientId);
-		builder.append(", clientServiceLocationId=");
-		builder.append(clientServiceLocationId);
-		builder.append(", clientServiceLocationAddress=");
-		builder.append(clientServiceLocationAddress);
 		builder.append(", clientInformation=");
 		builder.append(clientInformation);
 		builder.append(", clientName=");
 		builder.append(clientName);
+		builder.append(", clientServiceLocationId=");
+		builder.append(clientServiceLocationId);
+		builder.append(", clientServiceLocationAddress=");
+		builder.append(clientServiceLocationAddress);
 		builder.append(", inspectionDateTime=");
 		builder.append(inspectionDateTime);
 		builder.append(", vehicleRegNumber=");

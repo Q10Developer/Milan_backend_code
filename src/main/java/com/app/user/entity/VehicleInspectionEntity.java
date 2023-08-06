@@ -21,17 +21,17 @@ public class VehicleInspectionEntity {
 	@Column(name = "client_id", nullable = false)
 	private Long clientId;
 
-	@Column(name = "client_service_location_id")
-	private Long clientServiceLocationId;
-
 	@Column(name = "client_name", nullable = false)
 	private String clientName;
 
-	@Column(name = "client_service_location_address")
-	private String clientServiceLocationAddress;
-
 	@Column(name = "client_information", nullable = false)
 	private String clientInformation;
+
+	@Column(name = "client_service_location_id", nullable = false)
+	private Long clientServiceLocationId;
+
+	@Column(name = "client_service_location_address", nullable = false)
+	private String clientServiceLocationAddress;
 
 	@Column(name = "inspection_date_time", nullable = false)
 	private Date inspectionDateTime;
@@ -75,22 +75,6 @@ public class VehicleInspectionEntity {
 	@Column(name = "inspection_status", nullable = false)
 	private int inspectionStatus;
 
-	public Long getClientServiceLocationId() {
-		return clientServiceLocationId;
-	}
-
-	public void setClientServiceLocationId(Long clientServiceLocationId) {
-		this.clientServiceLocationId = clientServiceLocationId;
-	}
-
-	public String getClientServiceLocationAddress() {
-		return clientServiceLocationAddress;
-	}
-
-	public void setClientServiceLocationAddress(String clientServiceLocationAddress) {
-		this.clientServiceLocationAddress = clientServiceLocationAddress;
-	}
-
 	public String getInspectionId() {
 		return inspectionId;
 	}
@@ -121,6 +105,22 @@ public class VehicleInspectionEntity {
 
 	public void setClientInformation(String clientInformation) {
 		this.clientInformation = clientInformation;
+	}
+
+	public Long getClientServiceLocationId() {
+		return clientServiceLocationId;
+	}
+
+	public void setClientServiceLocationId(Long clientServiceLocationId) {
+		this.clientServiceLocationId = clientServiceLocationId;
+	}
+
+	public String getClientServiceLocationAddress() {
+		return clientServiceLocationAddress;
+	}
+
+	public void setClientServiceLocationAddress(String clientServiceLocationAddress) {
+		this.clientServiceLocationAddress = clientServiceLocationAddress;
 	}
 
 	public Date getInspectionDateTime() {
@@ -242,14 +242,14 @@ public class VehicleInspectionEntity {
 		builder.append(inspectionId);
 		builder.append(", clientId=");
 		builder.append(clientId);
-		builder.append(", clientServiceLocationId=");
-		builder.append(clientServiceLocationId);
 		builder.append(", clientName=");
 		builder.append(clientName);
-		builder.append(", clientServiceLocationAddress=");
-		builder.append(clientServiceLocationAddress);
 		builder.append(", clientInformation=");
 		builder.append(clientInformation);
+		builder.append(", clientServiceLocationId=");
+		builder.append(clientServiceLocationId);
+		builder.append(", clientServiceLocationAddress=");
+		builder.append(clientServiceLocationAddress);
 		builder.append(", inspectionDateTime=");
 		builder.append(inspectionDateTime);
 		builder.append(", vehicleRegNumber=");
