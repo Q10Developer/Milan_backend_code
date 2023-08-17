@@ -145,6 +145,10 @@ public interface ResponseKeysValue {
 	String WARNING_CLIENT_SERVICE_LOCATION_ALREADY_EXIST_DESC = "client service location alrady exist";
 	String WARNING_CLIENT_SERVICE_LOCATION_DATA__DOESNT_EXIST_CODE = "100";
 	String WARNING_CLIENT_SERVICE_LOCATION_DATA__DOESNT_EXIST_DESC = "client service location data doesn't exist";
+	String FAILURE_DATE_CODE_400 = "400";
+	String INSPECTIONDATETIME_AND_TIREORIGINALFITMATEDATE_ARE_SAME_DESCRIPTION_400 = null;
+
+	
 	
 	
 
