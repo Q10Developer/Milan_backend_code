@@ -1,6 +1,7 @@
 package com.app.user.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -39,6 +40,12 @@ public class IVehicleInspectionServiceImpl {
 
 	@Autowired
 	private VehicleInspectionDetailsRepository vehicleInspectionDetailsRepository;
+
+	private String inspectionDateTime;
+
+	private String tireOriginalFitmentDate;
+
+	
 
 	public ServiceResponseDTO startVehicleInspection(VehicleInspectionRequestDTO vehicleInspectionRequestDTO) {
 		LOGGER.info("Start Vehicle Inspection in IVehicleInspectionServiceImpl and startVehicleInspection method");
@@ -148,7 +155,7 @@ public class IVehicleInspectionServiceImpl {
 		}
 	}
 
-	@Transactional
+	/*@Transactional
 	public ServiceResponseDTO saveVehicleInspectionDetails(String inspectionId, int inspectionStatus,
 			List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails) {
 		LOGGER.info(
@@ -178,6 +185,7 @@ public class IVehicleInspectionServiceImpl {
 					response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
 					response.setResult(new GenericResponseDTO(idString));
 					LOGGER.info("Vehicle Inspection saved Successfully");
+					
 				} catch (Exception ex) {
 					LOGGER.error(
 							"Exception occurred in IVehicleInspectionServiceImpl class in method saveVehicleInspectionDetails with Exception {}",
@@ -196,6 +204,85 @@ public class IVehicleInspectionServiceImpl {
 		}
 		return response;
 	}
+	*/
+	
+	
+	@Transactional
+	public ServiceResponseDTO saveVehicleInspectionDetails(String inspectionId, int inspectionStatus,
+	        List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails) {
+	    LOGGER.info("Save Vehicle Inspection Details in IVehicleInspectionServiceImpl and saveVehicleInspectionDetails method");
+	    ServiceResponseDTO response = new ServiceResponseDTO();
+
+	    if (!CollectionUtils.isEmpty(vehicleInspectionDetails)) {
+	        Optional<VehicleInspectionEntity> vehicleInspectionEntityOptional = vehicleInspectionRepository.findById(inspectionId);
+
+	        if (vehicleInspectionEntityOptional.isPresent() && vehicleInspectionEntityOptional.get().getInspectionStatus() == URLConstants.DRAFT) {
+	            try {
+	                List<VehicleInspectionDetailsEntity> vehicleDetailsList = new ArrayList<>();
+
+	                for (VehicleInspectionDetailsRequestDTO requestDTO : vehicleInspectionDetails) {
+	                    VehicleInspectionDetailsEntity entity = new VehicleInspectionDetailsEntity();
+	                    BeanUtils.copyProperties(requestDTO, entity);
+	                    vehicleDetailsList.add(entity);
+	                }
+	               
+	                int rstMm;
+	                int ctMm;
+	                int lstMm;
+	                
+	                int rtd = Arrays.stream(new int[]{rstMm, ctMm, lstMm}).min().getAsInt();
+
+				
+					if (inspectionDateTime.compareTo(tireOriginalFitmentDate) > 0) { 
+	                    int vehicleOdometerReading = 0;
+	                    int odometerReadingWhenFitted = 0;
+	                    int otd = 0;
+	                    int LEASTTIRETHICKNESSALLOWED = 3;
+						double mileagePerMm = (vehicleOdometerReading - odometerReadingWhenFitted) / (otd - rtd);
+	                    double projectedMileage = (otd - LEASTTIRETHICKNESSALLOWED) * mileagePerMm;
+
+	                    Iterable<VehicleInspectionDetailsEntity> savedEntity = vehicleInspectionDetailsRepository.saveAll(vehicleDetailsList);
+
+	                    VehicleInspectionEntity vehicleInspectionEntityObj = vehicleInspectionEntityOptional.get();
+	                    vehicleInspectionEntityObj.setInspectionStatus(inspectionStatus);
+	                    vehicleInspectionRepository.save(vehicleInspectionEntityObj);
+
+	                    String idString = StreamSupport.stream(savedEntity.spliterator(), false)
+	                            .map(VehicleInspectionDetailsEntity::getRowId)
+	                            .map(String::valueOf)
+	                            .collect(Collectors.joining(","));
+
+	                    response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+	                    response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+	                    response.setResult(new GenericResponseDTO(idString));
+
+	                    LOGGER.info("Vehicle Inspection saved Successfully");
+	                } else {
+	                    response.setStatusCode(ResponseKeysValue.FAILURE_DATE_CODE_400);
+	                    response.setStatusDescription(ResponseKeysValue.INSPECTIONDATETIME_AND_TIREORIGINALFITMATEDATE_ARE_SAME_DESCRIPTION_400 );
+	                }
+	            } catch (Exception ex) {
+	                LOGGER.error("Exception occurred in IVehicleInspectionServiceImpl class in method saveVehicleInspectionDetails with Exception {}", ex.getMessage());
+	                response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+	                response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+	                response.setResult(ex.getMessage());
+	            }
+	        } else {
+	            response.setStatusCode(ResponseKeysValue.FAILURE_INCORRECT_INSPECTION_CODE_400);
+	            response.setStatusDescription(ResponseKeysValue.FAILURE_INCORRECT_INSPECTION_DESCRIPTION_400);
+	        }
+	    } else {
+	        response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);;
+	        response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+	    }
+
+	    return response;
+	}
+
+	
+	
+	
+	
 
 	public ServiceResponseDTO getVehicleInspectionByInspectionId(String inspectionId) {
 		LOGGER.info(

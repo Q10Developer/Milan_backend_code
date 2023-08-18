@@ -38,19 +38,19 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "tire_make_label", nullable = false)
 	private String tireMakeLabel;
 
-	@Column(name = "tire_original_fitment_date", nullable = false)
+	@Column(name = "tire_original_fitment_date", nullable = true)
 	private Date tireOriginalFitmentDate;
 
-	@Column(name = "tire_serial_no", nullable = false)
+	@Column(name = "tire_serial_no", nullable = true)
 	private String tireSerialNo;
 
 	@Column(name = "otd_projected_mileage", nullable = false)
 	private Double otdProjectedMileage;
 
 	@Column(name = "least_tire_thickness_allowed", nullable = false)
-	private int leastTireThicknessAllowed;
+	 private static final int LEASTTIRETHICKNESSALLOWED = 3;
 
-	@Column(name = "odometer_reading_when_fitted", nullable = false)
+	@Column(name = "odometer_reading_when_fitted", nullable = true)
 	private Integer odometerReadingWhenFitted;
 
 	@Column(name = "tire_pattern", nullable = false)
@@ -59,7 +59,7 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "tire_removal_date", nullable = false)
 	private Date tireRemovalDate;
 
-	@Column(name = "odometer_reading_when_removed", nullable = false)
+	@Column(name = "odometer_reading_when_removed", nullable = true)
 	private Integer odometerReadingWhenRemoved;
 
 	@Column(name = "reco_pressure", nullable = false)
@@ -206,13 +206,14 @@ public class VehicleInspectionDetailsEntity {
 		this.otdProjectedMileage = otdProjectedMileage;
 	}
 
-	public int getLeastTireThicknessAllowed() {
-		return leastTireThicknessAllowed;
-	}
-
-	public void setLeastTireThicknessAllowed(int leastTireThicknessAllowed) {
-		this.leastTireThicknessAllowed = leastTireThicknessAllowed;
-	}
+	
+	
+	 public static int getLeastTireThicknessAllowed() {
+	        return LEAST_TIRE_THICKNESS_ALLOWED;
+	    }
+	
+	
+	
 
 	public Integer getOdometerReadingWhenFitted() {
 		return odometerReadingWhenFitted;
@@ -391,8 +392,6 @@ public class VehicleInspectionDetailsEntity {
 		builder.append(tireSerialNo);
 		builder.append(", otdProjectedMileage=");
 		builder.append(otdProjectedMileage);
-		builder.append(", leastTireThicknessAllowed=");
-		builder.append(leastTireThicknessAllowed);
 		builder.append(", odometerReadingWhenFitted=");
 		builder.append(odometerReadingWhenFitted);
 		builder.append(", tirePattern=");
@@ -437,4 +436,5 @@ public class VehicleInspectionDetailsEntity {
 		return builder.toString();
 	}
 
+	
 }
