@@ -2,6 +2,8 @@ package com.app.user.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,6 +11,7 @@ import java.util.stream.StreamSupport;
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.StringUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -35,15 +38,17 @@ public class IVehicleInspectionServiceImpl {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(IVehicleInspectionServiceImpl.class);
 
+	private static final int LEASTTIRETHICKNESSALLOWED = 3;
+
 	@Autowired
 	private VehicleInspectionRepository vehicleInspectionRepository;
 
 	@Autowired
 	private VehicleInspectionDetailsRepository vehicleInspectionDetailsRepository;
 
-	private String inspectionDateTime;
 
-	private String tireOriginalFitmentDate;
+
+
 
 	
 
@@ -209,7 +214,7 @@ public class IVehicleInspectionServiceImpl {
 	
 	@Transactional
 	public ServiceResponseDTO saveVehicleInspectionDetails(String inspectionId, int inspectionStatus,
-	        List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails) {
+	        List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails, int rstMm, int ctMm, int lstMm,  Date inspectionDateTime, Date tireOriginalFitmentDate, int vehicleOdometerReading, int odometerReadingWhenFitted, int otdMm) {
 	    LOGGER.info("Save Vehicle Inspection Details in IVehicleInspectionServiceImpl and saveVehicleInspectionDetails method");
 	    ServiceResponseDTO response = new ServiceResponseDTO();
 
@@ -226,20 +231,12 @@ public class IVehicleInspectionServiceImpl {
 	                    vehicleDetailsList.add(entity);
 	                }
 	               
-	                int rstMm;
-	                int ctMm;
-	                int lstMm;
-	                
-	                int rtd = Arrays.stream(new int[]{rstMm, ctMm, lstMm}).min().getAsInt();
-
-				
-					if (inspectionDateTime.compareTo(tireOriginalFitmentDate) > 0) { 
-	                    int vehicleOdometerReading = 0;
-	                    int odometerReadingWhenFitted = 0;
-	                    int otd = 0;
-	                    int LEASTTIRETHICKNESSALLOWED = 3;
-						double mileagePerMm = (vehicleOdometerReading - odometerReadingWhenFitted) / (otd - rtd);
-	                    double projectedMileage = (otd - LEASTTIRETHICKNESSALLOWED) * mileagePerMm;
+	               
+					int rtd = Arrays.stream(new int[]{rstMm,ctMm, lstMm}).min().getAsInt();
+                if (inspectionDateTime.compareTo(tireOriginalFitmentDate) > 0) { 
+	                 
+				    double mileagePerMm = (vehicleOdometerReading - odometerReadingWhenFitted) / (otdMm - rtd);
+	                    double projectedMileage = (otdMm- LEASTTIRETHICKNESSALLOWED) * mileagePerMm;
 
 	                    Iterable<VehicleInspectionDetailsEntity> savedEntity = vehicleInspectionDetailsRepository.saveAll(vehicleDetailsList);
 

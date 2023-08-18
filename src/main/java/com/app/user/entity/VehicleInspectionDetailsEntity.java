@@ -110,262 +110,349 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "wear_analysis", updatable = false, insertable = false)
 	private String wearAnalysis;
 
-	public String getTireSize() {
-		return tireSize;
-	}
+	
+	@Column(name="rtd", updatable= false, insertable= false)
+	private int rtd;
+	
+	
+	@Column(name="mileage_per_mm", updatable= false, insertable= false)
+	private double mileagePerMm;
 
-	public void setTireSize(String tireSize) {
-		this.tireSize = tireSize;
-	}
-
-	public Long getInspectionDetailIndex() {
-		return inspectionDetailIndex;
-	}
-
-	public void setInspectionDetailIndex(Long inspectionDetailIndex) {
-		this.inspectionDetailIndex = inspectionDetailIndex;
-	}
 
 	public Long getRowId() {
 		return rowId;
 	}
 
+
 	public void setRowId(Long rowId) {
 		this.rowId = rowId;
 	}
+
+
+	public Long getInspectionDetailIndex() {
+		return inspectionDetailIndex;
+	}
+
+
+	public void setInspectionDetailIndex(Long inspectionDetailIndex) {
+		this.inspectionDetailIndex = inspectionDetailIndex;
+	}
+
 
 	public String getInspectionId() {
 		return inspectionId;
 	}
 
+
 	public void setInspectionId(String inspectionId) {
 		this.inspectionId = inspectionId;
 	}
+
 
 	public String getTirePosition() {
 		return tirePosition;
 	}
 
+
 	public void setTirePosition(String tirePosition) {
 		this.tirePosition = tirePosition;
 	}
+
 
 	public Long getTireType() {
 		return tireType;
 	}
 
+
 	public void setTireType(Long tireType) {
 		this.tireType = tireType;
 	}
+
 
 	public String getTireTypeLabel() {
 		return tireTypeLabel;
 	}
 
+
 	public void setTireTypeLabel(String tireTypeLabel) {
 		this.tireTypeLabel = tireTypeLabel;
 	}
+
 
 	public Long getTireMake() {
 		return tireMake;
 	}
 
+
 	public void setTireMake(Long tireMake) {
 		this.tireMake = tireMake;
 	}
+
 
 	public String getTireMakeLabel() {
 		return tireMakeLabel;
 	}
 
+
 	public void setTireMakeLabel(String tireMakeLabel) {
 		this.tireMakeLabel = tireMakeLabel;
 	}
+
 
 	public Date getTireOriginalFitmentDate() {
 		return tireOriginalFitmentDate;
 	}
 
+
 	public void setTireOriginalFitmentDate(Date tireOriginalFitmentDate) {
 		this.tireOriginalFitmentDate = tireOriginalFitmentDate;
 	}
+
 
 	public String getTireSerialNo() {
 		return tireSerialNo;
 	}
 
+
 	public void setTireSerialNo(String tireSerialNo) {
 		this.tireSerialNo = tireSerialNo;
 	}
+
 
 	public Double getOtdProjectedMileage() {
 		return otdProjectedMileage;
 	}
 
+
 	public void setOtdProjectedMileage(Double otdProjectedMileage) {
 		this.otdProjectedMileage = otdProjectedMileage;
 	}
 
-	
-	
-	 public static int getLeastTireThicknessAllowed() {
-	        return LEAST_TIRE_THICKNESS_ALLOWED;
-	    }
-	
-	
-	
 
 	public Integer getOdometerReadingWhenFitted() {
 		return odometerReadingWhenFitted;
 	}
 
+
 	public void setOdometerReadingWhenFitted(Integer odometerReadingWhenFitted) {
 		this.odometerReadingWhenFitted = odometerReadingWhenFitted;
 	}
+
 
 	public String getTirePattern() {
 		return tirePattern;
 	}
 
+
 	public void setTirePattern(String tirePattern) {
 		this.tirePattern = tirePattern;
 	}
+
 
 	public Date getTireRemovalDate() {
 		return tireRemovalDate;
 	}
 
+
 	public void setTireRemovalDate(Date tireRemovalDate) {
 		this.tireRemovalDate = tireRemovalDate;
 	}
+
 
 	public Integer getOdometerReadingWhenRemoved() {
 		return odometerReadingWhenRemoved;
 	}
 
+
 	public void setOdometerReadingWhenRemoved(Integer odometerReadingWhenRemoved) {
 		this.odometerReadingWhenRemoved = odometerReadingWhenRemoved;
 	}
+
 
 	public int getRecoPressure() {
 		return recoPressure;
 	}
 
+
 	public void setRecoPressure(int recoPressure) {
 		this.recoPressure = recoPressure;
 	}
+
 
 	public int getObsPressure() {
 		return obsPressure;
 	}
 
+
 	public void setObsPressure(int obsPressure) {
 		this.obsPressure = obsPressure;
 	}
+
 
 	public int getOtdMm() {
 		return otdMm;
 	}
 
+
 	public void setOtdMm(int otdMm) {
 		this.otdMm = otdMm;
 	}
+
 
 	public int getLstMm() {
 		return lstMm;
 	}
 
+
 	public void setLstMm(int lstMm) {
 		this.lstMm = lstMm;
 	}
+
 
 	public int getCtMm() {
 		return ctMm;
 	}
 
+
 	public void setCtMm(int ctMm) {
 		this.ctMm = ctMm;
 	}
+
 
 	public int getRstMm() {
 		return rstMm;
 	}
 
+
 	public void setRstMm(int rstMm) {
 		this.rstMm = rstMm;
 	}
+
 
 	public Long getObservationCategory() {
 		return observationCategory;
 	}
 
+
 	public void setObservationCategory(Long observationCategory) {
 		this.observationCategory = observationCategory;
 	}
+
 
 	public String getObservationCategoryLabel() {
 		return observationCategoryLabel;
 	}
 
+
 	public void setObservationCategoryLabel(String observationCategoryLabel) {
 		this.observationCategoryLabel = observationCategoryLabel;
 	}
+
 
 	public Long getObservation() {
 		return observation;
 	}
 
+
 	public void setObservation(Long observation) {
 		this.observation = observation;
 	}
+
 
 	public String getObservationLabel() {
 		return observationLabel;
 	}
 
+
 	public void setObservationLabel(String observationLabel) {
 		this.observationLabel = observationLabel;
 	}
+
 
 	public String getRecommendationLabel() {
 		return recommendationLabel;
 	}
 
+
 	public void setRecommendationLabel(String recommendationLabel) {
 		this.recommendationLabel = recommendationLabel;
 	}
+
 
 	public String getTireImageUrl() {
 		return tireImageUrl;
 	}
 
+
 	public void setTireImageUrl(String tireImageUrl) {
 		this.tireImageUrl = tireImageUrl;
 	}
+
+
+	public String getTireSize() {
+		return tireSize;
+	}
+
+
+	public void setTireSize(String tireSize) {
+		this.tireSize = tireSize;
+	}
+
 
 	public String getPressureAnalysis() {
 		return pressureAnalysis;
 	}
 
+
 	public void setPressureAnalysis(String pressureAnalysis) {
 		this.pressureAnalysis = pressureAnalysis;
 	}
+
 
 	public String getLeastTireThicknessAllowedAnalysis() {
 		return leastTireThicknessAllowedAnalysis;
 	}
 
+
 	public void setLeastTireThicknessAllowedAnalysis(String leastTireThicknessAllowedAnalysis) {
 		this.leastTireThicknessAllowedAnalysis = leastTireThicknessAllowedAnalysis;
 	}
+
 
 	public String getWearAnalysis() {
 		return wearAnalysis;
 	}
 
+
 	public void setWearAnalysis(String wearAnalysis) {
 		this.wearAnalysis = wearAnalysis;
 	}
+
+
+	public int getRtd() {
+		return rtd;
+	}
+
+
+	public void setRtd(int rtd) {
+		this.rtd = rtd;
+	}
+
+
+	public double getMileagePerMm() {
+		return mileagePerMm;
+	}
+
+
+	public void setMileagePerMm(double mileagePerMm) {
+		this.mileagePerMm = mileagePerMm;
+	}
+
+
+	public static int getLeasttirethicknessallowed() {
+		return LEASTTIRETHICKNESSALLOWED;
+	}
+
 
 	@Override
 	public String toString() {
@@ -432,9 +519,14 @@ public class VehicleInspectionDetailsEntity {
 		builder.append(leastTireThicknessAllowedAnalysis);
 		builder.append(", wearAnalysis=");
 		builder.append(wearAnalysis);
+		builder.append(", rtd=");
+		builder.append(rtd);
+		builder.append(", mileagePerMm=");
+		builder.append(mileagePerMm);
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
+	
 	
 }

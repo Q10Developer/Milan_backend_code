@@ -1,6 +1,8 @@
 package com.app.user.controller;
 
+import java.util.Date;
 import java.util.List;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,8 @@ import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.VehicleInspectionDetailsRequestDTO;
 import com.app.user.dto.request.VehicleInspectionRequestDTO;
 import com.app.user.service.impl.IVehicleInspectionServiceImpl;
+
+
 
 @RestController
 @CrossOrigin
@@ -66,10 +70,18 @@ public class VehicleInspectionController {
 	@PostMapping(value = URLConstants.SAVE_VEHICLE_INSPECTION_DETAILS)
 	public ServiceResponseDTO saveVehicleInspectionDetails(@RequestParam(name = "inspectionId") String inspectionId,
 			@RequestParam(name = "inspectionStatus") int inspectionStatus,
-			@RequestBody List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails) {
+			@RequestParam(name="rstMm") int rstMm,
+			@RequestParam(name="lstMm") int lstMm,
+			@RequestParam(name="ctMm") int ctMm,
+			@RequestParam(name="inspectionDateTime")  Date  inspectionDateTime,
+			@RequestParam(name="tireOriginalFitmentDate") Date tireOriginalFitmentDate,
+			@RequestParam(name="vehicleOdometerReading")   int  vehicleOdometerReading,
+			@RequestParam(name="odometerReadingWhenFitted")  int  odometerReadingWhenFitted,
+			@RequestParam(name="otdMm")  int  otdMm,
+	     	@RequestBody List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails) {
 		LOGGER.info("Executing  saveVehicleInspectionDetails() method of VehicleInspectionController");
 		return vehicleInspectionServiceImpl.saveVehicleInspectionDetails(inspectionId, inspectionStatus,
-				vehicleInspectionDetails);
+				vehicleInspectionDetails,rstMm,lstMm,ctMm,inspectionDateTime,tireOriginalFitmentDate,vehicleOdometerReading,odometerReadingWhenFitted,otdMm);
 	}
 
 	@GetMapping(value = URLConstants.GET_VEHICLE_INSPECTION_DETAILS)
