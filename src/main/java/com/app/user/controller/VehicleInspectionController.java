@@ -1,5 +1,8 @@
 package com.app.user.controller;
 
+
+
+
 import java.util.Date;
 import java.util.List;
 
@@ -7,6 +10,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -68,13 +72,13 @@ public class VehicleInspectionController {
 	}
 
 	@PostMapping(value = URLConstants.SAVE_VEHICLE_INSPECTION_DETAILS)
-	public ServiceResponseDTO saveVehicleInspectionDetails(@RequestParam(name = "inspectionId") String inspectionId,
+	public  ServiceResponseDTO saveVehicleInspectionDetails(@RequestParam(name = "inspectionId") String inspectionId,
 			@RequestParam(name = "inspectionStatus") int inspectionStatus,
 			@RequestParam(name="rstMm") int rstMm,
 			@RequestParam(name="lstMm") int lstMm,
 			@RequestParam(name="ctMm") int ctMm,
-			@RequestParam(name="inspectionDateTime")  Date  inspectionDateTime,
-			@RequestParam(name="tireOriginalFitmentDate") Date tireOriginalFitmentDate,
+			@RequestParam(name="inspectionDateTime")  Date inspectionDateTime,
+			@RequestParam(name="tireOriginalFitmentDate")  Date tireOriginalFitmentDate,
 			@RequestParam(name="vehicleOdometerReading")   int  vehicleOdometerReading,
 			@RequestParam(name="odometerReadingWhenFitted")  int  odometerReadingWhenFitted,
 			@RequestParam(name="otdMm")  int  otdMm,

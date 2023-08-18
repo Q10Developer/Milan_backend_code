@@ -2,8 +2,8 @@ package com.app.user.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+//import java.util.Date;
 import java.util.Date;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -160,7 +160,7 @@ public class IVehicleInspectionServiceImpl {
 		}
 	}
 
-	/*@Transactional
+	 /* @Transactional
 	public ServiceResponseDTO saveVehicleInspectionDetails(String inspectionId, int inspectionStatus,
 			List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails) {
 		LOGGER.info(
@@ -173,6 +173,7 @@ public class IVehicleInspectionServiceImpl {
 					&& vehicleInspectionEntity.get().getInspectionStatus() == URLConstants.DRAFT) {
 				try {
 					List<VehicleInspectionDetailsEntity> vehicleDetailsList = new ArrayList<>();
+					
 					for (VehicleInspectionDetailsRequestDTO requestDTO : vehicleInspectionDetails) {
 						VehicleInspectionDetailsEntity entity = new VehicleInspectionDetailsEntity();
 						BeanUtils.copyProperties(requestDTO, entity);
@@ -212,9 +213,10 @@ public class IVehicleInspectionServiceImpl {
 	*/
 	
 	
-	@Transactional
+
+@Transactional 
 	public ServiceResponseDTO saveVehicleInspectionDetails(String inspectionId, int inspectionStatus,
-	        List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails, int rstMm, int ctMm, int lstMm,  Date inspectionDateTime, Date tireOriginalFitmentDate, int vehicleOdometerReading, int odometerReadingWhenFitted, int otdMm) {
+	        List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails, int rstMm, int ctMm, int lstMm,  Date inspectionDateTime, Date tireOriginalFitmentDate, int vehicleOdometerReading, int odometerReadingWhenFitted, int otdMm ) {
 	    LOGGER.info("Save Vehicle Inspection Details in IVehicleInspectionServiceImpl and saveVehicleInspectionDetails method");
 	    ServiceResponseDTO response = new ServiceResponseDTO();
 
@@ -227,24 +229,28 @@ public class IVehicleInspectionServiceImpl {
 
 	                for (VehicleInspectionDetailsRequestDTO requestDTO : vehicleInspectionDetails) {
 	                    VehicleInspectionDetailsEntity entity = new VehicleInspectionDetailsEntity();
+	                    
+	                    int rtd = Arrays.stream(new int[]{rstMm,ctMm, lstMm}).min().getAsInt();
+						entity.setRtd(rtd);
+						if (inspectionDateTime.compareTo(tireOriginalFitmentDate) != 0) { 
+		                 
+							double mileagePerMm = (vehicleOdometerReading - odometerReadingWhenFitted) / (otdMm - rtd);
+		                    double projectedMileage = (otdMm - LEASTTIRETHICKNESSALLOWED) * mileagePerMm;
+		                    entity.setMileagePerMm(mileagePerMm);
+		                    entity.setProjectedMileage(projectedMileage);
+		               	}
+	                    
 	                    BeanUtils.copyProperties(requestDTO, entity);
 	                    vehicleDetailsList.add(entity);
 	                }
-	               
-	               
-					int rtd = Arrays.stream(new int[]{rstMm,ctMm, lstMm}).min().getAsInt();
-                if (inspectionDateTime.compareTo(tireOriginalFitmentDate) > 0) { 
-	                 
-				    double mileagePerMm = (vehicleOdometerReading - odometerReadingWhenFitted) / (otdMm - rtd);
-	                    double projectedMileage = (otdMm- LEASTTIRETHICKNESSALLOWED) * mileagePerMm;
-
+	            
+	        
 	                    Iterable<VehicleInspectionDetailsEntity> savedEntity = vehicleInspectionDetailsRepository.saveAll(vehicleDetailsList);
 
 	                    VehicleInspectionEntity vehicleInspectionEntityObj = vehicleInspectionEntityOptional.get();
 	                    vehicleInspectionEntityObj.setInspectionStatus(inspectionStatus);
 	                    vehicleInspectionRepository.save(vehicleInspectionEntityObj);
-
-	                    String idString = StreamSupport.stream(savedEntity.spliterator(), false)
+	                    		String idString = StreamSupport.stream(savedEntity.spliterator(), false)
 	                            .map(VehicleInspectionDetailsEntity::getRowId)
 	                            .map(String::valueOf)
 	                            .collect(Collectors.joining(","));
@@ -254,17 +260,14 @@ public class IVehicleInspectionServiceImpl {
 	                    response.setResult(new GenericResponseDTO(idString));
 
 	                    LOGGER.info("Vehicle Inspection saved Successfully");
-	                } else {
-	                    response.setStatusCode(ResponseKeysValue.FAILURE_DATE_CODE_400);
-	                    response.setStatusDescription(ResponseKeysValue.INSPECTIONDATETIME_AND_TIREORIGINALFITMATEDATE_ARE_SAME_DESCRIPTION_400 );
-	                }
-	            } catch (Exception ex) {
+	                } 
+	             catch (Exception ex) {
 	                LOGGER.error("Exception occurred in IVehicleInspectionServiceImpl class in method saveVehicleInspectionDetails with Exception {}", ex.getMessage());
 	                response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
 	                response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
 	                response.setResult(ex.getMessage());
-	            }
-	        } else {
+	            
+	             }}      else {
 	            response.setStatusCode(ResponseKeysValue.FAILURE_INCORRECT_INSPECTION_CODE_400);
 	            response.setStatusDescription(ResponseKeysValue.FAILURE_INCORRECT_INSPECTION_DESCRIPTION_400);
 	        }
