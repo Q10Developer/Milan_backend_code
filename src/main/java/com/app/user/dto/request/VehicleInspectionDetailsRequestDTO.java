@@ -39,6 +39,7 @@ public class VehicleInspectionDetailsRequestDTO {
 		private String wearAnalysis;
 		private int rtd;
 		private double mileagePerMm;
+		private double projectedMileage;
 		
 	
 		private static final int LEASTTIRETHICKNESSALLOWED = 3;
@@ -251,6 +252,17 @@ public class VehicleInspectionDetailsRequestDTO {
 			this.wearAnalysis = wearAnalysis;
 		}
 
+		
+
+		public double getProjectedMileage() {
+			return projectedMileage;
+		}
+
+
+		public void setProjectedMileage(double projectedMileage) {
+			this.projectedMileage = projectedMileage;
+		}
+
 
 		@Override
 		public String toString() {
@@ -321,12 +333,14 @@ public class VehicleInspectionDetailsRequestDTO {
 			builder.append(rtd);
 			builder.append(", mileagePerMm=");
 			builder.append(mileagePerMm);
+			builder.append(", projectedMileage=");
+			builder.append(projectedMileage);
 			builder.append("]");
 			return builder.toString();
 		}
-		
-		
 
+
+		
 		
 		
 		

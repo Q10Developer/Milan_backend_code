@@ -111,12 +111,30 @@ public class VehicleInspectionDetailsEntity {
 	private String wearAnalysis;
 
 	
+	@Column(name="projected_mileage", updatable=false, insertable=false)
+	private double projectedMileage;
+	
 	@Column(name="rtd", updatable= false, insertable= false)
 	private int rtd;
 	
 	
 	@Column(name="mileage_per_mm", updatable= false, insertable= false)
 	private double mileagePerMm;
+
+
+	
+	
+	
+	
+	
+	public double getProjectedMileage() {
+		return projectedMileage;
+	}
+
+
+	public void setProjectedMileage(double projectedMileage) {
+		this.projectedMileage = projectedMileage;
+	}
 
 
 	public Long getRowId() {
@@ -519,6 +537,8 @@ public class VehicleInspectionDetailsEntity {
 		builder.append(leastTireThicknessAllowedAnalysis);
 		builder.append(", wearAnalysis=");
 		builder.append(wearAnalysis);
+		builder.append(", projectedMileage=");
+		builder.append(projectedMileage);
 		builder.append(", rtd=");
 		builder.append(rtd);
 		builder.append(", mileagePerMm=");
@@ -526,6 +546,8 @@ public class VehicleInspectionDetailsEntity {
 		builder.append("]");
 		return builder.toString();
 	}
+
+
 	
 	
 	
