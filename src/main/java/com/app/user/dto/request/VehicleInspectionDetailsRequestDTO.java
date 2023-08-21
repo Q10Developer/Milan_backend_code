@@ -14,7 +14,6 @@ public class VehicleInspectionDetailsRequestDTO {
 	private String tireMakeLabel;
 	private Date tireOriginalFitmentDate;
 	private String tireSerialNo;
-	private Double otdProjectedMileage;
 	private Integer leastTireThicknessAllowed;
 	private Integer odometerReadingWhenFitted;
 	private String tirePattern;
@@ -118,14 +117,6 @@ public class VehicleInspectionDetailsRequestDTO {
 
 	public void setTireSerialNo(String tireSerialNo) {
 		this.tireSerialNo = tireSerialNo;
-	}
-
-	public Double getOtdProjectedMileage() {
-		return otdProjectedMileage;
-	}
-
-	public void setOtdProjectedMileage(Double otdProjectedMileage) {
-		this.otdProjectedMileage = otdProjectedMileage;
 	}
 
 	public int getLeastTireThicknessAllowed() {
@@ -347,8 +338,6 @@ public class VehicleInspectionDetailsRequestDTO {
 		builder.append(tireOriginalFitmentDate);
 		builder.append(", tireSerialNo=");
 		builder.append(tireSerialNo);
-		builder.append(", otdProjectedMileage=");
-		builder.append(otdProjectedMileage);
 		builder.append(", leastTireThicknessAllowed=");
 		builder.append(leastTireThicknessAllowed);
 		builder.append(", odometerReadingWhenFitted=");

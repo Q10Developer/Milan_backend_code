@@ -43,9 +43,6 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "tire_serial_no", nullable = true)
 	private String tireSerialNo;
 
-	@Column(name = "otd_projected_mileage", nullable = false)
-	private Double otdProjectedMileage;
-
 	@Column(name = "least_tire_thickness_allowed", nullable = false, columnDefinition = "int default 3")
 	private int leastTireThicknessAllowed;
 
@@ -196,14 +193,6 @@ public class VehicleInspectionDetailsEntity {
 
 	public void setTireSerialNo(String tireSerialNo) {
 		this.tireSerialNo = tireSerialNo;
-	}
-
-	public Double getOtdProjectedMileage() {
-		return otdProjectedMileage;
-	}
-
-	public void setOtdProjectedMileage(Double otdProjectedMileage) {
-		this.otdProjectedMileage = otdProjectedMileage;
 	}
 
 	public int getLeastTireThicknessAllowed() {
@@ -421,8 +410,6 @@ public class VehicleInspectionDetailsEntity {
 		builder.append(tireOriginalFitmentDate);
 		builder.append(", tireSerialNo=");
 		builder.append(tireSerialNo);
-		builder.append(", otdProjectedMileage=");
-		builder.append(otdProjectedMileage);
 		builder.append(", leastTireThicknessAllowed=");
 		builder.append(leastTireThicknessAllowed);
 		builder.append(", odometerReadingWhenFitted=");
