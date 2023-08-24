@@ -15,17 +15,17 @@ public class VehicleInspectionDetailsRequestDTO {
 	private Date tireOriginalFitmentDate;
 	private String tireSerialNo;
 	private Integer leastTireThicknessAllowed;
-	private Integer odometerReadingWhenFitted;
+	private Double odometerReadingWhenFitted;
 	private String tirePattern;
 	private String tireSize;
 	private Date tireRemovalDate;
-	private Integer odometerReadingWhenRemoved;
-	private Integer recoPressure;
-	private Integer obsPressure;
-	private Integer otdMm;
-	private Integer lstMm;
-	private Integer ctMm;
-	private Integer rstMm;
+	private Double odometerReadingWhenRemoved;
+	private Double recoPressure;
+	private Double obsPressure;
+	private Double otdMm;
+	private Double lstMm;
+	private Double ctMm;
+	private Double rstMm;
 	private Long observationCategory;
 	private String observationCategoryLabel;
 	private Long observation;
@@ -35,7 +35,7 @@ public class VehicleInspectionDetailsRequestDTO {
 	private String pressureAnalysis;
 	private String leastTireThicknessAllowedAnalysis;
 	private String wearAnalysis;
-	private Integer rtd;
+	private Double rtd;
 	private Double mileagePerMm;
 	private Double projectedMileage;
 
@@ -131,11 +131,11 @@ public class VehicleInspectionDetailsRequestDTO {
 		}
 	}
 
-	public Integer getOdometerReadingWhenFitted() {
+	public Double getOdometerReadingWhenFitted() {
 		return odometerReadingWhenFitted;
 	}
 
-	public void setOdometerReadingWhenFitted(Integer odometerReadingWhenFitted) {
+	public void setOdometerReadingWhenFitted(Double odometerReadingWhenFitted) {
 		this.odometerReadingWhenFitted = odometerReadingWhenFitted;
 	}
 
@@ -163,59 +163,59 @@ public class VehicleInspectionDetailsRequestDTO {
 		this.tireRemovalDate = tireRemovalDate;
 	}
 
-	public Integer getOdometerReadingWhenRemoved() {
+	public Double getOdometerReadingWhenRemoved() {
 		return odometerReadingWhenRemoved;
 	}
 
-	public void setOdometerReadingWhenRemoved(Integer odometerReadingWhenRemoved) {
+	public void setOdometerReadingWhenRemoved(Double odometerReadingWhenRemoved) {
 		this.odometerReadingWhenRemoved = odometerReadingWhenRemoved;
 	}
 
-	public Integer getRecoPressure() {
+	public Double getRecoPressure() {
 		return recoPressure;
 	}
 
-	public void setRecoPressure(Integer recoPressure) {
+	public void setRecoPressure(Double recoPressure) {
 		this.recoPressure = recoPressure;
 	}
 
-	public Integer getObsPressure() {
+	public Double getObsPressure() {
 		return obsPressure;
 	}
 
-	public void setObsPressure(Integer obsPressure) {
+	public void setObsPressure(Double obsPressure) {
 		this.obsPressure = obsPressure;
 	}
 
-	public Integer getOtdMm() {
+	public Double getOtdMm() {
 		return otdMm;
 	}
 
-	public void setOtdMm(Integer otdMm) {
+	public void setOtdMm(Double otdMm) {
 		this.otdMm = otdMm;
 	}
 
-	public Integer getLstMm() {
+	public Double getLstMm() {
 		return lstMm;
 	}
 
-	public void setLstMm(Integer lstMm) {
+	public void setLstMm(Double lstMm) {
 		this.lstMm = lstMm;
 	}
 
-	public Integer getCtMm() {
+	public Double getCtMm() {
 		return ctMm;
 	}
 
-	public void setCtMm(Integer ctMm) {
+	public void setCtMm(Double ctMm) {
 		this.ctMm = ctMm;
 	}
 
-	public Integer getRstMm() {
+	public Double getRstMm() {
 		return rstMm;
 	}
 
-	public void setRstMm(Integer rstMm) {
+	public void setRstMm(Double rstMm) {
 		this.rstMm = rstMm;
 	}
 
@@ -291,11 +291,11 @@ public class VehicleInspectionDetailsRequestDTO {
 		this.wearAnalysis = wearAnalysis;
 	}
 
-	public Integer getRtd() {
+	public Double getRtd() {
 		return rtd;
 	}
 
-	public void setRtd(Integer rtd) {
+	public void setRtd(Double rtd) {
 		this.rtd = rtd;
 	}
 

@@ -168,11 +168,11 @@ public class IVehicleInspectionServiceImpl {
 						 */
 						double mileagePerMm = 0.0;
 						double projectedMileage = 0.0;
-						int rtd = 0;
+						double rtd = 0.0;
 						if (inspectionStatus == URLConstants.SUBMITTED) {
 							rtd = Arrays.stream(
-									new int[] { requestDTO.getRstMm(), requestDTO.getCtMm(), requestDTO.getLstMm() })
-									.min().getAsInt();
+									new double[] { requestDTO.getRstMm(), requestDTO.getCtMm(), requestDTO.getLstMm() })
+									.min().getAsDouble();
 							if (!Utils.compareDates(vehicleInspectionEntityOptional.get().getInspectionDateTime(),
 									requestDTO.getTireOriginalFitmentDate())) {
 								try {
