@@ -52,7 +52,7 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "tire_pattern", nullable = false)
 	private String tirePattern;
 
-	@Column(name = "tire_removal_date", nullable = false)
+	@Column(name = "tire_removal_date", nullable = true)
 	private Date tireRemovalDate;
 
 	@Column(name = "odometer_reading_when_removed", nullable = true)

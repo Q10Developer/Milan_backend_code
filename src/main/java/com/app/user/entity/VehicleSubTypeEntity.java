@@ -23,7 +23,11 @@ public class VehicleSubTypeEntity {
 
 	@Column(name = "vehicle_subtype_name")
 	private String vehicleSubTypeName;
-
+    
+	@Column(name="no_of_tires")
+	private Long noOfTires;
+	
+	
 	@Column(name = "active_status", nullable = false)
 	private int activeStatus;
 
@@ -58,11 +62,36 @@ public class VehicleSubTypeEntity {
 	public void setActiveStatus(int activeStatus) {
 		this.activeStatus = activeStatus;
 	}
+	
+	
+
+	public Long getNoOfTires() {
+		return noOfTires;
+	}
+
+	public void setNoOfTires(Long noOfTires) {
+		this.noOfTires = noOfTires;
+	}
 
 	@Override
 	public String toString() {
-		return "VehicleSubTypeEntity [vehicleSubTypeId=" + vehicleSubTypeId + ", vehicleTypeId=" + vehicleTypeId
-				+ ", vehicleSubTypeName=" + vehicleSubTypeName + ", activeStatus=" + activeStatus + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("VehicleSubTypeEntity [vehicleSubTypeId=");
+		builder.append(vehicleSubTypeId);
+		builder.append(", vehicleTypeId=");
+		builder.append(vehicleTypeId);
+		builder.append(", vehicleSubTypeName=");
+		builder.append(vehicleSubTypeName);
+		builder.append(", noOfTires=");
+		builder.append(noOfTires);
+		builder.append(", activeStatus=");
+		builder.append(activeStatus);
+		builder.append("]");
+		return builder.toString();
 	}
 
+
+	
+	
+	
 }
