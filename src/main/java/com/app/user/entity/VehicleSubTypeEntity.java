@@ -23,11 +23,10 @@ public class VehicleSubTypeEntity {
 
 	@Column(name = "vehicle_subtype_name")
 	private String vehicleSubTypeName;
-    
-	@Column(name="no_of_tires")
+
+	@Column(name = "no_of_tires")
 	private Long noOfTires;
-	
-	
+
 	@Column(name = "active_status", nullable = false)
 	private int activeStatus;
 
@@ -62,8 +61,6 @@ public class VehicleSubTypeEntity {
 	public void setActiveStatus(int activeStatus) {
 		this.activeStatus = activeStatus;
 	}
-	
-	
 
 	public Long getNoOfTires() {
 		return noOfTires;
@@ -90,8 +87,4 @@ public class VehicleSubTypeEntity {
 		return builder.toString();
 	}
 
-
-	
-	
-	
 }
