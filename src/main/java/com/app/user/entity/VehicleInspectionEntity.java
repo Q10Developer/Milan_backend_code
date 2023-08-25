@@ -17,6 +17,9 @@ public class VehicleInspectionEntity {
 	@GenericGenerator(name = "custom-id-generator", strategy = "com.app.user.config.helper.CustomIdGenerator")
 	@Column(name = "inspection_id")
 	private String inspectionId;
+	
+	
+	
 
 	@Column(name = "client_id", nullable = false)
 	private Long clientId;
@@ -68,6 +71,10 @@ public class VehicleInspectionEntity {
 
 	@Column(name = "no_of_tires", nullable = false)
 	private Long noOfTires;
+	
+	
+	@Column(name="tire_sequence", nullable =false)
+	private String tireSequence;
 
 	@Column(name = "no_of_stepneys", nullable = false)
 	private Long noOfStepneys;
@@ -227,6 +234,15 @@ public class VehicleInspectionEntity {
 		this.noOfStepneys = noOfStepneys;
 	}
 
+
+	public String getTireSequence() {
+		return tireSequence;
+	}
+
+	public void setTireSequence(String tireSequence) {
+		this.tireSequence = tireSequence;
+	}
+
 	public int getInspectionStatus() {
 		return inspectionStatus;
 	}
@@ -274,6 +290,8 @@ public class VehicleInspectionEntity {
 		builder.append(vehicleTypeLabel);
 		builder.append(", noOfTires=");
 		builder.append(noOfTires);
+		builder.append(", tireSequence=");
+		builder.append(tireSequence);
 		builder.append(", noOfStepneys=");
 		builder.append(noOfStepneys);
 		builder.append(", inspectionStatus=");
@@ -281,5 +299,7 @@ public class VehicleInspectionEntity {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 
 }
