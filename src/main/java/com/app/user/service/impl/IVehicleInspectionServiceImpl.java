@@ -157,8 +157,7 @@ public class IVehicleInspectionServiceImpl {
 		if (!CollectionUtils.isEmpty(vehicleInspectionDetails)) {
 			Optional<VehicleInspectionEntity> vehicleInspectionEntityOptional = vehicleInspectionRepository
 					.findById(inspectionId);
-			if (vehicleInspectionEntityOptional.isPresent()
-					&& vehicleInspectionEntityOptional.get().getInspectionStatus() == URLConstants.DRAFT) {
+			if (vehicleInspectionEntityOptional.isPresent()) {
 				try {
 					List<VehicleInspectionDetailsEntity> vehicleDetailsList = new ArrayList<>();
 					for (VehicleInspectionDetailsRequestDTO requestDTO : vehicleInspectionDetails) {
