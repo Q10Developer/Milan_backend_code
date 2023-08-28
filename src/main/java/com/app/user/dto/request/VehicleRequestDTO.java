@@ -11,6 +11,7 @@ public class VehicleRequestDTO {
 	private String vehicleTypeLabel;
 	private String vehicleSubType;
 	private String vehicleSubTypeLabel;
+	private String tireSequence;
 	private Long vehicleUsage;
 	private String vehicleUsageLabel;
 	private Long noOfTires;
@@ -58,6 +59,9 @@ public class VehicleRequestDTO {
 		this.vehicleModelLabel = vehicleModelLabel;
 	}
 
+	
+	
+	
 	public Long getVehicleType() {
 		return vehicleType;
 	}
@@ -88,6 +92,15 @@ public class VehicleRequestDTO {
 
 	public void setVehicleSubTypeLabel(String vehicleSubTypeLabel) {
 		this.vehicleSubTypeLabel = vehicleSubTypeLabel;
+	}
+
+
+	public String getTireSequence() {
+		return tireSequence;
+	}
+
+	public void setTireSequence(String tireSequence) {
+		this.tireSequence = tireSequence;
 	}
 
 	public Long getVehicleUsage() {
@@ -159,6 +172,8 @@ public class VehicleRequestDTO {
 		builder.append(vehicleSubType);
 		builder.append(", vehicleSubTypeLabel=");
 		builder.append(vehicleSubTypeLabel);
+		builder.append(", tireSequence=");
+		builder.append(tireSequence);
 		builder.append(", vehicleUsage=");
 		builder.append(vehicleUsage);
 		builder.append(", vehicleUsageLabel=");
@@ -174,5 +189,10 @@ public class VehicleRequestDTO {
 		builder.append("]");
 		return builder.toString();
 	}
+
+
+	
+	
+	
 
 }

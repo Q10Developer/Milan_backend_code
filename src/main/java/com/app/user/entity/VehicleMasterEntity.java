@@ -38,6 +38,10 @@ public class VehicleMasterEntity {
 
 	@Column(name = "vehicle_sub_type_label")
 	private String vehicleSubTypeLabel;
+	
+	
+	@Column(name="tire_sequence")
+	private String tireSequence;
 
 	@Column(name = "configured_vehicle", updatable = false, insertable = false)
 	private String configuredVehicle;
@@ -114,6 +118,16 @@ public class VehicleMasterEntity {
 
 	public void setVehicleTypeLabel(String vehicleTypeLabel) {
 		this.vehicleTypeLabel = vehicleTypeLabel;
+	}
+
+
+	
+	public String getTireSequence() {
+		return tireSequence;
+	}
+
+	public void setTireSequence(String tireSequence) {
+		this.tireSequence = tireSequence;
 	}
 
 	public String getVehicleSubType() {
@@ -209,6 +223,8 @@ public class VehicleMasterEntity {
 		builder.append(vehicleSubType);
 		builder.append(", vehicleSubTypeLabel=");
 		builder.append(vehicleSubTypeLabel);
+		builder.append(", tireSequence=");
+		builder.append(tireSequence);
 		builder.append(", configuredVehicle=");
 		builder.append(configuredVehicle);
 		builder.append(", vehicleUsage=");
@@ -226,5 +242,9 @@ public class VehicleMasterEntity {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
+		
+	
 
 }
