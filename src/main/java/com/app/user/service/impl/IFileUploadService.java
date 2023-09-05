@@ -70,8 +70,10 @@ public class IFileUploadService {
 			if (!StringUtils.isEmpty(publicS3ImageUrl)) {
 				response = new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 						ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, publicS3ImageUrl);
+			} else {
+				response = new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_500,
+						ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500, publicS3ImageUrl);
 			}
-			response = new ServiceResponseDTO(uniqueKey, updatedFilename, publicS3ImageUrl);
 		} catch (Exception ex) {
 			LOGGER.error("Exception occur in IFileUploadService class in method uploadToAwsS3 with Exception {}",
 					ex.getMessage());
