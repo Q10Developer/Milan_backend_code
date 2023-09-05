@@ -176,9 +176,11 @@ public class IVehicleInspectionServiceImpl {
 									requestDTO.getTireOriginalFitmentDate())) {
 								try {
 									mileagePerMm = (vehicleInspectionEntityOptional.get().getVehicleOdometerReading()
-											- requestDTO.getOdometerReadingWhenFitted())
-											/ (requestDTO.getOtdMm() - rtd);
-									projectedMileage = (requestDTO.getOtdMm()
+											- (requestDTO.getOdometerReadingWhenFitted() != null
+													? requestDTO.getOdometerReadingWhenFitted()
+													: 0.0))
+											/ ((requestDTO.getOtdMm() != null ? requestDTO.getOtdMm() : 0.0) - rtd);
+									projectedMileage = ((requestDTO.getOtdMm() != null ? requestDTO.getOtdMm() : 0.0)
 											- requestDTO.getLeastTireThicknessAllowed()) * mileagePerMm;
 								} catch (ArithmeticException aex) {
 									LOGGER.error(
