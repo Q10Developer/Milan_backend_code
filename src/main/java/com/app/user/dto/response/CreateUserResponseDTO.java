@@ -3,13 +3,13 @@ package com.app.user.dto.response;
 public class CreateUserResponseDTO {
 
 	private Long userID;
-	private Long roleType;
+	private Integer roleType;
 
 	public CreateUserResponseDTO() {
 
 	}
 
-	public CreateUserResponseDTO(Long userID, Long roleType) {
+	public CreateUserResponseDTO(Long userID, Integer roleType) {
 		super();
 		this.userID = userID;
 		this.roleType = roleType;
@@ -23,11 +23,11 @@ public class CreateUserResponseDTO {
 		this.userID = userID;
 	}
 
-	public Long getRoleType() {
+	public Integer getRoleType() {
 		return roleType;
 	}
 
-	public void setRoleType(Long roleType) {
+	public void setRoleType(Integer roleType) {
 		this.roleType = roleType;
 	}
 

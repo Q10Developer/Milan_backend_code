@@ -33,7 +33,7 @@ public class IUserLoginServiceImpl {
 				LOGGER.info("User data {} ", userData);
 				if (userData != null && !userData.isEmpty()) {
 					Long userId = (Long) userData.get("userId");
-					Long roleTypeId = (Long) userData.get("roleType");
+					Integer roleTypeId = (Integer) userData.get("roleType");
 					LOGGER.info("Login Success. Routing to Dashboard Screen");
 					return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 							ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200,
