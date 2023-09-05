@@ -3,14 +3,16 @@ package com.app.user.dto.response;
 public class CreateUserResponseDTO {
 
 	private Long userID;
+	private Long roleType;
 
 	public CreateUserResponseDTO() {
 
 	}
 
-	public CreateUserResponseDTO(Long userID) {
+	public CreateUserResponseDTO(Long userID, Long roleType) {
 		super();
 		this.userID = userID;
+		this.roleType = roleType;
 	}
 
 	public Long getUserID() {
@@ -21,8 +23,22 @@ public class CreateUserResponseDTO {
 		this.userID = userID;
 	}
 
+	public Long getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(Long roleType) {
+		this.roleType = roleType;
+	}
+
 	@Override
 	public String toString() {
-		return "CreateUserResponseDTO [userID=" + userID + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("CreateUserResponseDTO [userID=");
+		builder.append(userID);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append("]");
+		return builder.toString();
 	}
 }

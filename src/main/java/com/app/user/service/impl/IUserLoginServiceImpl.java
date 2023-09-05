@@ -33,9 +33,11 @@ public class IUserLoginServiceImpl {
 				LOGGER.info("User data {} ", userData);
 				if (userData != null && !userData.isEmpty()) {
 					Long userId = (Long) userData.get("userId");
+					Long roleTypeId = (Long) userData.get("roleType");
 					LOGGER.info("Login Success. Routing to Dashboard Screen");
 					return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-							ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, new CreateUserResponseDTO(userId));
+							ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200,
+							new CreateUserResponseDTO(userId, roleTypeId));
 				} else {
 					LOGGER.info("User authetication fail");
 					return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_401,

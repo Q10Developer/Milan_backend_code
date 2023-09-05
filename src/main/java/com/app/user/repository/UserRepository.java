@@ -8,17 +8,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 
-
 import com.app.user.entity.UserRegistrationEtity;
 
-public interface UserRepository extends PagingAndSortingRepository<UserRegistrationEtity , Long> {
+public interface UserRepository extends PagingAndSortingRepository<UserRegistrationEtity, Long> {
 
 	@Transactional
 	@Modifying
 	@Query(value = "UPDATE UserRegistrationEtity u set u.password= ?1 where (u.userId= ?2) AND (u.activeStatus= 1)")
 	Integer updatePasswordById(String password, Long userId);
 
-	@Query(value = "SELECT c.userId as userId  FROM UserRegistrationEtity c WHERE c.password= :password AND (c.emailId= :emailId or c.mobileNumber= :mobileNumber) AND (c.activeStatus= 1)")
+	@Query(value = "SELECT c.userId as userId , c.roleType as roleType FROM UserRegistrationEtity c WHERE c.password= :password AND (c.emailId= :emailId or c.mobileNumber= :mobileNumber) AND (c.activeStatus= 1)")
 	Map<String, Object> findIdByPasswordAndEmailOrMobile(@Param("password") String password,
 			@Param("emailId") String emailId, @Param("mobileNumber") Long mobileNumber);
 
