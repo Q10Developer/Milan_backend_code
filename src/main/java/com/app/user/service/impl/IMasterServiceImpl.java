@@ -218,14 +218,8 @@ public class IMasterServiceImpl {
 					for (ClientServiceLocationRequestDTO updatedLocation : serviceLocationDTOs) {
 						Long existingLocationId = existingLocation.getClientServiceLocationId();
 						Long updatedLocationId = updatedLocation.getClientServiceLocationId();
-						if (existingLocationId != null && (updatedLocationId == null || updatedLocationId == 0
-								|| existingLocationId.equals(updatedLocationId))) {
-							ClientServiceLocationEntity serviceLocationEntity = new ClientServiceLocationEntity();
-							serviceLocationEntity = clientDataMapper
-									.fromClientServiceLocationDTOToEntity(updatedLocation, serviceLocationEntity);
-							serviceLocationEntity.setClientId(existingClientMasterEntity);
-							serviceLocationEntity.setActiveStatus(URLConstants.ACTIVE);
-							finalServiceLocations.add(serviceLocationEntity);
+						if (existingLocationId != null && updatedLocationId != null
+								&& existingLocationId.equals(updatedLocationId)) {
 							found = true;
 							break;
 						}
@@ -236,13 +230,23 @@ public class IMasterServiceImpl {
 					deleteServiceLocations.add(existingLocation);
 				}
 			}
+			for (ClientServiceLocationRequestDTO updatedLocation : serviceLocationDTOs) {
+				ClientServiceLocationEntity serviceLocationEntity = new ClientServiceLocationEntity();
+				serviceLocationEntity = clientDataMapper.fromClientServiceLocationDTOToEntity(updatedLocation,
+						serviceLocationEntity);
+				serviceLocationEntity.setClientId(existingClientMasterEntity);
+				serviceLocationEntity.setActiveStatus(URLConstants.ACTIVE);
+				finalServiceLocations.add(serviceLocationEntity);
+			}
 			if (!CollectionUtils.isEmpty(finalServiceLocations)) {
 				existingClientMasterEntity.setServiceLocations(finalServiceLocations);
 			}
 			/*
 			 * First Save the delete records and then save actual records
 			 */
-			clientServiceLocationRepository.saveAll(deleteServiceLocations);
+			if (!CollectionUtils.isEmpty(deleteServiceLocations)) {
+				clientServiceLocationRepository.saveAll(deleteServiceLocations);
+			}
 			existingClientMasterEntity = clientMasterRepository.save(existingClientMasterEntity);
 			List<ClientServiceLocationEntity> finalClientLocationEntity = existingClientMasterEntity
 					.getServiceLocations().stream().filter(location -> location.getActiveStatus() == 1).toList();
