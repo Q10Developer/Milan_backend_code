@@ -21,10 +21,65 @@ public class VehicleInspectionRequestDTO {
 	private String vehicleModelLabel;
 	private Long vehicleType;
 	private String vehicleTypeLabel;
-	private Long noOfTires;
+	private String driverName;
+	private Long driverMobileNo;
+	private String maintanaceManagerName;
+	private Long maintanaceManagerMobileNo;
+	private String milanTireServiceAndSolutionName;
+	private Long milanTireServiceAndSolutionMobileNo;
+    private Long noOfTires;
 	private Long noOfStepneys;
 	private String tireSequence;
 	private int inspectionStatus;
+
+	
+	public String getDriverName() {
+		return driverName;
+	}
+
+	public void setDriverName(String driverName) {
+		this.driverName = driverName;
+	}
+
+	public Long getDriverMobileNo() {
+		return driverMobileNo;
+	}
+
+	public void setDriverMobileNo(Long driverMobileNo) {
+		this.driverMobileNo = driverMobileNo;
+	}
+
+	public String getMaintanaceManagerName() {
+		return maintanaceManagerName;
+	}
+
+	public void setMaintanaceManagerName(String maintanaceManagerName) {
+		this.maintanaceManagerName = maintanaceManagerName;
+	}
+
+	public Long getMaintanaceManagerMobileNo() {
+		return maintanaceManagerMobileNo;
+	}
+
+	public void setMaintanaceManagerMobileNo(Long maintanaceManagerMobileNo) {
+		this.maintanaceManagerMobileNo = maintanaceManagerMobileNo;
+	}
+
+	public String getMilanTireServiceAndSolutionName() {
+		return milanTireServiceAndSolutionName;
+	}
+
+	public void setMilanTireServiceAndSolutionName(String milanTireServiceAndSolutionName) {
+		this.milanTireServiceAndSolutionName = milanTireServiceAndSolutionName;
+	}
+
+	public Long getMilanTireServiceAndSolutionMobileNo() {
+		return milanTireServiceAndSolutionMobileNo;
+	}
+
+	public void setMilanTireServiceAndSolutionMobileNo(Long milanTireServiceAndSolutionMobileNo) {
+		this.milanTireServiceAndSolutionMobileNo = milanTireServiceAndSolutionMobileNo;
+	}
 
 	public String getInspectionId() {
 		return inspectionId;
@@ -231,6 +286,18 @@ public class VehicleInspectionRequestDTO {
 		builder.append(vehicleType);
 		builder.append(", vehicleTypeLabel=");
 		builder.append(vehicleTypeLabel);
+		builder.append(", driverName=");
+		builder.append(driverName);
+		builder.append(", driverMobileNo=");
+		builder.append(driverMobileNo);
+		builder.append(", maintanaceManagerName=");
+		builder.append(maintanaceManagerName);
+		builder.append(", maintanaceManagerMobileNo=");
+		builder.append(maintanaceManagerMobileNo);
+		builder.append(", milanTireServiceAndSolutionName=");
+		builder.append(milanTireServiceAndSolutionName);
+		builder.append(", milanTireServiceAndSolutionMobileNo=");
+		builder.append(milanTireServiceAndSolutionMobileNo);
 		builder.append(", noOfTires=");
 		builder.append(noOfTires);
 		builder.append(", noOfStepneys=");
@@ -243,5 +310,6 @@ public class VehicleInspectionRequestDTO {
 		return builder.toString();
 	}
 
+	
 	
 }
