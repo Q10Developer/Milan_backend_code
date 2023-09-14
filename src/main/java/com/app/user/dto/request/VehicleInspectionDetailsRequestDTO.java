@@ -121,7 +121,7 @@ public class VehicleInspectionDetailsRequestDTO {
 	}
 
 	public Integer getLeastTireThicknessAllowed() {
-		return leastTireThicknessAllowed;
+		return 3;
 	}
 
 	public void setLeastTireThicknessAllowed(Integer leastTireThicknessAllowed) {
