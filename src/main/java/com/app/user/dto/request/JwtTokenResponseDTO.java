@@ -10,7 +10,6 @@ public class JwtTokenResponseDTO {
 
 	public JwtTokenResponseDTO() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getToken() {
@@ -25,5 +24,5 @@ public class JwtTokenResponseDTO {
 	public String toString() {
 		return "JwtTokenResponseDTO [token=" + token + "]";
 	}
-	
+
 }

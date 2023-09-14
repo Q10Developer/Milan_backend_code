@@ -59,11 +59,13 @@ public class AmazonS3Client {
 		return fileUrl;
 	}
 
-	private File convertMultiPartToFile(MultipartFile file) throws IOException {
+	private File convertMultiPartToFile(MultipartFile file) {
 		File convFile = new File(file.getOriginalFilename());
-		FileOutputStream fos = new FileOutputStream(convFile);
-		fos.write(file.getBytes());
-		fos.close();
+		try (FileOutputStream fos = new FileOutputStream(convFile)) {
+			fos.write(file.getBytes());
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 		return convFile;
 	}
 
