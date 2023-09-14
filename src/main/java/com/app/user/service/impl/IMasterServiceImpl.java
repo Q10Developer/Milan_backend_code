@@ -319,7 +319,7 @@ public class IMasterServiceImpl {
 			String clientEmailId, Long clientId) {
 		LOGGER.info(
 				"getAllClientDetails process start in IMasterServiceImpl and getAllClientDetails method Executing ");
-		List<ClientMasterEntity> clientDetailList = new ArrayList<ClientMasterEntity>();
+		List<ClientMasterEntity> clientDetailList = new ArrayList<>();
 		if (!StringUtils.isEmpty(clientFullName) && !StringUtils.isEmpty(clientCompanyName)
 				&& !StringUtils.isEmpty(clientEmailId)) {
 			clientDetailList = clientMasterRepository
@@ -1041,8 +1041,8 @@ public class IMasterServiceImpl {
 			try {
 				if (null != observationRequestDTO.getObservationId()) {
 					LOGGER.info(" Need to do Updation (Observation Type Data exist) ");
-					return new ServiceResponseDTO(ResponseKeysValue.WARNING__Observation_Master_Data_ALREADY_EXIST_CODE,
-							ResponseKeysValue.WARNING_Observation_Master_Data_ALREADY_EXIT_DESC, null);
+					return new ServiceResponseDTO(ResponseKeysValue.WARNING_OBSERVATION_MASTER_DATA_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_OBSERVATION_MASTER_DATA_ALREADY_EXIT_DESC, null);
 				}
 				observationRequestDTO.setActiveStatus(URLConstants.ACTIVE);
 				BeanUtils.copyProperties(observationRequestDTO, entity);
@@ -1173,8 +1173,8 @@ public class IMasterServiceImpl {
 				if (null != vehicleManufacturerRequestDTO.getVehicleManufacturerId()) {
 					LOGGER.info("Need to do Updation (VehicleManufacturer data exist) ");
 					return new ServiceResponseDTO(
-							ResponseKeysValue.WARNING__VehicleManufacture_Master_Data_ALREADY_EXIST_CODE,
-							ResponseKeysValue.WARNING_VehicleManufacture_Master_Data_ALREADY_EXIT_DESC, null);
+							ResponseKeysValue.WARNING_VEHICLEMANUFACTURE_MASTER_DATA_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_VEHICLEMANUFACTURE_MASTER_DATA_ALREADY_EXIT_DESC, null);
 				}
 				vehicleManufacturerRequestDTO.setActiveStatus(URLConstants.ACTIVE);
 				BeanUtils.copyProperties(vehicleManufacturerRequestDTO, entity);
@@ -1209,8 +1209,8 @@ public class IMasterServiceImpl {
 			if (vehicleManufacturerEntity.isEmpty()) {
 				LOGGER.info("Invalid VehicleManufacturer for updation");
 				return new ServiceResponseDTO(
-						ResponseKeysValue.WARNING__VehicleManufacture_Master_Data_DOESNT_EXIST_CODE,
-						ResponseKeysValue.WARNING_VehicleManufacture_Master_Data_DOESNT_EXIST_DESC, null);
+						ResponseKeysValue.WARNING_VEHICLEMANUFACTURE_MASTER_DATA_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_VEHICLEMANUFACTURE_MASTER_DATA_DOESNT_EXIST_DESC, null);
 			}
 			VehicleManufacturerEntity entity = new VehicleManufacturerEntity();
 			vehicleManufacturerRequestDTO.setVehicleManufacturerId(vehicleManufacturerId);
@@ -1247,8 +1247,8 @@ public class IMasterServiceImpl {
 			if (vehicleManufacturerEntity.isEmpty()) {
 				LOGGER.info("Invalid  VehicleManufacturer for updation");
 				return new ServiceResponseDTO(
-						ResponseKeysValue.WARNING__VehicleManufacture_Master_Data_DOESNT_EXIST_CODE,
-						ResponseKeysValue.WARNING_VehicleManufacture_Master_Data_DOESNT_EXIST_DESC, null);
+						ResponseKeysValue.WARNING_VEHICLEMANUFACTURE_MASTER_DATA_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_VEHICLEMANUFACTURE_MASTER_DATA_DOESNT_EXIST_DESC, null);
 			}
 			VehicleManufacturerEntity entity = vehicleManufacturerEntity.get();
 			entity.setActiveStatus(vehicleManufacturerRequestDTO.getActiveStatus());
@@ -1572,8 +1572,8 @@ public class IMasterServiceImpl {
 			try {
 				if (null != vehicleSubTypeRequestDTO.getVehicleSubTypeId()) {
 					LOGGER.info(" Need to do Updation (VehicleSubType Data exist) ");
-					return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA__ALREADY_EXIST_CODE,
-							ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA__ALREADY_EXIST_DESC, null);
+					return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA_ALREADY_EXIST_DESC, null);
 				}
 				vehicleSubTypeRequestDTO.setActiveStatus(URLConstants.ACTIVE);
 				BeanUtils.copyProperties(vehicleSubTypeRequestDTO, entity);
@@ -1609,8 +1609,8 @@ public class IMasterServiceImpl {
 			Optional<VehicleSubTypeEntity> vehicleSubTypeEntity = vehicleSubTypeRepository.findById(vehicleSubTypeId);
 			if (vehicleSubTypeEntity.isEmpty()) {
 				LOGGER.info(" Invalid Vehicle master Data for updation ");
-				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA__DOESNT_EXIST_CODE,
-						ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA__DOESNT_EXIST_DESC, null);
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA_DOESNT_EXIST_DESC, null);
 			}
 			VehicleSubTypeEntity entity = new VehicleSubTypeEntity();
 			VehicleTypeEntity vehicleTypeEntity = new VehicleTypeEntity();
@@ -1651,8 +1651,8 @@ public class IMasterServiceImpl {
 			Optional<VehicleSubTypeEntity> vehicleSubTypeEntity = vehicleSubTypeRepository.findById(vehicleSubTypeId);
 			if (vehicleSubTypeEntity.isEmpty()) {
 				LOGGER.info(" Invalid  Vehicle Master Data List for updation ");
-				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA__DOESNT_EXIST_CODE,
-						ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA__DOESNT_EXIST_DESC, null);
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_VEHICLE_SUB_TYPE_DATA_DOESNT_EXIST_DESC, null);
 
 			}
 			VehicleSubTypeEntity entity = vehicleSubTypeEntity.get();
@@ -1852,8 +1852,8 @@ public class IMasterServiceImpl {
 			try {
 				if (null != vehicleModelRequestDTO.getVehicleModelId()) {
 					LOGGER.info(" Need to do Updation (VehicleModelType Data exist) ");
-					return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__ALREADY_EXIST_CODE,
-							ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__ALREADY_EXIST_DESC, null);
+					return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA_ALREADY_EXIST_DESC, null);
 				}
 				vehicleModelRequestDTO.setActiveStatus(URLConstants.ACTIVE);
 				BeanUtils.copyProperties(vehicleModelRequestDTO, entity);
@@ -1889,8 +1889,8 @@ public class IMasterServiceImpl {
 			Optional<VehicleModelEntity> vehicleModelEntity = vehicleModelRepository.findById(vehicleModelId);
 			if (vehicleModelEntity.isEmpty()) {
 				LOGGER.info(" Invalid Vehicle Model Master Data for updation ");
-				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__DOESNT_EXIST_CODE,
-						ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__DOESNT_EXIST_DESC, null);
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA_DOESNT_EXIST_DESC, null);
 			}
 			VehicleModelEntity entity = new VehicleModelEntity();
 			VehicleManufacturerEntity vehicleManufacturerEntity = new VehicleManufacturerEntity();
@@ -1929,8 +1929,8 @@ public class IMasterServiceImpl {
 			Optional<VehicleModelEntity> vehicleModelEntity = vehicleModelRepository.findById(vehicleModelId);
 			if (vehicleModelEntity.isEmpty()) {
 				LOGGER.info(" Invalid  Vehicle Model Master Data List for updation ");
-				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__DOESNT_EXIST_CODE,
-						ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA__DOESNT_EXIST_DESC, null);
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_VEHICLE_MODEL_TYPE_DATA_DOESNT_EXIST_DESC, null);
 
 			}
 			VehicleModelEntity entity = vehicleModelEntity.get();
@@ -1993,8 +1993,8 @@ public class IMasterServiceImpl {
 				if (null != observationCategoryRequestDTO.getObservationCategoryId()) {
 					LOGGER.info("Need to do Updation (observation data exist) ");
 					return new ServiceResponseDTO(
-							ResponseKeysValue.WARNING__OBSERVATION_CATEGORY_MASTER_DATA_ALREADY_EXIST_CODE,
-							ResponseKeysValue.WARNING__OBSERVATION_CATEGORY_MASTER_DATA_ALREADY_EXIST_DESC, null);
+							ResponseKeysValue.WARNING_OBSERVATION_CATEGORY_MASTER_DATA_ALREADY_EXIST_CODE,
+							ResponseKeysValue.WARNING_OBSERVATION_CATEGORY_MASTER_DATA_ALREADY_EXIST_DESC, null);
 				}
 				observationCategoryRequestDTO.setActiveStatus(URLConstants.ACTIVE);
 				BeanUtils.copyProperties(observationCategoryRequestDTO, entity);
@@ -2169,8 +2169,8 @@ public class IMasterServiceImpl {
 					.findById(tireConfigurationId);
 			if (tireConfigurationEntity.isEmpty()) {
 				LOGGER.info(" Invalid TireConfiguration master Data for updation ");
-				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_CODE,
-						ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_DESC, null);
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA_DOESNT_EXIST_DESC, null);
 			}
 			TireConfigurationEntity entity = new TireConfigurationEntity();
 			TireMakeEntity tireMakeEntity = new TireMakeEntity();
@@ -2212,8 +2212,8 @@ public class IMasterServiceImpl {
 					.findById(tireConfigurationId);
 			if (tireConfigurationEntity.isEmpty()) {
 				LOGGER.info(" Invalid  Tire Configuration Master Data List for updation ");
-				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_CODE,
-						ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA__DOESNT_EXIST_DESC, null);
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_TIRE_CONFIGURATION_DATA_DOESNT_EXIST_DESC, null);
 
 			}
 			TireConfigurationEntity entity = tireConfigurationEntity.get();
@@ -2311,7 +2311,7 @@ public class IMasterServiceImpl {
 			Optional<TirePatternEntity> tirePatternEntity = tirePatternRepository.findById(tirePatternId);
 			if (tirePatternEntity.isEmpty()) {
 				LOGGER.info(" Invalid Tire  master Data for updation ");
-				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_PATTERN_DATA__DOESNT_EXIST_CODE,
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_PATTERN_DATA_DOESNT_EXIST_CODE,
 						ResponseKeysValue.WARNING_TIRE_PATTERN_DATA_DOESNT_EXIST_DESC, null);
 			}
 			TirePatternEntity entity = new TirePatternEntity();
@@ -2352,7 +2352,7 @@ public class IMasterServiceImpl {
 			Optional<TirePatternEntity> tirePatternEntity = tirePatternRepository.findById(tirePatternId);
 			if (tirePatternEntity.isEmpty()) {
 				LOGGER.info(" Invalid  Tire Pattern Master Data List for updation ");
-				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_PATTERN_DATA__DOESNT_EXIST_CODE,
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_TIRE_PATTERN_DATA_DOESNT_EXIST_CODE,
 						ResponseKeysValue.WARNING_TIRE_PATTERN_DATA_DOESNT_EXIST_DESC, null);
 
 			}

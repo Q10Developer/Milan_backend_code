@@ -30,7 +30,7 @@ import com.app.user.repository.OldVehicleInspectionRepository;
 @Service
 public class IOldVehicleInspectionServiceImpl {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(IVehicleInspectionServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(IOldVehicleInspectionServiceImpl.class);
 
 	@Autowired
 	private OldVehicleInspectionRepository oldVehicleInspectionRepository;

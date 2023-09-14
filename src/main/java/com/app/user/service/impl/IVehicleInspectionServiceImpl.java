@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import com.app.user.constants.CalculationConstants;
 import com.app.user.constants.ResponseKeysValue;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
@@ -56,7 +57,7 @@ public class IVehicleInspectionServiceImpl {
 				entity = vehicleInspectionRepository.save(entity);
 				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
 				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
-				response.setResult(new GenericResponseDTO(entity.getInspectionId().toString()));
+				response.setResult(new GenericResponseDTO(entity.getInspectionId()));
 				LOGGER.info("Client data saved Successfully");
 			} catch (Exception ex) {
 				LOGGER.error(
@@ -165,33 +166,7 @@ public class IVehicleInspectionServiceImpl {
 						/*
 						 * Analysis and Calculation will happen when status is submitted
 						 */
-						double mileagePerMm = 0.0;
-						double projectedMileage = 0.0;
-						double rtd = 0.0;
-						if (inspectionStatus == URLConstants.SUBMITTED) {
-							rtd = Arrays.stream(
-									new double[] { requestDTO.getRstMm(), requestDTO.getCtMm(), requestDTO.getLstMm() })
-									.min().getAsDouble();
-							if (!Utils.compareDates(vehicleInspectionEntityOptional.get().getInspectionDateTime(),
-									requestDTO.getTireOriginalFitmentDate())) {
-								try {
-									mileagePerMm = (vehicleInspectionEntityOptional.get().getVehicleOdometerReading()
-											- (requestDTO.getOdometerReadingWhenFitted() != null
-													? requestDTO.getOdometerReadingWhenFitted()
-													: 0.0))
-											/ ((requestDTO.getOtdMm() != null ? requestDTO.getOtdMm() : 0.0) - rtd);
-									projectedMileage = ((requestDTO.getOtdMm() != null ? requestDTO.getOtdMm() : 0.0)
-											- requestDTO.getLeastTireThicknessAllowed()) * mileagePerMm;
-								} catch (ArithmeticException aex) {
-									LOGGER.error(
-											"ArithmeticException occurred while doing computation of mileagePerMm and projectedMileage : {}",
-											aex.getMessage());
-								}
-							}
-						}
-						requestDTO.setRtd(rtd);
-						requestDTO.setMileagePerMm(mileagePerMm);
-						requestDTO.setProjectedMileage(projectedMileage);
+						analysisCalculations(vehicleInspectionEntityOptional.get(), requestDTO, inspectionStatus);
 						BeanUtils.copyProperties(requestDTO, entity);
 						vehicleDetailsList.add(entity);
 					}
@@ -221,7 +196,6 @@ public class IVehicleInspectionServiceImpl {
 			}
 		} else {
 			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
-			;
 			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
 		}
 		return response;
@@ -239,6 +213,128 @@ public class IVehicleInspectionServiceImpl {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
 					null);
 		}
+	}
+
+	private void analysisCalculations(VehicleInspectionEntity vehicleInspectionEntity,
+			VehicleInspectionDetailsRequestDTO requestDTO, int inspectionStatus) {
+		double mileagePerMm = 0.0;
+		double projectedMileage = 0.0;
+		double rtd = 0.0;
+		String pressureAnalysis = null;
+		String pressureAnalysisColorCode = null;
+		String leastTireThicknessAllowedAnalysis = null;
+		String wearAnalysis = null;
+		if (inspectionStatus == URLConstants.SUBMITTED) {
+			/*
+			 * Other Calculations
+			 */
+			pressureAnalysis = calculatePressureAnalysis(requestDTO.getObsPressure(), requestDTO.getRecoPressure());
+			pressureAnalysisColorCode = calculatePressureAnalysisColorCode(pressureAnalysis);
+			leastTireThicknessAllowedAnalysis = calculateThicknessAnalysis(requestDTO.getRstMm(),
+					requestDTO.getLeastTireThicknessAllowed());
+			wearAnalysis = calculateWearAnalysis(requestDTO.getObservationCategoryLabel(), requestDTO.getLstMm(),
+					requestDTO.getCtMm(), requestDTO.getRstMm());
+			rtd = Arrays.stream(new double[] { requestDTO.getRstMm(), requestDTO.getCtMm(), requestDTO.getLstMm() })
+					.min().getAsDouble();
+			/*
+			 * Calculations for Projected Mileage and Mileage Per MM
+			 */
+			if (rtd >= URLConstants.RTD_MIN_VALUE
+					&& !Utils.compareDates(vehicleInspectionEntity.getInspectionDateTime(),
+							requestDTO.getTireOriginalFitmentDate())) {
+				try {
+					mileagePerMm = calculateMileagePerMM(vehicleInspectionEntity, requestDTO, rtd);
+					projectedMileage = calculateProjectedMileagePerMM(requestDTO, mileagePerMm);
+				} catch (ArithmeticException aex) {
+					LOGGER.error(
+							"ArithmeticException occurred while doing computation of mileagePerMm and projectedMileage : {}",
+							aex.getMessage());
+				}
+			}
+		}
+		requestDTO.setPressureAnalysis(pressureAnalysis);
+		requestDTO.setPressureColorCode(pressureAnalysisColorCode);
+		requestDTO.setLeastTireThicknessAllowedAnalysis(leastTireThicknessAllowedAnalysis);
+		requestDTO.setWearAnalysis(wearAnalysis);
+		requestDTO.setRtd(rtd);
+		requestDTO.setMileagePerMm(mileagePerMm);
+		requestDTO.setProjectedMileage(projectedMileage);
+	}
+
+	private static Double calculateMileagePerMM(VehicleInspectionEntity vehicleInspectionEntity,
+			VehicleInspectionDetailsRequestDTO requestDTO, double rtd) {
+		return (vehicleInspectionEntity.getVehicleOdometerReading()
+				- (requestDTO.getOdometerReadingWhenFitted() != null ? requestDTO.getOdometerReadingWhenFitted() : 0.0))
+				/ ((requestDTO.getOtdMm() != null ? requestDTO.getOtdMm() : 0.0) - rtd);
+	}
+
+	private static Double calculateProjectedMileagePerMM(VehicleInspectionDetailsRequestDTO requestDTO,
+			double mileagePerMm) {
+		return ((requestDTO.getOtdMm() != null ? requestDTO.getOtdMm() : 0.0)
+				- requestDTO.getLeastTireThicknessAllowed()) * mileagePerMm;
+	}
+
+	private static String calculatePressureAnalysis(Double obsPressure, Double recoPressure) {
+		double pressurePercentage = (obsPressure / recoPressure) * 100;
+		if (pressurePercentage > 95 && pressurePercentage < 105) {
+			return CalculationConstants.PRESSURE_OK;
+		} else if (pressurePercentage > 90 && pressurePercentage < 95) {
+			return CalculationConstants.UNDER_INFLATION;
+		} else if (pressurePercentage < 90) {
+			return CalculationConstants.EXTREME_UNDERINFLATION;
+		} else if (pressurePercentage > 105 && pressurePercentage < 110) {
+			return CalculationConstants.OVER_INFLATION;
+		} else if (pressurePercentage > 110) {
+			return CalculationConstants.EXTREME_OVERINFLATION;
+		}
+		return null;
+	}
+
+	private static String calculatePressureAnalysisColorCode(String pressureAnalysis) {
+		if (!StringUtils.isEmpty(pressureAnalysis)) {
+			if (pressureAnalysis.equals(CalculationConstants.PRESSURE_OK)) {
+				return CalculationConstants.COLOR_GREEN;
+			} else if (pressureAnalysis.equals(CalculationConstants.UNDER_INFLATION)) {
+				return CalculationConstants.COLOR_YELLOW;
+			} else if (pressureAnalysis.equals(CalculationConstants.EXTREME_UNDERINFLATION)) {
+				return CalculationConstants.COLOR_RED;
+			} else if (pressureAnalysis.equals(CalculationConstants.OVER_INFLATION)) {
+				return CalculationConstants.COLOR_YELLOW;
+			} else if (pressureAnalysis.equals(CalculationConstants.EXTREME_OVERINFLATION)) {
+				return CalculationConstants.COLOR_RED;
+			}
+		}
+		return null;
+	}
+
+	private static String calculateThicknessAnalysis(Double rstMm, int leastTireThicknessAllowed) {
+		if (rstMm != null && leastTireThicknessAllowed == 3) {
+			double redThreshold = leastTireThicknessAllowed * 1.25;
+			double yellowThreshold = leastTireThicknessAllowed * 1.5;
+			if (rstMm < redThreshold) {
+				return CalculationConstants.COLOR_RED;
+			} else if (rstMm < yellowThreshold) {
+				return CalculationConstants.COLOR_YELLOW;
+			} else {
+				return CalculationConstants.COLOR_GREEN;
+			}
+		}
+		return null;
+	}
+
+	private static String calculateWearAnalysis(String observationCategoryLabel, Double lstMm, Double ctMm,
+			Double rstMm) {
+		if (!CalculationConstants.NORMAL.equalsIgnoreCase(observationCategoryLabel) && lstMm != null && ctMm != null
+				&& rstMm != null) {
+			if (lstMm < ctMm && ctMm < rstMm) {
+				return CalculationConstants.LEFT_SLIDE_SLOPE;
+			} else if (lstMm > ctMm && ctMm > rstMm) {
+				return CalculationConstants.RIGHT_SLIDE_SLOPE;
+			} else if (lstMm > ctMm && ctMm < rstMm) {
+				return CalculationConstants.CENTER_WEAR;
+			}
+		}
+		return null;
 	}
 
 }

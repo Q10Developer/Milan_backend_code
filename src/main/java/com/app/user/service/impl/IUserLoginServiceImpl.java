@@ -59,7 +59,6 @@ public class IUserLoginServiceImpl {
 	public ServiceResponseDTO sendOtp(SendOTPRequestDTO sendOTPRequestDTO) {
 		LOGGER.info("user userLogin process start in IUserLoginServiceImpl and sendOtp method Executing ");
 		ServiceResponseDTO response = new ServiceResponseDTO();
-
 		try {
 			if (sendOTPRequestDTO != null && sendOTPRequestDTO.getUserId() != null
 					&& sendOTPRequestDTO.getMobileNumber() != null) {
@@ -69,7 +68,7 @@ public class IUserLoginServiceImpl {
 					int isUpdated = 1;// need to modify
 					if (isUpdated > 0) {
 						LOGGER.info("otp updated in database");
-						status = sendOtpToMobileNumber(otp, sendOTPRequestDTO.getMobileNumber());
+						status = true;
 					}
 					setResponseStatusAndDesc(response, status, otp);
 				} else
@@ -91,11 +90,6 @@ public class IUserLoginServiceImpl {
 	private String generateOtp() {
 		LOGGER.info("OTP Send to user Mobile");
 		return "1234";
-	}
-
-	private boolean sendOtpToMobileNumber(String otp, Long mobileNumber) {
-		return true;
-
 	}
 
 	private void setResponseStatusAndDesc(ServiceResponseDTO response, boolean status, String otp) {

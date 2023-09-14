@@ -17,46 +17,41 @@ import com.app.user.dto.request.JwtRequestDTO;
 import com.app.user.dto.request.JwtTokenResponseDTO;
 import com.app.user.service.CustomUserDetailsService;
 
-
 @RestController
 @CrossOrigin
 public class JwtController {
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
-	
+
 	@Autowired
 	private JwtUtil jwtUtil;
-	
-	@PostMapping(value="/token")
+
+	@PostMapping(value = "/token")
 	public Object getToken(@RequestBody JwtRequestDTO jwtRequestDTO) throws Exception {
-		
+
 		try {
-		 this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(jwtRequestDTO.getUserId(), jwtRequestDTO.getPassword()));
-		 //authenticate(jwtRequestDTO.getUserId(), jwtRequestDTO.getPassword());
-		}
-		catch(DisabledException ex) {
+			this.authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(jwtRequestDTO.getUserId(), jwtRequestDTO.getPassword()));
+		} catch (DisabledException ex) {
 			ex.printStackTrace();
-			//return new Exception("Bad Credential");
-			return new ServiceResponseDTO("401","BAD_CREDENTIALS","Token can not be creataed due to BAD CREDENTIALS. Please provide valid credential");
-		}
-		catch (BadCredentialsException e) {
-			//throw new Exception("INVALID_CREDENTIALS", e);
+			return new ServiceResponseDTO("401", "BAD_CREDENTIALS",
+					"Token can not be creataed due to BAD CREDENTIALS. Please provide valid credential");
+		} catch (BadCredentialsException e) {
 			e.printStackTrace();
-			return new ServiceResponseDTO("401","INVALID_CREDENTIALS","Token can not be creataed due to INVALID CREDENTIALS. Please provide valid credential");
-		}
-		catch(Exception e) {
+			return new ServiceResponseDTO("401", "INVALID_CREDENTIALS",
+					"Token can not be creataed due to INVALID CREDENTIALS. Please provide valid credential");
+		} catch (Exception e) {
 			e.printStackTrace();
-			return new ServiceResponseDTO("500","FAILURE",e.getMessage());
-		}		
-		UserDetails userDetails= this.customUserDetailsService.loadUserByUsername(jwtRequestDTO.getUserId());
-			String topken=this.jwtUtil.generateToken(userDetails);
-			System.err.print("Token is:"+ topken);
-			return new JwtTokenResponseDTO(topken);
-		
+			return new ServiceResponseDTO("500", "FAILURE", e.getMessage());
+		}
+		UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(jwtRequestDTO.getUserId());
+		String topken = this.jwtUtil.generateToken(userDetails);
+		System.err.print("Token is:" + topken);
+		return new JwtTokenResponseDTO(topken);
 	}
 
 }

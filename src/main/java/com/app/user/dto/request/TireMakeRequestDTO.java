@@ -1,15 +1,10 @@
 package com.app.user.dto.request;
 
 public class TireMakeRequestDTO {
- 
-	
+
 	private Long tireMakeId;
 	private String tireMakeName;
 	private int activeStatus;
-	
-	public TireMakeRequestDTO() {
-		// TODO Auto-generated constructor stub
-	}
 
 	public Long getTireMakeId() {
 		return tireMakeId;

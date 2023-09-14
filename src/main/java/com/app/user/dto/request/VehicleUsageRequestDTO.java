@@ -1,14 +1,10 @@
 package com.app.user.dto.request;
 
 public class VehicleUsageRequestDTO {
-	
+
 	private Long vehicleUsageId;
 	private String vehicleUsageName;
-	private int ActiveStatus;
-	
-	public VehicleUsageRequestDTO() {
-		// TODO Auto-generated constructor stub
-	}
+	private int activeStatus;
 
 	public Long getVehicleUsageId() {
 		return vehicleUsageId;
@@ -27,20 +23,17 @@ public class VehicleUsageRequestDTO {
 	}
 
 	public int getActiveStatus() {
-		return ActiveStatus;
+		return activeStatus;
 	}
 
 	public void setActiveStatus(int activeStatus) {
-		ActiveStatus = activeStatus;
+		this.activeStatus = activeStatus;
 	}
 
 	@Override
 	public String toString() {
 		return "VehicleUsageRequestDTO [vehicleUsageId=" + vehicleUsageId + ", vehicleUsageName=" + vehicleUsageName
-				+ ", ActiveStatus=" + ActiveStatus + "]";
+				+ ", activeStatus=" + activeStatus + "]";
 	}
 
-	
-	
-	
 }

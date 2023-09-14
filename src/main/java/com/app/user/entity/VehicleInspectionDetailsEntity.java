@@ -97,13 +97,16 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "tire_size")
 	private String tireSize;
 
-	@Column(name = "pressure_analysis", updatable = false, insertable = false)
+	@Column(name = "pressure_analysis", nullable = true)
 	private String pressureAnalysis;
 
-	@Column(name = "least_tire_thickness_allowed_analysis", updatable = false, insertable = false)
+	@Column(name = "pressure_color_code", nullable = true)
+	private String pressureColorCode;
+
+	@Column(name = "least_tire_thickness_allowed_analysis", nullable = true)
 	private String leastTireThicknessAllowedAnalysis;
 
-	@Column(name = "wear_analysis", updatable = false, insertable = false)
+	@Column(name = "wear_analysis", nullable = true)
 	private String wearAnalysis;
 
 	@Column(name = "rtd", nullable = true)
@@ -347,6 +350,14 @@ public class VehicleInspectionDetailsEntity {
 		this.pressureAnalysis = pressureAnalysis;
 	}
 
+	public String getPressureColorCode() {
+		return pressureColorCode;
+	}
+
+	public void setPressureColorCode(String pressureColorCode) {
+		this.pressureColorCode = pressureColorCode;
+	}
+
 	public String getLeastTireThicknessAllowedAnalysis() {
 		return leastTireThicknessAllowedAnalysis;
 	}
@@ -448,6 +459,8 @@ public class VehicleInspectionDetailsEntity {
 		builder.append(tireSize);
 		builder.append(", pressureAnalysis=");
 		builder.append(pressureAnalysis);
+		builder.append(", pressureColorCode=");
+		builder.append(pressureColorCode);
 		builder.append(", leastTireThicknessAllowedAnalysis=");
 		builder.append(leastTireThicknessAllowedAnalysis);
 		builder.append(", wearAnalysis=");

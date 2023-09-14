@@ -7,26 +7,13 @@ public class VehicleSubTypeRequestDTO {
 	private Long vehicleTypeId;
 	private int activeStatus;
 
-	public VehicleSubTypeRequestDTO() {
-		// TODO Auto-generated constructor stub
-	}
-
-	
-	
-	
 	public Long getNoOfTires() {
 		return noOfTires;
 	}
 
-
-
-
 	public void setNoOfTires(Long noOfTires) {
 		this.noOfTires = noOfTires;
 	}
-
-
-
 
 	public Long getVehicleSubTypeId() {
 		return vehicleSubTypeId;

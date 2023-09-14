@@ -33,6 +33,7 @@ public class VehicleInspectionDetailsRequestDTO {
 	private String recommendationLabel;
 	private String tireImageUrl;
 	private String pressureAnalysis;
+	private String pressureColorCode;
 	private String leastTireThicknessAllowedAnalysis;
 	private String wearAnalysis;
 	private Double rtd;
@@ -119,16 +120,12 @@ public class VehicleInspectionDetailsRequestDTO {
 		this.tireSerialNo = tireSerialNo;
 	}
 
-	public int getLeastTireThicknessAllowed() {
+	public Integer getLeastTireThicknessAllowed() {
 		return leastTireThicknessAllowed;
 	}
 
-	public void setLeastTireThicknessAllowed(int leastTireThicknessAllowed) {
-		if (leastTireThicknessAllowed == 0) {
-			this.leastTireThicknessAllowed = 3;
-		} else {
-			this.leastTireThicknessAllowed = leastTireThicknessAllowed;
-		}
+	public void setLeastTireThicknessAllowed(Integer leastTireThicknessAllowed) {
+		this.leastTireThicknessAllowed = leastTireThicknessAllowed;
 	}
 
 	public Double getOdometerReadingWhenFitted() {
@@ -275,6 +272,14 @@ public class VehicleInspectionDetailsRequestDTO {
 		this.pressureAnalysis = pressureAnalysis;
 	}
 
+	public String getPressureColorCode() {
+		return pressureColorCode;
+	}
+
+	public void setPressureColorCode(String pressureColorCode) {
+		this.pressureColorCode = pressureColorCode;
+	}
+
 	public String getLeastTireThicknessAllowedAnalysis() {
 		return leastTireThicknessAllowedAnalysis;
 	}
@@ -376,6 +381,8 @@ public class VehicleInspectionDetailsRequestDTO {
 		builder.append(tireImageUrl);
 		builder.append(", pressureAnalysis=");
 		builder.append(pressureAnalysis);
+		builder.append(", pressureColorCode=");
+		builder.append(pressureColorCode);
 		builder.append(", leastTireThicknessAllowedAnalysis=");
 		builder.append(leastTireThicknessAllowedAnalysis);
 		builder.append(", wearAnalysis=");

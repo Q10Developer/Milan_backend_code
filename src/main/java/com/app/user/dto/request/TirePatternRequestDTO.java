@@ -1,26 +1,19 @@
 package com.app.user.dto.request;
 
 public class TirePatternRequestDTO {
-	
+
 	private Long tirePatternId;
 	private String tirePattern;
 	private Long tireMakeId;
-    private int activeStatus;
- 
-    public TirePatternRequestDTO() {
-		// TODO Auto-generated constructor stub
-	}
- 
+	private int activeStatus;
 
 	public Long getTirePatternId() {
 		return tirePatternId;
 	}
 
-
 	public void setTirePatternId(Long tirePatternId) {
 		this.tirePatternId = tirePatternId;
 	}
-
 
 	public String getTirePattern() {
 		return tirePattern;
@@ -30,17 +23,13 @@ public class TirePatternRequestDTO {
 		this.tirePattern = tirePattern;
 	}
 
-	
-
 	public Long getTireMakeId() {
 		return tireMakeId;
 	}
 
-
 	public void setTireMakeId(Long tireMakeId) {
 		this.tireMakeId = tireMakeId;
 	}
-
 
 	public int getActiveStatus() {
 		return activeStatus;
@@ -49,7 +38,6 @@ public class TirePatternRequestDTO {
 	public void setActiveStatus(int activeStatus) {
 		this.activeStatus = activeStatus;
 	}
-
 
 	@Override
 	public String toString() {
@@ -65,13 +53,5 @@ public class TirePatternRequestDTO {
 		builder.append("]");
 		return builder.toString();
 	}
-
-
-	
-
-	
- 
- 
-    
 
 }

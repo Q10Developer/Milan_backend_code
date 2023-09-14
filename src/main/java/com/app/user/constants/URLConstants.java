@@ -115,6 +115,7 @@ public class URLConstants {
 	public static final String GET_VEHICLE_INSPECTION_DETAILS = "/getvehicleinspectiondetails";
 	public static final Integer DRAFT = 2;
 	public static final Integer SUBMITTED = 1;
+	public static final Double RTD_MIN_VALUE = 3.0;
 	public static final String GET_VEHICLE_BY_MULTIPLE_FILTER = "/getvehiclebymultiplefilter";
 	public static final String UPDATE_VEHICLE_INSPECTION = "/updatevehicleinspection";
 
@@ -123,7 +124,7 @@ public class URLConstants {
 	public static final String UPDATE_OLD_VEHICLE_INSPECTION = "/updateoldvehicleinspection";
 	public static final String GET_ALL_OLD_VEHICLE_INSPECTION = "/getalloldvehicleinspection";
 
-	public static final String GET_OLD_VEHICLE_INSPECTION_BY_Id = "/getoldinspectionbyid";
+	public static final String GET_OLD_VEHICLE_INSPECTION_BY_ID = "/getoldinspectionbyid";
 	public static final String GET_OLD_VEHICLE_INSPECTION_BY_REGISTRATION_NO = "/getoldinspectiponbyregistrationno";
 
 	public static final String UPLOAD_FILE = "/uploadfile";
