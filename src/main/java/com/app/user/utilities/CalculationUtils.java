@@ -29,13 +29,13 @@ public class CalculationUtils {
 		double pressurePercentage = (obsPressure / recoPressure) * 100;
 		if (pressurePercentage > 95 && pressurePercentage < 105) {
 			return CalculationConstants.PRESSURE_OK;
-		} else if (pressurePercentage > 90 && pressurePercentage < 95) {
+		} else if (pressurePercentage > 90 && pressurePercentage <= 95) {
 			return CalculationConstants.UNDER_INFLATION;
-		} else if (pressurePercentage < 90) {
+		} else if (pressurePercentage <= 90) {
 			return CalculationConstants.EXTREME_UNDERINFLATION;
-		} else if (pressurePercentage > 105 && pressurePercentage < 110) {
+		} else if (pressurePercentage >= 105 && pressurePercentage < 110) {
 			return CalculationConstants.OVER_INFLATION;
-		} else if (pressurePercentage > 110) {
+		} else if (pressurePercentage >= 110) {
 			return CalculationConstants.EXTREME_OVERINFLATION;
 		}
 		return null;
