@@ -68,7 +68,27 @@ public class VehicleInspectionEntity {
 
 	@Column(name = "vehicle_type_label", nullable = false)
 	private String vehicleTypeLabel;
-
+	
+	
+	@Column(name="driver_name", nullable=true)
+	private String driverName;
+	
+	@Column(name="driver_mobile_no", nullable=true)
+	private Long driverMobileNo;
+	
+	@Column(name="maintanace_manager_name", nullable=true)
+	private String maintanaceManagerName;
+	
+	@Column(name="maintanace_manager_mobile_no", nullable=true)
+	private Long maintanaceManagerMobileNo;
+	
+	@Column(name="milan_tire_service_and_solution_name", nullable=true)
+	private String milanTireServiceAndSolutionName;
+	
+	@Column(name="milan_tire_service_and_solution_mobile_no", nullable=true)
+	private Long milanTireServiceAndSolutionMobileNo;
+	
+	
 	@Column(name = "no_of_tires", nullable = false)
 	private Long noOfTires;
 	
@@ -81,6 +101,56 @@ public class VehicleInspectionEntity {
 
 	@Column(name = "inspection_status", nullable = false)
 	private int inspectionStatus;
+
+	
+	
+	public String getDriverName() {
+		return driverName;
+	}
+
+	public void setDriverName(String driverName) {
+		this.driverName = driverName;
+	}
+
+	public Long getDriverMobileNo() {
+		return driverMobileNo;
+	}
+
+	public void setDriverMobileNo(Long driverMobileNo) {
+		this.driverMobileNo = driverMobileNo;
+	}
+
+	public String getMaintanaceManagerName() {
+		return maintanaceManagerName;
+	}
+
+	public void setMaintanaceManagerName(String maintanaceManagerName) {
+		this.maintanaceManagerName = maintanaceManagerName;
+	}
+
+	public Long getMaintanaceManagerMobileNo() {
+		return maintanaceManagerMobileNo;
+	}
+
+	public void setMaintanaceManagerMobileNo(Long maintanaceManagerMobileNo) {
+		this.maintanaceManagerMobileNo = maintanaceManagerMobileNo;
+	}
+
+	public String getMilanTireServiceAndSolutionName() {
+		return milanTireServiceAndSolutionName;
+	}
+
+	public void setMilanTireServiceAndSolutionName(String milanTireServiceAndSolutionName) {
+		this.milanTireServiceAndSolutionName = milanTireServiceAndSolutionName;
+	}
+
+	public Long getMilanTireServiceAndSolutionMobileNo() {
+		return milanTireServiceAndSolutionMobileNo;
+	}
+
+	public void setMilanTireServiceAndSolutionMobileNo(Long milanTireServiceAndSolutionMobileNo) {
+		this.milanTireServiceAndSolutionMobileNo = milanTireServiceAndSolutionMobileNo;
+	}
 
 	public String getInspectionId() {
 		return inspectionId;
@@ -288,6 +358,18 @@ public class VehicleInspectionEntity {
 		builder.append(vehicleType);
 		builder.append(", vehicleTypeLabel=");
 		builder.append(vehicleTypeLabel);
+		builder.append(", driverName=");
+		builder.append(driverName);
+		builder.append(", driverMobileNo=");
+		builder.append(driverMobileNo);
+		builder.append(", maintanaceManagerName=");
+		builder.append(maintanaceManagerName);
+		builder.append(", maintanaceManagerMobileNo=");
+		builder.append(maintanaceManagerMobileNo);
+		builder.append(", milanTireServiceAndSolutionName=");
+		builder.append(milanTireServiceAndSolutionName);
+		builder.append(", milanTireServiceAndSolutionMobileNo=");
+		builder.append(milanTireServiceAndSolutionMobileNo);
 		builder.append(", noOfTires=");
 		builder.append(noOfTires);
 		builder.append(", tireSequence=");

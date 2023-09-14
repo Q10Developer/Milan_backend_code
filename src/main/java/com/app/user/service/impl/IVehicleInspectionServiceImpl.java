@@ -83,8 +83,13 @@ public class IVehicleInspectionServiceImpl {
 				Optional<VehicleInspectionEntity> entity = vehicleInspectionRepository.findById(inspectionId);
 				if (entity.isPresent()) {
 					VehicleInspectionEntity vehicleInspectionEntity = entity.get();
-					vehicleInspectionEntity
-							.setVehicleOdometerReading(vehicleInspectionRequestDTO.getVehicleOdometerReading());
+					vehicleInspectionEntity.setVehicleOdometerReading(vehicleInspectionRequestDTO.getVehicleOdometerReading());
+					vehicleInspectionEntity.setDriverName(vehicleInspectionRequestDTO.getDriverName());
+					vehicleInspectionEntity.setDriverMobileNo(vehicleInspectionRequestDTO.getDriverMobileNo());
+					vehicleInspectionEntity.setMaintanaceManagerName(vehicleInspectionRequestDTO.getMaintanaceManagerName());
+					vehicleInspectionEntity.setMaintanaceManagerMobileNo(vehicleInspectionRequestDTO.getMaintanaceManagerMobileNo());
+					vehicleInspectionEntity.setMilanTireServiceAndSolutionName(vehicleInspectionRequestDTO.getMilanTireServiceAndSolutionName());
+					vehicleInspectionEntity.setMilanTireServiceAndSolutionMobileNo(vehicleInspectionRequestDTO.getMilanTireServiceAndSolutionMobileNo());
 					vehicleInspectionEntity = vehicleInspectionRepository.save(vehicleInspectionEntity);
 					response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
 					response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
