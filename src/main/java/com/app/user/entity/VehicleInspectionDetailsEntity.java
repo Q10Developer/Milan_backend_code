@@ -111,12 +111,38 @@ public class VehicleInspectionDetailsEntity {
 
 	@Column(name = "rtd", nullable = true)
 	private Double rtd;
+	
+	@Column(name="remark", nullable=true)
+	private String remark;
+	
+	
+	@Column(name="current_tire_life" , nullable=true)
+	private Double currentTireLife;
 
 	@Column(name = "projected_mileage", nullable = true)
 	private Double projectedMileage;
 
 	@Column(name = "mileage_per_mm", nullable = true)
 	private Double mileagePerMm;
+
+	
+	
+	
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Double getCurrentTireLife() {
+		return currentTireLife;
+	}
+
+	public void setCurrentTireLife(Double currentTireLife) {
+		this.currentTireLife = currentTireLife;
+	}
 
 	public Long getRowId() {
 		return rowId;
@@ -467,6 +493,10 @@ public class VehicleInspectionDetailsEntity {
 		builder.append(wearAnalysis);
 		builder.append(", rtd=");
 		builder.append(rtd);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", currentTireLife=");
+		builder.append(currentTireLife);
 		builder.append(", projectedMileage=");
 		builder.append(projectedMileage);
 		builder.append(", mileagePerMm=");
