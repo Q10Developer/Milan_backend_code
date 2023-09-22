@@ -17,8 +17,8 @@ public class CalculationUtils {
 	
 	public static Double calculateCurrentTireLife(VehicleInspectionEntity vehicleInspectionEntity,
 			VehicleInspectionDetailsRequestDTO requestDTO) {
-		return ((vehicleInspectionEntity.getVehicleOdometerReading()
-				- (requestDTO.getOdometerReadingWhenFitted() != null ? requestDTO.getOdometerReadingWhenFitted() : 0.0)));
+		return (vehicleInspectionEntity.getVehicleOdometerReading()
+				- (requestDTO.getOdometerReadingWhenFitted() != null ? requestDTO.getOdometerReadingWhenFitted() : 0.0));
 	}
 	
 	
@@ -71,13 +71,13 @@ public class CalculationUtils {
 		return null;
 	}
 
-	public static String calculateThicknessAnalysis(Double rstMm, int leastTireThicknessAllowed) {
-		if (rstMm != null && leastTireThicknessAllowed == 3) {
-			double redThreshold = leastTireThicknessAllowed * 1.25;
-			double yellowThreshold = leastTireThicknessAllowed * 1.5;
-			if (rstMm < redThreshold) {
+	public static String calculateThicknessAnalysis(Double rtd, int leastTireThicknessAllowed) {
+		if (rtd != null && leastTireThicknessAllowed == 3) {
+			double redThreshold = leastTireThicknessAllowed * 1;
+			double yellowThreshold = leastTireThicknessAllowed * 2;
+			if (rtd <= redThreshold) {
 				return CalculationConstants.COLOR_RED;
-			} else if (rstMm < yellowThreshold) {
+			} else if (rtd <= yellowThreshold) {
 				return CalculationConstants.COLOR_YELLOW;
 			} else {
 				return CalculationConstants.COLOR_GREEN;
