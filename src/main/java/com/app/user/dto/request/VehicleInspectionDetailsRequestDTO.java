@@ -32,13 +32,39 @@ public class VehicleInspectionDetailsRequestDTO {
 	private String observationLabel;
 	private String recommendationLabel;
 	private String tireImageUrl;
+	private String remark;
 	private String pressureAnalysis;
 	private String pressureColorCode;
 	private String leastTireThicknessAllowedAnalysis;
 	private String wearAnalysis;
+	private Double currentTireLife;
 	private Double rtd;
 	private Double mileagePerMm;
 	private Double projectedMileage;
+
+	
+	
+	
+	
+	
+	
+	
+	
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
+	public Double getCurrentTireLife() {
+		return currentTireLife;
+	}
+
+	public void setCurrentTireLife(Double currentTireLife) {
+		this.currentTireLife = currentTireLife;
+	}
 
 	public Long getRowId() {
 		return rowId;
@@ -379,6 +405,8 @@ public class VehicleInspectionDetailsRequestDTO {
 		builder.append(recommendationLabel);
 		builder.append(", tireImageUrl=");
 		builder.append(tireImageUrl);
+		builder.append(", remark=");
+		builder.append(remark);
 		builder.append(", pressureAnalysis=");
 		builder.append(pressureAnalysis);
 		builder.append(", pressureColorCode=");
@@ -387,6 +415,8 @@ public class VehicleInspectionDetailsRequestDTO {
 		builder.append(leastTireThicknessAllowedAnalysis);
 		builder.append(", wearAnalysis=");
 		builder.append(wearAnalysis);
+		builder.append(", currentTireLife=");
+		builder.append(currentTireLife);
 		builder.append(", rtd=");
 		builder.append(rtd);
 		builder.append(", mileagePerMm=");

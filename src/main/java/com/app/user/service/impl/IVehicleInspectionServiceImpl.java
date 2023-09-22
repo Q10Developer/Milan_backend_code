@@ -225,6 +225,7 @@ public class IVehicleInspectionServiceImpl {
 		double mileagePerMm = 0.0;
 		double projectedMileage = 0.0;
 		double rtd = 0.0;
+		double 	currentTireLife = 0.0;
 		String pressureAnalysis = null;
 		String pressureAnalysisColorCode = null;
 		String leastTireThicknessAllowedAnalysis = null;
@@ -242,6 +243,8 @@ public class IVehicleInspectionServiceImpl {
 					requestDTO.getLstMm(), requestDTO.getCtMm(), requestDTO.getRstMm());
 			rtd = Arrays.stream(new double[] { requestDTO.getRstMm(), requestDTO.getCtMm(), requestDTO.getLstMm() })
 					.min().getAsDouble();
+			
+			currentTireLife = CalculationUtils.calculateCurrentTireLife(vehicleInspectionEntity, requestDTO);
 			/*
 			 * Calculations for Projected Mileage and Mileage Per MM
 			 */
@@ -258,6 +261,7 @@ public class IVehicleInspectionServiceImpl {
 				}
 			}
 		}
+		requestDTO.setCurrentTireLife(currentTireLife);
 		requestDTO.setPressureAnalysis(pressureAnalysis);
 		requestDTO.setPressureColorCode(pressureAnalysisColorCode);
 		requestDTO.setLeastTireThicknessAllowedAnalysis(leastTireThicknessAllowedAnalysis);
