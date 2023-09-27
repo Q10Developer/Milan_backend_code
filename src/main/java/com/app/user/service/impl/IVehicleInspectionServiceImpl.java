@@ -242,12 +242,15 @@ public class IVehicleInspectionServiceImpl {
 			pressureAnalysis = CalculationUtils.calculatePressureAnalysis(requestDTO.getObsPressure(),
 					requestDTO.getRecoPressure());
 			pressureAnalysisColorCode = CalculationUtils.calculatePressureAnalysisColorCode(pressureAnalysis);
-			leastTireThicknessAllowedAnalysis = CalculationUtils.calculateThicknessAnalysis(requestDTO.getRstMm(),
-					requestDTO.getLeastTireThicknessAllowed());
+		
 			wearAnalysis = CalculationUtils.calculateWearAnalysis(requestDTO.getObservationCategoryLabel(),
 					requestDTO.getLstMm(), requestDTO.getCtMm(), requestDTO.getRstMm());
 			rtd = Arrays.stream(new double[] { requestDTO.getRstMm(), requestDTO.getCtMm(), requestDTO.getLstMm() })
 					.min().getAsDouble();
+
+			
+			leastTireThicknessAllowedAnalysis = CalculationUtils.calculateThicknessAnalysis(rtd,
+					requestDTO.getLeastTireThicknessAllowed());
 
 			currentTireLife = CalculationUtils.calculateCurrentTireLife(vehicleInspectionEntity, requestDTO);
 			/*
