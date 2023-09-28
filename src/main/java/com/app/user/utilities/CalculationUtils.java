@@ -74,7 +74,7 @@ public class CalculationUtils {
 			} else {
 				return CalculationConstants.COLOR_GREEN;
 			}
-		}
+		}     
 		return null;
 	}
 
