@@ -14,13 +14,7 @@ public class CalculationUtils {
 
 	public static Double calculateCurrentTireLife(VehicleInspectionEntity vehicleInspectionEntity,
 			VehicleInspectionDetailsRequestDTO requestDTO) {
-		return (vehicleInspectionEntity.getVehicleOdometerReading()
-
-				- (requestDTO.getOdometerReadingWhenFitted() != null ? requestDTO.getOdometerReadingWhenFitted() : 0.0));
-
-				- (requestDTO.getOdometerReadingWhenFitted() != null ? requestDTO.getOdometerReadingWhenFitted()
-						: 0.0));
-
+		return (vehicleInspectionEntity.getVehicleOdometerReading() - (requestDTO.getOdometerReadingWhenFitted() != null ? requestDTO.getOdometerReadingWhenFitted() : 0.0));
 	}
 
 	public static Double calculateMileagePerMM(VehicleInspectionEntity vehicleInspectionEntity,
