@@ -22,8 +22,41 @@ public class ClientMasterRequestDTO {
 	private String clientBillingCity;
 	private String clientBillingCountry;
 	private String clientBillingPincode;
+	private Long userId;
+	private String clientContactOwner;
+	private String clientPassword;
 	private int clientActiveStatus;
 	private List<ClientServiceLocationRequestDTO> serviceLocations;
+    
+	
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public String getClientContactOwner() {
+		return clientContactOwner;
+	}
+
+	public void setClientContactOwner(String clientContactOwner) {
+		this.clientContactOwner = clientContactOwner;
+	}
+
+	public String getClientPassword() {
+		return clientPassword;
+	}
+
+	public void setClientPassword(String clientPassword) {
+		this.clientPassword = clientPassword;
+	}
+
+	public void setClientLastName(String clientLastName) {
+		this.clientLastName = clientLastName;
+	}
 
 	public Long getClientId() {
 		return clientId;
@@ -224,6 +257,10 @@ public class ClientMasterRequestDTO {
 		builder.append(clientBillingCountry);
 		builder.append(", clientBillingPincode=");
 		builder.append(clientBillingPincode);
+		builder.append(", clientContactOwner=");
+		builder.append(clientContactOwner);
+		builder.append(", clientPassword=");
+		builder.append(clientPassword);
 		builder.append(", clientActiveStatus=");
 		builder.append(clientActiveStatus);
 		builder.append(", serviceLocations=");

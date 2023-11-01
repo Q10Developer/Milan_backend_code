@@ -67,4 +67,12 @@ public class UserRegistrationController {
 		return iUserService.getUserDetailsById(userId);
 	}
 
+	@GetMapping(value = URLConstants.GET_COUNT_OF_USER)
+	public ServiceResponseDTO getUserCount() {
+		LOGGER.info("Executing  getUserCount() method of UserLoginController #####");
+		return iUserService.getUserCount();
+	}
+	
+	
+	
 }

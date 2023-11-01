@@ -17,12 +17,15 @@ public class ResponseKeysValue {
 	public static final String FAILURE_INCORRECT_INSPECTION_DESCRIPTION_400 = "Inspection doesn't exist";
 	public static final String FAILURE_STATUS_CODE_401 = "401";
 	public static final String FAILURE_STATUS_DESCRIPTION_401 = "AUTHENTICATION FAIL";
+	public static final String USE_ADMIN_CREDENTIAL = "USE ADMIN CREDENTIAL";
+	public static final String USE_USER_CREDENTIAL = "USE USER CREDENTIAL";
 	public static final String FAILURE_LOGIN_DESCRIPTION_401 = "WRONG LOGIN CREDENTIAL";
 	public static final String FAILURE_OTP_DESCRIPTION = "OTP SENDING PROCESS FAIL";
 	public static final String SUCCESS_OTP_DESCRIPTION = "OTP SENT SUCCESSFULLY";
 	public static final String FAILURE_PASS_CPASS_DESCRIPTION = "PASSWORD AND CONFIRM PASSWORD ARE NOT SAME";
 	public static final String FAILURE_MPIN_CMPIN_DESCRIPTION = "MPIN AND CONFIRM MPIN ARE NOT SAME";
 	public static final String NO_RECORDS_FOUND = "No Data Found";
+	public static final String NO_VEHICLE_REG_NUMBER_FOUND = "no vehicle reg number found";
 
 	/* WARNING */
 	public static final String WARNING_MULTIPLE_DEVICE_LOGIN_DESCRIPTION_401 = "DO YOU WANT TO LOGOUT FROM OTHER DEVICE?";
@@ -150,5 +153,23 @@ public class ResponseKeysValue {
 	public static final String WARNING_CLIENT_SERVICE_LOCATION_DATA_DOESNT_EXIST_DESC = "client service location data doesn't exist";
 	public static final String FAILURE_DATE_CODE_400 = "400";
 	public static final String INSPECTIONDATETIME_AND_TIREORIGINALFITMATEDATE_ARE_SAME_DESCRIPTION_400 = null;
+	public static final String WARNING_VEHICLE_INSPECTION_DOESNT_EXIST_CODE = "100";
+	public static final String WARNING_VEHICLE_INSPECTION_DOESNT_EXIST_DESC = "vehicle inspection data doesn't exist";
+	public static final String WARNING_VEHICLE_REGISTER_NO_ALREADY_EXIST_CODE = "100";
+	public static final String WARNING_VEHICLE_REGISTER_NO_ALREADY_EXIST_DESC = "vehicle register no already exist";
+	public static final String WARNING_SAVE_CLIENT_VEHICLE_ALREADY_EXIST_CODE = "100";
+	public static final String WARNING_CLIENT_VEHICLE_ALREADY_EXIST_DESC = "client vehicle already exist";
+	public static final String WARNING_CLIENT_VEHICLE_ALREADY_EXIST_CODE = "100";
+	public static final String WARNING_CLENT_VEHICLE_ALREADY_EXIST_DESC = "client vehicle already exist";
+	public static final String WARNING_CLIENT_VEHICLE_DATA_DOESNT_EXIST_CODE = "100";
+	public static final String WARNING_CLIENT_VEHICLE_DATA_DOESNT_EXIST_DESC = "client vehicle data doesn't exist";
+	public static final String WARNING_VEHICLE_REG_NUMBER_ALREADY_EXIST_CODE ="100";
+	public static final String WARNING_VEHICLE_REG_NUMBER_ALREADY_EXIST_DESC = "vehicle reg number already exist";
+	
+	
+	
+
+	
+	
 
 }

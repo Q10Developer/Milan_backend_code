@@ -26,8 +26,23 @@ public class UserRegistrationEtity {
 	private String emailId;
 	@Column(name = "role_type")
 	private Integer roleType;
+	
+	@Column(name = "is_admin")
+	private Boolean isAdmin;
+	
+	
+	
 	@Column(name = "active_status")
 	private Integer activeStatus;
+
+	
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 
 	public Long getUserId() {
 		return userId;
@@ -100,6 +115,8 @@ public class UserRegistrationEtity {
 		builder.append(emailId);
 		builder.append(", roleType=");
 		builder.append(roleType);
+		builder.append(", isAdmin=");
+		builder.append(isAdmin);
 		builder.append(", activeStatus=");
 		builder.append(activeStatus);
 		builder.append("]");

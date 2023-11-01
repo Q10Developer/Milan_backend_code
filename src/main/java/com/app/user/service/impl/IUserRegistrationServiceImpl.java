@@ -203,5 +203,21 @@ public class IUserRegistrationServiceImpl {
 					null);
 		}
 	}
+	
+	
+	
+	public ServiceResponseDTO getUserCount() {
+	    LOGGER.info("getUserCount process start in IUserRegistrationServiceImpl");
+	    
+	    long userCount = userRepository.count(); // Call the count method from your UserRepository.
+	    
+	    return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+	            ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, userCount);
+	}
+
+	
+	
+	
+	
 
 }

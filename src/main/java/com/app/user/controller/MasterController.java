@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ClientMasterRequestDTO;
+import com.app.user.dto.request.ClientVehicleRequestDTO;
 import com.app.user.dto.request.DropDownMasterDTO;
+import com.app.user.dto.request.LoginRequestDTO;
 import com.app.user.dto.request.MasterDataRequestDTO;
 import com.app.user.dto.request.ObservationCategoryRequestDTO;
 import com.app.user.dto.request.ObservationRequestDTO;
@@ -74,6 +76,8 @@ public class MasterController {
 		return masterServiceImpl.getClientDetailsById(clientId);
 	}
 
+	
+	
 	@GetMapping(value = URLConstants.GET_CLIENT_SERVICE_LOCATION_BY_CLIENT_ID)
 	public ServiceResponseDTO getClientServiceLocationDetail(@RequestParam(name = "clientId") Long clientId) {
 		LOGGER.info("Executing  getClientServiceLocationDetail() method of MasterController");
@@ -91,6 +95,16 @@ public class MasterController {
 				clientId);
 	}
 
+	
+	@PostMapping(value = URLConstants.CLIENT_LOGIN_USER)
+	public ServiceResponseDTO clientLoginUser(@RequestBody  ClientMasterRequestDTO clientMasterRequestDTO ) {
+		LOGGER.info("Executing  clientLoginUser() method of MasterController");
+		return  masterServiceImpl.userClientLogin(clientMasterRequestDTO);
+	}
+	
+	
+
+	
 	@PostMapping(value = URLConstants.SAVE_VEHICLE)
 	public ServiceResponseDTO createVehicle(@RequestBody VehicleRequestDTO vehicleTyreRequestDTO) {
 		LOGGER.info("Executing  createVehicle() method of MasterController");
@@ -632,4 +646,62 @@ public class MasterController {
 		return masterServiceImpl.getTireMakeById(tireMakeId);
 	}
 
+	
+	
+	@PostMapping(value = URLConstants.SAVE_CLIENT_VEHICLE)
+	public ServiceResponseDTO createClientVehicle(@RequestBody ClientVehicleRequestDTO clientVehicleRequestDTO) {
+		LOGGER.info("Executing  createClientVehicle() method of MasterController");
+		return masterServiceImpl.saveClientVehicleMasterData(clientVehicleRequestDTO);
+	}
+	
+	
+	@PutMapping(value = URLConstants.UPDATE_CLIENT_VEHICLE)
+	public ServiceResponseDTO updateClientVehicle(@RequestParam(name = "clientVehicleId") Long clientVehicleId,
+			@RequestBody ClientVehicleRequestDTO clientVehicleRequestDTO ) {
+		LOGGER.info("Executing updateClientVehicleMaster() method of MasterController");
+		return masterServiceImpl.updateClientVehicle(clientVehicleRequestDTO,clientVehicleId );
+	}
+	
+	
+	@GetMapping(value = URLConstants.GET_ALL_CLIENT_VEHICLE)
+	public ServiceResponseDTO getAllClientVehicle(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
+			@RequestParam(name = "size", defaultValue = "10") int size,
+			@RequestParam(name = "sortBy", defaultValue = "clientVehicleId") String sortBy) {
+		LOGGER.info("Executing  getAllClientVehicle() method of MasterController");
+		return masterServiceImpl.getAllClientVehicle(pageNumber, size, sortBy);
+	}
+
+	
+	@PutMapping(value = URLConstants.ENABLE_DISABLE_CLIENT_VEHICLE_MASTER)
+	public ServiceResponseDTO enableDisableClientVehicleMaster(@RequestParam(name = "clientVehicleId") Long clientVehicleId,
+			@RequestBody ClientVehicleRequestDTO ClientVehicleRequestDTO) {
+		LOGGER.info("Executing  enableDisabletirePatternMaster() method of MasterController");
+		return masterServiceImpl.enableDisableClientVehicleMaster(ClientVehicleRequestDTO,clientVehicleId );
+	}
+	
+	
+	@GetMapping(value = URLConstants. GET_CLIENT_VEHICLE_BY_ID)
+	public ServiceResponseDTO getClientVehiclebyId(
+			@RequestParam(name = "clientVehicleId") Long clientVehicleId) {
+		LOGGER.info("Executing getClientVehiclebyId  method of MasterController");
+		return masterServiceImpl.getClientVehicleById(clientVehicleId);
+	}
+	
+	
+	@GetMapping(value = URLConstants.GET_CLIENT_VEHICLE_BY_CLIENT_ID)
+	public ServiceResponseDTO getClientVehicleByClientId(@RequestParam(name = "clientId") Long clientId) {
+		LOGGER.info("Executing  getClientDetail() method of MasterController");
+		return masterServiceImpl.getClientVehicleByClientId(clientId);
+	}
+	
+	
+	@GetMapping(value = URLConstants.GET_COUNT)
+	public ServiceResponseDTO getActiveCounts() {
+	    LOGGER.info("Executing getActiveCounts() method of MasterController #####");
+	    return masterServiceImpl.getActiveCounts();
+	}
+
+	
+	
+	
 }

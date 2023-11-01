@@ -29,6 +29,9 @@ public class ClientDataMapper {
 		entity.setClientBillingCity(clientMasterRequestDTO.getClientBillingCity());
 		entity.setClientBillingCountry(clientMasterRequestDTO.getClientBillingCountry());
 		entity.setClientBillingPincode(clientMasterRequestDTO.getClientBillingPincode());
+		entity.setClientContactOwner(clientMasterRequestDTO.getClientContactOwner());
+		entity.setClientPassword(clientMasterRequestDTO.getClientPassword());
+		entity.setUserId(clientMasterRequestDTO.getUserId());
 		entity.setClientActiveStatus(clientMasterRequestDTO.getClientActiveStatus());
 		return entity;
 	}

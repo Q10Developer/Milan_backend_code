@@ -12,6 +12,17 @@ public class LoginRequestDTO implements Serializable{
 	private String password;
 	private Long mobileNumber;
 	private String email;
+	private Boolean isAdmin;
+	
+	
+
+	
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -32,7 +43,17 @@ public class LoginRequestDTO implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "LoginRequestDTO [password=" + password + ", mobileNumber=" + mobileNumber + ", email=" + email + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("LoginRequestDTO [password=");
+		builder.append(password);
+		builder.append(", mobileNumber=");
+		builder.append(mobileNumber);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", isAdmin=");
+		builder.append(isAdmin);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

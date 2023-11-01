@@ -77,10 +77,48 @@ public class ClientMasterEntity {
 
 	@Column(name = "client_active_status")
 	private int clientActiveStatus;
+	
+	
+	
+	 @Column(name = "client_contact_owner", nullable = false)
+	private String clientContactOwner;
+	
+	@Column(name = "client_password", nullable = false)
+	private String clientPassword;
 
 	@OneToMany(mappedBy = "clientId", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<ClientServiceLocationEntity> serviceLocations;
+
+	@Column(name="user_id" ,nullable=false)
+	private Long userId;
+	
+	
+	
+	
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public String getClientContactOwner() {
+		return clientContactOwner;
+	}
+
+	public void setClientContactOwner(String clientContactOwner) {
+		this.clientContactOwner = clientContactOwner;
+	}
+
+	public String getClientPassword() {
+		return clientPassword;
+	}
+
+	public void setClientPassword(String clientPassword) {
+		this.clientPassword = clientPassword;
+	}
 
 	public Long getClientId() {
 		return clientId;
@@ -293,8 +331,14 @@ public class ClientMasterEntity {
 		builder.append(clientBillingPincode);
 		builder.append(", clientActiveStatus=");
 		builder.append(clientActiveStatus);
+		builder.append(", clientContactOwner=");
+		builder.append(clientContactOwner);
+		builder.append(", clientPassword=");
+		builder.append(clientPassword);
 		builder.append(", serviceLocations=");
 		builder.append(serviceLocations);
+		builder.append(", userId=");
+		builder.append(userId);
 		builder.append("]");
 		return builder.toString();
 	}

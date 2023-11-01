@@ -4,10 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
@@ -30,10 +32,13 @@ public class UserLoginController {
 		return iUserLoginServiceImpl.userLogin(loginDto);
 	}
 
+	
 	@PutMapping(value = URLConstants.FORGET_PASSWORD)
-	public Object forgetPassword(@RequestBody ForgetPasswordRequestDTO forgetPasswordRequestDTO) {
-		LOGGER.info("Executing  forgetPassword() method of UserLoginController #####");
+	public Object forgotePassword(@RequestBody ForgetPasswordRequestDTO forgetPasswordRequestDTO) {
+		LOGGER.info("Executing  forgotePassword() method of UserLoginController #####");
 		return iUserLoginServiceImpl.forgetPassword(forgetPasswordRequestDTO);
 	}
+	
+	
 
 }

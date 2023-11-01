@@ -41,6 +41,8 @@ public class IVehicleInspectionServiceImpl {
 	@Autowired
 	private VehicleInspectionDetailsRepository vehicleInspectionDetailsRepository;
 
+	
+
 	public ServiceResponseDTO startVehicleInspection(VehicleInspectionRequestDTO vehicleInspectionRequestDTO) {
 		LOGGER.info("Start Vehicle Inspection in IVehicleInspectionServiceImpl and startVehicleInspection method");
 		ServiceResponseDTO response = new ServiceResponseDTO();
@@ -119,20 +121,23 @@ public class IVehicleInspectionServiceImpl {
 		return response;
 	}
 
+	
 	public ServiceResponseDTO getAllVehicleInspection(int pageNumber, int size, String sortBy) {
 		LOGGER.info(
-				"getAllVehcileInspection process start in IVehicleInspectionServiceImpl and getAllVehcileInspection method Executing ");
+				"getAllVehicleInspection process start in VehicleInspectionServiceImpl and getAllVehcileInspection method Executing ");
 		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
 		Page<VehicleInspectionEntity> vehicleInspectionDetails = vehicleInspectionRepository.findAll(pageable);
 		if (vehicleInspectionDetails.getSize() > 0) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleInspectionDetails);
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200,vehicleInspectionDetails);
 		} else {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
 					null);
 		}
-	}
 
+	}
+		
+		
 	public ServiceResponseDTO getVehicleInspectionById(String inspectionId) {
 		LOGGER.info(
 				"getVehcileInspectionById process start in IVehicleInspectionServiceImpl and getVehcileInspectionById method Executing ");
@@ -146,6 +151,7 @@ public class IVehicleInspectionServiceImpl {
 		}
 	}
 
+	
 	public ServiceResponseDTO getVehicleInspectionByClientId(Long clientId) {
 		LOGGER.info(
 				"getVehcileInspectionByClientId process start in IVehicleInspectionServiceImpl and getVehcileInspectionByClientId method Executing ");
@@ -158,7 +164,137 @@ public class IVehicleInspectionServiceImpl {
 					null);
 		}
 	}
+	
+	
+	
 
+	
+	public ServiceResponseDTO getVehicleInspectionByClientIdUserId(Long userId) {
+	    LOGGER.info("getVehcileInspectionByClientIdUserId process start in IVehicleInspectionServiceImpl and getVehcileInspectionByClientId UserId method Executing");
+	    
+	    List<VehicleInspectionEntity> vehicleoInspectionDetail = vehicleInspectionRepository.findByClientIdUserId(userId);
+	    
+	    List<VehicleInspectionEntity> activeInspections = vehicleoInspectionDetail.stream()
+	        .filter(inspection -> inspection.getActiveStatus() == 1) // Assuming 1 represents an active status, change this value as needed
+	        .collect(Collectors.toList());
+	    
+	    if (!activeInspections.isEmpty()) {
+	        return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+	            ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, activeInspections);
+	    } else {
+	        return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND, null);
+	    }
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public ServiceResponseDTO getVehicleLastInspectionDate(Long clientId,String vehicleRegNumber) {
+		LOGGER.info(
+				"getVehicleLastInspectionDate process start in IVehicleInspectionServiceImpl and getVehicleLastInspectionDate method Executing ");
+		List<VehicleInspectionEntity> vehicleoInspectionDetail = vehicleInspectionRepository.findByLastInspectionDate(clientId,vehicleRegNumber);
+		if (!vehicleoInspectionDetail.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleoInspectionDetail);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+	
+	
+
+	
+	public ServiceResponseDTO getVehicleRegNumber(String vehicleRegNumber) {
+		LOGGER.info(
+				"getVehcileRegNumber process start in IVehicleInspectionServiceImpl and getVehicleRegNumber method Executing ");
+		List<VehicleInspectionEntity> vehicleoInspectionDetail = vehicleInspectionRepository.findByVehicleRegNumber(vehicleRegNumber);
+		if (!vehicleoInspectionDetail.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleoInspectionDetail);
+		}else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_VEHICLE_REG_NUMBER_FOUND,null);
+	}
+	}
+	
+	
+	
+	public ServiceResponseDTO enableDisableInspection( VehicleInspectionRequestDTO vehicleInspectionRequestDTO ,String inspectionId
+			) {
+		LOGGER.info(" master data in IMasterServiceImpl and enableDisableInspection method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if ( vehicleInspectionRequestDTO!= null) {
+			Optional<VehicleInspectionEntity> vehicleInspectionEntity = vehicleInspectionRepository.findById(inspectionId);
+			if (vehicleInspectionEntity.isEmpty()) {
+				LOGGER.info("Invalid   vehicleInspection for updation");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_INSPECTION_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_VEHICLE_INSPECTION_DOESNT_EXIST_DESC, null);
+
+			}
+			VehicleInspectionEntity	 entity = vehicleInspectionEntity.get();
+			entity.setActiveStatus(vehicleInspectionRequestDTO.getActiveStatus());
+			try {
+				entity = vehicleInspectionRepository.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(new GenericResponseDTO(entity.getInspectionId().toString()));
+				LOGGER.info("  VehicleInspection data enabled or disabled Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IVehicleInspectionServiceImpl calss in method  enableDisableInspection with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	
+	
+	
+	
+
+	
+	public ServiceResponseDTO getTopTenIssueClientIdAndVehicleId(Long clientId, Long vehicleId) {
+	    LOGGER.info("getTopTenIssueClientIdAndVehicleId process start in IVehicleInspectionServiceImpl and getTopTenIssueClientIdAndVehicleId method Executing ");
+	    List<VehicleInspectionDetailsEntity> vehicleInspectionDetail = vehicleInspectionRepository.findByTopTenIssueClientIdAndVehicleId(clientId, vehicleId);
+	    if (vehicleInspectionDetail.size() > 10) {
+	        vehicleInspectionDetail = vehicleInspectionDetail.subList(0, 10);
+	    }
+
+	    if (!vehicleInspectionDetail.isEmpty()) {
+	        return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+	                ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleInspectionDetail);
+	    } else {
+	        return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+	                null);
+	    }
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Transactional
 	public ServiceResponseDTO saveVehicleInspectionDetails(String inspectionId, int inspectionStatus,
 			List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails) {
@@ -214,8 +350,7 @@ public class IVehicleInspectionServiceImpl {
 	public ServiceResponseDTO getVehicleInspectionByInspectionId(String inspectionId) {
 		LOGGER.info(
 				"getVehicleInspectionByInspectionId process start in IVehicleInspectionServiceImpl and getVehicleInspectionByInspectionId method Executing ");
-		List<VehicleInspectionDetailsEntity> vehicleInspectionDetails = vehicleInspectionDetailsRepository
-				.findByInspectionId(inspectionId);
+		List<VehicleInspectionDetailsEntity> vehicleInspectionDetails = vehicleInspectionDetailsRepository.findByInspectionId(inspectionId);
 		if (!vehicleInspectionDetails.isEmpty()) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleInspectionDetails);
@@ -224,9 +359,13 @@ public class IVehicleInspectionServiceImpl {
 					null);
 		}
 	}
+	
+	
+	
 
 	private void analysisCalculations(VehicleInspectionEntity vehicleInspectionEntity,
 			VehicleInspectionDetailsRequestDTO requestDTO, int inspectionStatus) {
+	   double finalTireLife=0.0;
 		double mileagePerMm = 0.0;
 		double projectedMileage = 0.0;
 		double rtd = 0.0;
@@ -252,16 +391,33 @@ public class IVehicleInspectionServiceImpl {
 			leastTireThicknessAllowedAnalysis = CalculationUtils.calculateThicknessAnalysis(rtd,
 					requestDTO.getLeastTireThicknessAllowed());
 
+			if(vehicleInspectionEntity.getVehicleOdometerReading()!=null && requestDTO.getOdometerReadingWhenFitted()!=null  
+					&&  vehicleInspectionEntity.getVehicleOdometerReading() > requestDTO.getOdometerReadingWhenFitted() && vehicleInspectionEntity.getVehicleOdometerReading()!=0
+					&& requestDTO.getOdometerReadingWhenFitted()!=0 && requestDTO.getTireRemovalDate()== null && requestDTO.getOdometerReadingWhenRemoved() == null  )
+			{
 			currentTireLife = CalculationUtils.calculateCurrentTireLife(vehicleInspectionEntity, requestDTO);
+			}
 			/*
 			 * Calculations for Projected Mileage and Mileage Per MM
 			 */
+		     if(requestDTO.getOdometerReadingWhenRemoved() !=null && requestDTO.getOdometerReadingWhenFitted()!= null && requestDTO.getOdometerReadingWhenRemoved() > requestDTO.getOdometerReadingWhenFitted() && requestDTO.getOdometerReadingWhenRemoved()!=0 && requestDTO.getOdometerReadingWhenFitted()!=0  )
+		     {
+		    	 finalTireLife = CalculationUtils.calculateFinalTireLife(requestDTO);
+		     }
+			
 			if (rtd >= URLConstants.RTD_MIN_VALUE
 					&& !Utils.compareDates(vehicleInspectionEntity.getInspectionDateTime(),
 							requestDTO.getTireOriginalFitmentDate())) {
 				try {
-					mileagePerMm = CalculationUtils.calculateMileagePerMM(vehicleInspectionEntity, requestDTO, rtd);
+					if(currentTireLife != -1.0 )
+					{
+					mileagePerMm = CalculationUtils.calculateMileagePerMM( currentTireLife, rtd,requestDTO);
+					}
+					if(requestDTO.getTireRemovalDate()== null && requestDTO.getOdometerReadingWhenRemoved() == null && mileagePerMm != -1.0 )
+					{
 					projectedMileage = CalculationUtils.calculateProjectedMileagePerMM(requestDTO, mileagePerMm);
+					}
+					
 				} catch (ArithmeticException aex) {
 					LOGGER.error(
 							"ArithmeticException occurred while doing computation of mileagePerMm and projectedMileage : {}",
@@ -275,6 +431,7 @@ public class IVehicleInspectionServiceImpl {
 		requestDTO.setLeastTireThicknessAllowedAnalysis(leastTireThicknessAllowedAnalysis);
 		requestDTO.setWearAnalysis(wearAnalysis);
 		requestDTO.setRtd(rtd);
+		requestDTO.setFinalTireLife(finalTireLife);
 		requestDTO.setMileagePerMm(mileagePerMm);
 		requestDTO.setProjectedMileage(projectedMileage);
 	}

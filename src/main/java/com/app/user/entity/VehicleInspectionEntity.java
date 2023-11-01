@@ -95,6 +95,11 @@ public class VehicleInspectionEntity {
 	
 	@Column(name="tire_sequence", nullable =false)
 	private String tireSequence;
+	
+	@Column(name="tire_sequence_label", nullable =false)
+	private String tireSequenceLabel;
+	
+	
 
 	@Column(name = "no_of_stepneys", nullable = false)
 	private Long noOfStepneys;
@@ -102,8 +107,28 @@ public class VehicleInspectionEntity {
 	@Column(name = "inspection_status", nullable = false)
 	private int inspectionStatus;
 
+	@Column(name = "active_status")
+	private int activeStatus;
 	
 	
+	
+
+	public String getTireSequenceLabel() {
+		return tireSequenceLabel;
+	}
+
+	public void setTireSequenceLabel(String tireSequenceLabel) {
+		this.tireSequenceLabel = tireSequenceLabel;
+	}
+
+	public int getActiveStatus() {
+		return activeStatus;
+	}
+
+	public void setActiveStatus(int activeStatus) {
+		this.activeStatus = activeStatus;
+	}
+
 	public String getDriverName() {
 		return driverName;
 	}
@@ -374,10 +399,14 @@ public class VehicleInspectionEntity {
 		builder.append(noOfTires);
 		builder.append(", tireSequence=");
 		builder.append(tireSequence);
+		builder.append(", tireSequenceLabel=");
+		builder.append(tireSequenceLabel);
 		builder.append(", noOfStepneys=");
 		builder.append(noOfStepneys);
 		builder.append(", inspectionStatus=");
 		builder.append(inspectionStatus);
+		builder.append(", activeStatus=");
+		builder.append(activeStatus);
 		builder.append("]");
 		return builder.toString();
 	}

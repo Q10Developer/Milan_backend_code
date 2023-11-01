@@ -12,23 +12,32 @@ public class CalculationUtils {
 
 	}
 
+	
+	public static Double calculateFinalTireLife(VehicleInspectionDetailsRequestDTO requestDTO)
+	{
+		return(requestDTO.getOdometerReadingWhenRemoved()-(requestDTO.getOdometerReadingWhenFitted()));
+	}
+	
+	
 	public static Double calculateCurrentTireLife(VehicleInspectionEntity vehicleInspectionEntity,
 			VehicleInspectionDetailsRequestDTO requestDTO) {
-		return (vehicleInspectionEntity.getVehicleOdometerReading() - (requestDTO.getOdometerReadingWhenFitted() != null ? requestDTO.getOdometerReadingWhenFitted() : 0.0));
+		return (vehicleInspectionEntity.getVehicleOdometerReading() - (requestDTO.getOdometerReadingWhenFitted()));
 	}
 
-	public static Double calculateMileagePerMM(VehicleInspectionEntity vehicleInspectionEntity,
-			VehicleInspectionDetailsRequestDTO requestDTO, double rtd) {
-		return (vehicleInspectionEntity.getVehicleOdometerReading()
-				- (requestDTO.getOdometerReadingWhenFitted() != null ? requestDTO.getOdometerReadingWhenFitted() : 0.0))
-				/ ((requestDTO.getOtdMm() != null ? requestDTO.getOtdMm() : 0.0) - rtd);
+
+	
+	public static Double calculateMileagePerMM(double currentTireLife ,double rtd,VehicleInspectionDetailsRequestDTO requestDTO)
+	{  
+	   return(currentTireLife) / ((requestDTO.getOtdMm() != null ? requestDTO.getOtdMm() : 0.0) - rtd) ;
+	}
+	
+	
+	public static Double calculateProjectedMileagePerMM(VehicleInspectionDetailsRequestDTO requestDTO, double mileagePerMm) {
+	    return((mileagePerMm) * (requestDTO.getOtdMm() - (requestDTO.getLeastTireThicknessAllowed())));
 	}
 
-	public static Double calculateProjectedMileagePerMM(VehicleInspectionDetailsRequestDTO requestDTO,
-			double mileagePerMm) {
-		return ((requestDTO.getOtdMm() != null ? requestDTO.getOtdMm() : 0.0)
-				- requestDTO.getLeastTireThicknessAllowed()) * mileagePerMm;
-	}
+	
+	
 
 	public static String calculatePressureAnalysis(Double obsPressure, Double recoPressure) {
 		double pressurePercentage = (obsPressure / recoPressure) * 100;

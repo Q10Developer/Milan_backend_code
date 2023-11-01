@@ -34,5 +34,12 @@ public interface UserRepository extends PagingAndSortingRepository<UserRegistrat
 
 	@Query(value = "SELECT c.userId, c.name, c.password, c.mobileNumber, c.emailId, c.roleType, c.activeStatus FROM UserRegistrationEtity c WHERE  (c.emailId= :emailId) AND (c.activeStatus= 1)")
 	UserRegistrationEtity findUserByEmail(@Param("emailId") String emailId);
+	
+	
+	/*@Query(value = "SELECT COUNT(*) FROM user_master c WHERE c.active_status = 1")
+       long countActiveUsers();*/
+	
+	@Query("SELECT COUNT(u) FROM UserRegistrationEtity u WHERE u.activeStatus = 1")
+	long countActiveUsers();
 
 }

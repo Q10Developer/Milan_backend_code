@@ -118,6 +118,9 @@ public class VehicleInspectionDetailsEntity {
 	
 	@Column(name="current_tire_life" , nullable=true)
 	private Double currentTireLife;
+	
+	@Column(name="final_tire_life", nullable=true)
+	private Double finalTireLife;
 
 	@Column(name = "projected_mileage", nullable = true)
 	private Double projectedMileage;
@@ -125,9 +128,15 @@ public class VehicleInspectionDetailsEntity {
 	@Column(name = "mileage_per_mm", nullable = true)
 	private Double mileagePerMm;
 
-	
-	
-	
+
+	public Double getFinalTireLife() {
+		return finalTireLife;
+	}
+
+	public void setFinalTireLife(Double finalTireLife) {
+		this.finalTireLife = finalTireLife;
+	}
+
 	public String getRemark() {
 		return remark;
 	}

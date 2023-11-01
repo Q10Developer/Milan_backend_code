@@ -1,9 +1,13 @@
 package com.app.user.controller;
 
+
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
+import com.app.user.dto.request.TyreRequestDTO;
 import com.app.user.dto.request.VehicleInspectionDetailsRequestDTO;
 import com.app.user.dto.request.VehicleInspectionRequestDTO;
+
+import com.app.user.entity.VehicleInspectionEntity;
 import com.app.user.service.impl.IVehicleInspectionServiceImpl;
 
 @RestController
@@ -45,22 +52,62 @@ public class VehicleInspectionController {
 	@GetMapping(value = URLConstants.GET_ALL_VEHICLE_INSPECTION)
 	public ServiceResponseDTO getAllVehcileInspection(@RequestParam(name = "page", defaultValue = "0") int pageNumber,
 			@RequestParam(name = "size", defaultValue = "10") int size,
-			@RequestParam(name = "sortBy", defaultValue = "inspectionDateTime") String sortBy) {
+			@RequestParam(name = "sortBy", defaultValue = "inspectionDateTime") String sortBy ){
 		LOGGER.info("Executing  getAllVehcileInspection() method of MasterController");
-		return vehicleInspectionServiceImpl.getAllVehicleInspection(pageNumber, size, sortBy);
+		return vehicleInspectionServiceImpl.getAllVehicleInspection(pageNumber, size, sortBy );
 	}
-
+	
+	
 	@GetMapping(value = URLConstants.GET_VEHICLE_INSPECTION_BY_ID)
 	public ServiceResponseDTO getVehicleInspectionById(@RequestParam(name = "inspectionId") String inspectionId) {
 		LOGGER.info("Executing  getVehcileInspectionById() method of MasterController");
 		return vehicleInspectionServiceImpl.getVehicleInspectionById(inspectionId);
 	}
+	
+	
 
 	@GetMapping(value = URLConstants.GET_VEHICLE_INSPECTION_BY_CLIENT_ID)
 	public ServiceResponseDTO getVehicleInspectionByClientId(@RequestParam(name = "clientId") Long clientId) {
 		LOGGER.info("Executing  getVehcileInspectionByClientId() method of MasterController");
 		return vehicleInspectionServiceImpl.getVehicleInspectionByClientId(clientId);
 	}
+	
+	
+
+	@GetMapping(value = URLConstants.GET_VEHICLE_INSPECTION_BY_CLIENT_ID_USER_ID)
+	public ServiceResponseDTO getVehicleInspectionByClientIdUserId(@RequestParam(name = "userId") Long userId) {
+		LOGGER.info("Executing  getVehcileInspectionByClientId() method of MasterController");
+		return vehicleInspectionServiceImpl.getVehicleInspectionByClientIdUserId(userId);
+	}
+	
+	
+	
+
+	@GetMapping(value = URLConstants.GET_LAST_VEHICLE_INSPECTION_DATE)
+	public ServiceResponseDTO getVehicleLastInspectionDate(@RequestParam(name = "clientId") Long  clientId,
+			@RequestParam(name="vehicleRegNumber") String vehicleRegNumber) {
+		LOGGER.info("Executing  getVehicleLastInspectionDate method of MasterController");
+		return vehicleInspectionServiceImpl.getVehicleLastInspectionDate(clientId,vehicleRegNumber);
+	}
+	
+	
+	@GetMapping(value = URLConstants.GET_VEHICLE_BY_REG_NUMBER)
+	public ServiceResponseDTO getVehicleByRegNumber(@RequestParam(name = "vehicleRegNumber") String vehicleRegNumber) {
+		LOGGER.info("Executing getVehicleByRegNumber() method of MasterController");
+		return vehicleInspectionServiceImpl.getVehicleRegNumber(vehicleRegNumber);
+	}
+	
+	
+
+	@PutMapping(value = URLConstants.ENABLE_DISABLE_INSPECTION)
+	public ServiceResponseDTO enableDisableInspection(@RequestParam(name = "inspectionId") String inspectionId,
+			 @RequestBody VehicleInspectionRequestDTO vehicleInspectionRequestDTO ) {
+		LOGGER.info("Executing  enableDisableInspection() method of VehicleInspectionController ");
+		return vehicleInspectionServiceImpl.enableDisableInspection(vehicleInspectionRequestDTO,inspectionId);
+	}
+	
+	
+	
 
 	@PostMapping(value = URLConstants.SAVE_VEHICLE_INSPECTION_DETAILS)
 	public ServiceResponseDTO saveVehicleInspectionDetails(@RequestParam(name = "inspectionId") String inspectionId,
@@ -78,4 +125,14 @@ public class VehicleInspectionController {
 		return vehicleInspectionServiceImpl.getVehicleInspectionByInspectionId(inspectionId);
 	}
 
+	
+	@GetMapping(value = URLConstants.GET_TOP_TEN_ISSUE_CLIENT_ID_AND_VEHICLE_ID)
+	public ServiceResponseDTO getTopTenIssueClientIdAndVehicleId(@RequestParam(name = "clientId") Long  clientId,
+			@RequestParam(name="vehicleId") Long vehicleId ) {
+		LOGGER.info("Executing  getVehicleLastInspectionDate method of MasterController");
+		return vehicleInspectionServiceImpl.getTopTenIssueClientIdAndVehicleId(clientId,vehicleId );
+	}
+	
+
 }
+

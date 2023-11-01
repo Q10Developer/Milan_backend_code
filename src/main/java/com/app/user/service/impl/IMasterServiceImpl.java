@@ -27,6 +27,7 @@ import com.app.user.constants.URLConstants;
 import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.ClientMasterRequestDTO;
 import com.app.user.dto.request.ClientServiceLocationRequestDTO;
+import com.app.user.dto.request.ClientVehicleRequestDTO;
 import com.app.user.dto.request.DropDownMasterDTO;
 import com.app.user.dto.request.MasterDataRequestDTO;
 import com.app.user.dto.request.ObservationCategoryRequestDTO;
@@ -35,16 +36,19 @@ import com.app.user.dto.request.TireConfigurationRequestDTO;
 import com.app.user.dto.request.TireMakeRequestDTO;
 import com.app.user.dto.request.TirePatternRequestDTO;
 import com.app.user.dto.request.TyreRequestDTO;
+import com.app.user.dto.request.VehicleInspectionRequestDTO;
 import com.app.user.dto.request.VehicleManufacturerRequestDTO;
 import com.app.user.dto.request.VehicleModelRequestDTO;
 import com.app.user.dto.request.VehicleRequestDTO;
 import com.app.user.dto.request.VehicleSubTypeRequestDTO;
 import com.app.user.dto.request.VehicleTypeRequestDTO;
 import com.app.user.dto.request.VehicleUsageRequestDTO;
+import com.app.user.dto.response.CreateUserResponseDTO;
 import com.app.user.dto.response.GenericResponseDTO;
 import com.app.user.entity.ClientDataMapper;
 import com.app.user.entity.ClientMasterEntity;
 import com.app.user.entity.ClientServiceLocationEntity;
+import com.app.user.entity.ClientVehicleEntity;
 import com.app.user.entity.DropDownEntity;
 import com.app.user.entity.MasterDataListEntity;
 import com.app.user.entity.ObservationCategoryEntity;
@@ -53,6 +57,7 @@ import com.app.user.entity.TireConfigurationEntity;
 import com.app.user.entity.TireMakeEntity;
 import com.app.user.entity.TirePatternEntity;
 import com.app.user.entity.TyreMasterEntity;
+import com.app.user.entity.VehicleInspectionEntity;
 import com.app.user.entity.VehicleManufacturerEntity;
 import com.app.user.entity.VehicleMasterEntity;
 import com.app.user.entity.VehicleModelEntity;
@@ -61,6 +66,7 @@ import com.app.user.entity.VehicleTypeEntity;
 import com.app.user.entity.VehicleUsageEntity;
 import com.app.user.repository.ClientMasterRepository;
 import com.app.user.repository.ClientServiceLocationRepository;
+import com.app.user.repository.ClientVehicleReposistory;
 import com.app.user.repository.DropDownMasterRepository;
 import com.app.user.repository.MasterDataListRepository;
 import com.app.user.repository.ObservatioRepository;
@@ -69,6 +75,7 @@ import com.app.user.repository.TireConfigurationRepository;
 import com.app.user.repository.TireMakeRepository;
 import com.app.user.repository.TirePatternReposistory;
 import com.app.user.repository.TyreRepository;
+import com.app.user.repository.UserRepository;
 import com.app.user.repository.VehicleManufacturerRepository;
 import com.app.user.repository.VehicleModelRepository;
 import com.app.user.repository.VehicleRepository;
@@ -134,6 +141,16 @@ public class IMasterServiceImpl {
 
 	@Autowired
 	private ClientDataMapper clientDataMapper;
+	
+	@Autowired
+	private ClientVehicleReposistory clientVehicleReposistory;
+	
+	@Autowired
+    private UserRepository userRepository;
+	
+
+	
+	
 
 	@Transactional
 	public ServiceResponseDTO saveClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO) {
@@ -192,6 +209,43 @@ public class IMasterServiceImpl {
 		}
 		return response;
 	}
+
+	
+	
+	
+	public ServiceResponseDTO userClientLogin(ClientMasterRequestDTO clientMasterRequestDTO ) {
+		LOGGER.info("user userClientLogin process start in IMasterServiceImpl  and userClientLogin method Executing");
+		try {
+			if ( clientMasterRequestDTO!= null && (clientMasterRequestDTO.getClientMobileNo() != null || clientMasterRequestDTO.getClientEmailId() != null)
+					&& clientMasterRequestDTO.getClientPassword() != null){
+				Map<String, Object> userData = clientMasterRepository.findClientIdByClientPasswordAndClientEmailIdOrClientMobileNo(clientMasterRequestDTO.getClientPassword(),
+						clientMasterRequestDTO.getClientEmailId(), clientMasterRequestDTO.getClientMobileNo());
+				LOGGER.info("User data {} ", userData);
+				if (userData != null && !userData.isEmpty()) {
+					Long userId = (Long) userData.get("clientId");
+					Integer roleTypeId = (Integer) userData.get("roleType");
+					LOGGER.info("Login Success. Routing to Dashboard Screen");
+					return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+							ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200,
+							new CreateUserResponseDTO(userId, roleTypeId));
+				} else {
+					LOGGER.info("User authetication fail");
+					return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_401,
+							ResponseKeysValue.FAILURE_LOGIN_DESCRIPTION_401, null);
+				}
+			} else {
+				return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_400,
+						ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400, null);
+			}
+		} catch (Exception ex) {
+			LOGGER.error("Exception occur in IMasterServiceImpl calss in method userClientLogin with Exception {}",
+					ex.getMessage());
+			return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_500,
+					ResponseKeysValue.FAILURE_STATUS_CODE_500, ex.getMessage());
+		}
+	}
+	
+	
 
 	@Transactional
 	public ServiceResponseDTO updateClientMasterData(ClientMasterRequestDTO clientMasterRequestDTO, Long clientId) {
@@ -304,9 +358,10 @@ public class IMasterServiceImpl {
 		} else {
 			pageable = PageRequest.of(0, Integer.MAX_VALUE);
 		}
-		Page<ClientMasterEntity> clientDetailList = clientMasterRepository
-				.findAllActiveClientsWithServiceLocationStatus(URLConstants.ACTIVE, URLConstants.ACTIVE, pageable);
-		if (clientDetailList.getSize() > 0) {
+		/*Page<ClientMasterEntity> clientDetailList = clientMasterRepository
+				.findAllActiveClientsWithServiceLocationStatus(URLConstants.ACTIVE, URLConstants.ACTIVE, pageable);*/
+		Page<ClientMasterEntity> clientDetailList =clientMasterRepository.findAll(pageable);
+		 if (clientDetailList.getSize() > 0) {
 			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientDetailList);
 		} else {
@@ -361,6 +416,11 @@ public class IMasterServiceImpl {
 					null);
 		}
 	}
+	
+	
+	
+	
+	
 
 	public ServiceResponseDTO getClientServiceLocationDetailsByClientId(Long clientId) {
 		LOGGER.info(
@@ -375,6 +435,8 @@ public class IMasterServiceImpl {
 					null);
 		}
 	}
+	
+	
 
 	public ServiceResponseDTO saveVehicleMasterData(VehicleRequestDTO vehicleTyreRequestDTO) {
 		LOGGER.info("Vehicle data in IMasterServiceImpl and saveVehicleMasterData method");
@@ -603,6 +665,7 @@ public class IMasterServiceImpl {
 			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
 		}
 		return response;
+
 	}
 
 	public ServiceResponseDTO enableDisableTyreData(TyreRequestDTO tyreRequestDTO, Long tyreId) {
@@ -2416,4 +2479,193 @@ public class IMasterServiceImpl {
 					null);
 		}
 	}
+	
+	public ServiceResponseDTO getClientVehicleById(Long clientVehicleId) {
+		LOGGER.info("getClientVehicleById process start in IMasterServiceImpl ");
+		Optional<ClientVehicleEntity> clientVehicleEntity = clientVehicleReposistory.findById(clientVehicleId);
+		
+		if (!clientVehicleEntity.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientVehicleEntity.get());
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+	
+	
+	
+	
+	public ServiceResponseDTO saveClientVehicleMasterData(ClientVehicleRequestDTO clientVehicleRequestDTO) {
+	    LOGGER.info("Start Client Vehicle Inspection in IVehicleInspectionServiceImpl and saveClientVehicleMasterData method");
+	    ServiceResponseDTO response = new ServiceResponseDTO();
+
+	    if (clientVehicleRequestDTO != null) {
+	        // Check if the provided vehicle registration number is already associated with another client
+	        ClientVehicleEntity existingVehicle = clientVehicleReposistory.findByVehicleRegNumber(clientVehicleRequestDTO.getVehicleRegNumber());
+	        if (existingVehicle != null) {
+	            // A vehicle with the same registration number already exists for another client
+	            return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_REG_NUMBER_ALREADY_EXIST_CODE,
+	                    ResponseKeysValue.WARNING_VEHICLE_REG_NUMBER_ALREADY_EXIST_DESC, null);
+	        }
+
+	        ClientVehicleEntity entity = new ClientVehicleEntity();
+	        try {
+	            if (null != clientVehicleRequestDTO.getClientVehicleId()) {
+	                LOGGER.info("Need to do Updation Client Vehicle Inspection exist");
+	                return new ServiceResponseDTO(ResponseKeysValue.WARNING_CLIENT_VEHICLE_ALREADY_EXIST_CODE,
+	                        ResponseKeysValue.WARNING_CLENT_VEHICLE_ALREADY_EXIST_DESC, null);
+	            }
+	            clientVehicleRequestDTO.setInspectionStatus(URLConstants.DRAFT);
+	            BeanUtils.copyProperties(clientVehicleRequestDTO, entity);
+	            entity = clientVehicleReposistory.save(entity);
+	            response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_201);
+	            response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_201);
+	            response.setResult(new GenericResponseDTO(entity.getClientVehicleId().toString()));
+	            LOGGER.info("Client vehicle data saved Successfully");
+	        } catch (Exception ex) {
+	            LOGGER.error(
+	                    "Exception occur in IMasterServiceImpl class in method saveClientVehicleMasterData with Exception {}",
+	                    ex.getMessage());
+	            response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+	            response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+	            response.setResult(ex.getMessage());
+	        }
+	    } else {
+	        response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+	        response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+	    }
+	    return response;
+	}
+
+	
+	
+	
+
+	public ServiceResponseDTO updateClientVehicle(ClientVehicleRequestDTO clientVehicleRequestDTO ,
+			Long clientVehicleId) {
+		LOGGER.info(
+				"updateClientVehicle Data List master data in IMasterServiceImpl and updateClientVehicle method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if (clientVehicleRequestDTO!= null) {
+			Optional<ClientVehicleEntity> clientVehicleEntity = clientVehicleReposistory
+					.findById(clientVehicleId);
+			if (clientVehicleEntity.isEmpty()) {
+				LOGGER.info(" Invalid client Vehicle   master Data for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_CLIENT_VEHICLE_DATA_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_CLIENT_VEHICLE_DATA_DOESNT_EXIST_DESC, null);
+			}
+			ClientVehicleEntity entity = new ClientVehicleEntity();
+			clientVehicleRequestDTO.setClientVehicleId(clientVehicleId);
+			clientVehicleRequestDTO.setActiveStatus(URLConstants.ACTIVE);
+			BeanUtils.copyProperties(clientVehicleRequestDTO, entity);
+			entity.setVehicleRegNumber(clientVehicleRequestDTO.getVehicleRegNumber());
+			try {
+				entity = clientVehicleReposistory.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(entity);
+				LOGGER.info("updateClientVehicle Master Data List data update  Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method  updateClientVehicle with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+
+	
+	
+	public ServiceResponseDTO getAllClientVehicle(int pageNumber, int size, String sortBy) {
+		LOGGER.info(
+				"getAllClientVehicle process start in IMasterServiceImpl and getAllClientVehicle method Executing ");
+		PageRequest pageable = PageRequest.of(pageNumber > 0 ? pageNumber - 1 : pageNumber, size, Sort.by(sortBy));
+		Page<ClientVehicleEntity> oDetail =clientVehicleReposistory.findAll(pageable);
+		if (oDetail.getSize() > 0) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, oDetail);
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+
+	
+	public ServiceResponseDTO enableDisableClientVehicleMaster(ClientVehicleRequestDTO clientVehicleRequestDTO,
+			Long clientVehicleId) {
+		LOGGER.info("Client Vehicle   Master Data  master data in IMasterServiceImpl and enableDisableClientVehicleMaster method");
+		ServiceResponseDTO response = new ServiceResponseDTO();
+		if ( clientVehicleRequestDTO != null) {
+			Optional<ClientVehicleEntity> clientVehicleEntity = clientVehicleReposistory.findById(clientVehicleId);
+			if  (clientVehicleEntity.isEmpty()) {
+				LOGGER.info(" Invalid  ClientVehicleMaster  Data List for updation ");
+				return new ServiceResponseDTO(ResponseKeysValue.WARNING_CLIENT_VEHICLE_DATA_DOESNT_EXIST_CODE,
+						ResponseKeysValue.WARNING_CLIENT_VEHICLE_DATA_DOESNT_EXIST_DESC, null);
+
+			}
+			ClientVehicleEntity entity =clientVehicleEntity.get();
+			entity.setActiveStatus(clientVehicleRequestDTO.getActiveStatus());
+			try {
+				entity =clientVehicleReposistory.save(entity);
+				response.setStatusCode(ResponseKeysValue.SUCCESS_STATUS_CODE_200);
+				response.setStatusDescription(ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200);
+				response.setResult(new GenericResponseDTO(entity.getClientVehicleId().toString()));
+				LOGGER.info(" ClientVehicleMaster  Master Data List data enabled or disabled Successfully");
+			} catch (Exception ex) {
+				LOGGER.error(
+						"Exception occur in IMasterServiceImpl calss in method enableDisableClientVehicleMaster  with Exception {}",
+						ex.getMessage());
+				response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_500);
+				response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500);
+				response.setResult(ex.getMessage());
+			}
+		} else {
+			response.setStatusCode(ResponseKeysValue.FAILURE_STATUS_CODE_400);
+			response.setStatusDescription(ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400);
+		}
+		return response;
+	}
+	
+	
+	
+	public ServiceResponseDTO getClientVehicleByClientId(Long clientId) {
+		LOGGER.info(
+				"getClientVehicleByClientId process start in IMasterServiceImpl and getClientVehicleByClientId method Executing ");
+		List<ClientVehicleEntity> oDetail = clientVehicleReposistory.findByClientId(clientId);
+		if (!oDetail.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200,oDetail );
+		} else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+					null);
+		}
+	}
+	
+	
+	public ServiceResponseDTO getActiveCounts() {
+	    LOGGER.info("getActiveCounts process start in IMasterServiceImpl");
+
+	    long clientCount = clientMasterRepository.countActiveClients(); 
+	    long userCount = userRepository.countActiveUsers(); 
+	    long tireCount = tireConfigurationRepository.countActiveTires(); 
+        long vehicleCount= vehicleRepository.countActiveVehicle();
+	    Map<String, Long> counts = new HashMap<>();
+	    counts.put("clientCount", clientCount);
+	    counts.put("userCount", userCount);
+	    counts.put("tireCount", tireCount);
+	    counts.put("vehicleCount", vehicleCount);
+
+	    return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+	            ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, counts);
+	}
+
+	
+	
 }

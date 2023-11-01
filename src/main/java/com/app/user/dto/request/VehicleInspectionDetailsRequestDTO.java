@@ -38,18 +38,20 @@ public class VehicleInspectionDetailsRequestDTO {
 	private String leastTireThicknessAllowedAnalysis;
 	private String wearAnalysis;
 	private Double currentTireLife;
+	private Double finalTireLife;
 	private Double rtd;
 	private Double mileagePerMm;
 	private Double projectedMileage;
 
 	
-	
-	
-	
-	
-	
-	
-	
+	public Double getFinalTireLife() {
+		return finalTireLife;
+	}
+
+	public void setFinalTireLife(Double finalTireLife) {
+		this.finalTireLife = finalTireLife;
+	}
+
 	public String getRemark() {
 		return remark;
 	}

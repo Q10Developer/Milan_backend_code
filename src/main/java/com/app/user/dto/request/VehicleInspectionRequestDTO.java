@@ -30,9 +30,28 @@ public class VehicleInspectionRequestDTO {
     private Long noOfTires;
 	private Long noOfStepneys;
 	private String tireSequence;
+	private String tireSequenceLabel;
 	private int inspectionStatus;
+	private int activeStatus;
 
 	
+	
+	public String getTireSequenceLabel() {
+		return tireSequenceLabel;
+	}
+
+	public void setTireSequenceLabel(String tireSequenceLabel) {
+		this.tireSequenceLabel = tireSequenceLabel;
+	}
+
+	public int getActiveStatus() {
+		return activeStatus;
+	}
+
+	public void setActiveStatus(int activeStatus) {
+		this.activeStatus = activeStatus;
+	}
+
 	public String getDriverName() {
 		return driverName;
 	}
@@ -304,8 +323,12 @@ public class VehicleInspectionRequestDTO {
 		builder.append(noOfStepneys);
 		builder.append(", tireSequence=");
 		builder.append(tireSequence);
+		builder.append(", tireSequenceLabel=");
+		builder.append(tireSequenceLabel);
 		builder.append(", inspectionStatus=");
 		builder.append(inspectionStatus);
+		builder.append(", activeStatus=");
+		builder.append(activeStatus);
 		builder.append("]");
 		return builder.toString();
 	}

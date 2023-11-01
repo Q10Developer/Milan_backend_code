@@ -6,6 +6,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.app.user.constants.ResponseKeysValue;
 import com.app.user.dto.ServiceResponseDTO;
@@ -14,6 +17,7 @@ import com.app.user.dto.request.LoginRequestDTO;
 import com.app.user.dto.request.SendOTPRequestDTO;
 import com.app.user.dto.response.CreateUserResponseDTO;
 import com.app.user.dto.response.SendOtpResponseDTO;
+import com.app.user.entity.VehicleMasterEntity;
 import com.app.user.repository.UserRepository;
 
 @Service
@@ -22,39 +26,78 @@ public class IUserLoginServiceImpl {
 
 	@Autowired
 	private UserRepository userRepository;
-
+	
+	
 	public ServiceResponseDTO userLogin(LoginRequestDTO loginDTO) {
-		LOGGER.info("user userLogin process start in IUserLoginServiceImpl and userLogin method Executing");
-		try {
-			if (loginDTO != null && (loginDTO.getMobileNumber() != null || loginDTO.getEmail() != null)
-					&& loginDTO.getPassword() != null) {
-				Map<String, Object> userData = userRepository.findIdByPasswordAndEmailOrMobile(loginDTO.getPassword(),
-						loginDTO.getEmail(), loginDTO.getMobileNumber());
-				LOGGER.info("User data {} ", userData);
-				if (userData != null && !userData.isEmpty()) {
-					Long userId = (Long) userData.get("userId");
-					Integer roleTypeId = (Integer) userData.get("roleType");
-					LOGGER.info("Login Success. Routing to Dashboard Screen");
-					return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
-							ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200,
-							new CreateUserResponseDTO(userId, roleTypeId));
-				} else {
-					LOGGER.info("User authetication fail");
-					return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_401,
-							ResponseKeysValue.FAILURE_LOGIN_DESCRIPTION_401, null);
-				}
-			} else {
-				return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_400,
-						ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400, null);
-			}
-		} catch (Exception ex) {
-			LOGGER.error("Exception occur in IUserLoginServiceImpl calss in method userLogin with Exception {}",
-					ex.getMessage());
-			return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_500,
-					ResponseKeysValue.FAILURE_STATUS_CODE_500, ex.getMessage());
-		}
+	    LOGGER.info("user userLogin process start in IUserLoginServiceImpl and userLogin method Executing");
+	    try {
+	        if (loginDTO != null && (loginDTO.getMobileNumber() != null || loginDTO.getEmail() != null)
+	                && loginDTO.getPassword() != null) {
+	            Map<String, Object> userData = userRepository.findIdByPasswordAndEmailOrMobile(loginDTO.getPassword(),
+	                    loginDTO.getEmail(), loginDTO.getMobileNumber());
+	            LOGGER.info("User data {} ", userData);
+	            if (userData != null && !userData.isEmpty()) {
+	                Long userId = (Long) userData.get("userId");
+	                Integer roleTypeId = (Integer) userData.get("roleType");
+
+	                if (loginDTO.getIsAdmin().equals(true)) {
+	                    if (roleTypeId == 1) {
+	                        LOGGER.info("Login Success. Routing to Dashboard Screen");
+	                        return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+	                                ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200,
+	                                new CreateUserResponseDTO(userId, roleTypeId));
+	                    } else {
+	                        // Use admin credentials
+	                        return new ServiceResponseDTO(ResponseKeysValue.USE_ADMIN_CREDENTIAL,
+	                                ResponseKeysValue.USE_ADMIN_CREDENTIAL, null);
+	                    }
+	                } else if (loginDTO.getIsAdmin().equals(false)) {
+	                    if (roleTypeId == 2) {
+	                        LOGGER.info("Login Success. Routing to Dashboard Screen");
+	                        return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+	                                ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200,
+	                                new CreateUserResponseDTO(userId, roleTypeId));
+	                    } else {
+	                        // Use user credentials
+	                        return new ServiceResponseDTO(ResponseKeysValue.USE_USER_CREDENTIAL,
+	                                ResponseKeysValue.USE_USER_CREDENTIAL, null);
+	                    }
+	                } else {
+	                    // Handle the case where loginDTO.getIsAdmin() is neither true nor false
+	                    LOGGER.info("User authentication fail");
+	                    return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_401,
+	                            ResponseKeysValue.FAILURE_LOGIN_DESCRIPTION_401, null);
+	                }
+	            } else {
+	                return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_401,
+	                        ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_401, null);
+	            }
+	        } else {
+	            return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_400,
+	                    ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_400, null);
+	        }
+
+	    } catch (Exception ex) {
+	        LOGGER.error("Exception occur in IUserLoginServiceImpl class in method userLogin with Exception {}",
+	                ex.getMessage());
+	        return new ServiceResponseDTO(ResponseKeysValue.FAILURE_STATUS_CODE_500,
+	                ResponseKeysValue.FAILURE_STATUS_CODE_500, ex.getMessage());
+	    }
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
 	@Transactional
 	public ServiceResponseDTO sendOtp(SendOTPRequestDTO sendOTPRequestDTO) {
 		LOGGER.info("user userLogin process start in IUserLoginServiceImpl and sendOtp method Executing ");
@@ -151,4 +194,58 @@ public class IUserLoginServiceImpl {
 					ResponseKeysValue.FAILURE_STATUS_DESCRIPTION_500, null);
 		}
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

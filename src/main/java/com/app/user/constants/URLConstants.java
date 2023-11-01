@@ -22,7 +22,6 @@ public class URLConstants {
 	public static final String GENERATE_MPIN = "/generatempin";
 	public static final String SEND_OTP = "/sendotp";
 	public static final String LOGOUT = "/logout";
-	public static final String FORGET_PASSWORD = "/fogetPassword";
 	public static final String MASTER_SERVICE = "/masterservice";
 	public static final String FILE_SERVICE = "/fileservice";
 	public static final String SAVE_CLIENT = "/saveclient";
@@ -139,5 +138,31 @@ public class URLConstants {
 	public static final String GET_TIRE_MAKE_ID = "/gettiremakeid";
 	public static final String GET_TIRE_PATERN_MAKE_BY_ID = "/gettirepatternmakebyid";
 	public static final String GET_CLIENT_SERVICE_LOCATION_BY_CLIENT_ID = "/getclientservicelocationbyclientId";
+	public static final String ENABLE_DISABLE_INSPECTION = "/enabledisableinspection";
+	public static final String CLIENT_LOGIN_USER = "/clientLoginUser";
+	public static final String FORGET_PASSWORD = "/forgetpassword";
+	public static final String GET_CLIENT_BY_USERID = "/getclientbyuserid";
+	public static final String GET_CLIENT_VEHICLE_INSPECTION = "/getClientVehicleInspection";
+	public static final String GET_VEHICLE_INSPECTION_BY_CLIENT_ID_USER_ID = "/getVehicleInspectionByClientIdUserId";
+	public static final String GET_VEHICLE_BY_REG_NUMBER = "/getvehiclebyregnumber";
+
+	public static final String GET_LAST_VEHICLE_INSPECTION_DATE = "/getlastvehicleinspectiondate";
+	public static final String FORGOTE_PASSWORD = "/forgotepassword";
+	public static final String SAVE_CLIENT_VEHICLE = "/saveclientVehicle";
+	public static final String UPDATE_CLIENT_VEHICLE = "/updateClientvehicle";
+	public static final String GET_ALL_CLIENT_VEHICLE = "/getallclientvehicle";
+	public static final String ENABLE_DISABLE_CLIENT_VEHICLE_MASTER = "/enabledisableclientvehiclemaster";
+	
+	public static final String GET_VEHICLE_BY_USER_NAME = "/getvehiclebyusername";
+	public static final String GET_CLIENT_VEHICLE_BY_ID = "/getclientvehiclebyid";
+	public static final String GET_CLIENT_VEHICLE_BY_CLIENT_ID = "/getclientvehiclebyclientid";
+	public static final String GET_ALL_USER = "/getalluser";
+	public static final String GET_COUNT_OF_USERS = "/getcountofusers";
+	public static final String GET_COUNT_OF_USER = "/getcountofuser";
+	public static final String GET_COUNT_OF_CLIENT = "/getcountofclient";
+	public static final String GET_COUNT = "/getcount";
+	public static final String GET_TIRE_DETAILS_BY_CLIENT_ID_AND_VEHICLE_ID ="/gettiredetailsbyclientidandvehicleid";
+	public static final String GET_TOP_TEN_ISSUE_CLIENT_ID_AND_VEHICLE_ID = "/gettoptenissueclientidandvehicleid";
+	
 
 }
