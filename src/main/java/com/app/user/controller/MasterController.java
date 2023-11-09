@@ -695,12 +695,32 @@ public class MasterController {
 	}
 	
 	
+	
+	@GetMapping(value = URLConstants.GET_VEHICLE_BY_REG_NUMBER)
+	public ServiceResponseDTO getVehicleByRegNumber(@RequestParam(name = "vehicleRegNumber") String vehicleRegNumber) {
+		LOGGER.info("Executing getVehicleByRegNumber() method of MasterController");
+		return masterServiceImpl.getVehicleRegNumber(vehicleRegNumber);
+	}
+	
+	
+	
+	
+	
+	
+	
 	@GetMapping(value = URLConstants.GET_COUNT)
 	public ServiceResponseDTO getActiveCounts() {
 	    LOGGER.info("Executing getActiveCounts() method of MasterController #####");
 	    return masterServiceImpl.getActiveCounts();
 	}
 
+	@GetMapping(value = URLConstants.GET_CLIENT_VEHICLE_BY_CLIENT_ID_AND_LOCATION_ID)
+	public ServiceResponseDTO getClientVehicleByClientIdAndLocationId(@RequestParam(name = "clientId") Long clientId,
+			@RequestParam(name = "clientServiceLocationId") Long 	clientServiceLocationId) {
+		LOGGER.info("Executing  getClientDetail() method of MasterController");
+		return masterServiceImpl.getClientVehicleByClientIdAndLocationId(clientId,clientServiceLocationId);
+	}
+	
 	
 	
 	

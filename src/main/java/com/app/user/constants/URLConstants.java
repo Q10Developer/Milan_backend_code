@@ -163,6 +163,10 @@ public class URLConstants {
 	public static final String GET_COUNT = "/getcount";
 	public static final String GET_TIRE_DETAILS_BY_CLIENT_ID_AND_VEHICLE_ID ="/gettiredetailsbyclientidandvehicleid";
 	public static final String GET_TOP_TEN_ISSUE_CLIENT_ID_AND_VEHICLE_ID = "/gettoptenissueclientidandvehicleid";
+	public static final String GET_TIRE_DETAILS_BY_INSPECTION_ID_CLIENT_ID = "/gettiredetailsbyinspectionidclientid";
+	public static final String GET_CLIENT_VEHICLE_BY_CLIENT_ID_AND_LOCATION_ID = "/getclientvehiclebyclientidandlocationid";
+	public static final String GET_INSPECTION_DONE_BY_CLIENT_ID_LOCATION_ID = "/getinspectiondonebyclientidandlocationid";
+	
 	
 
 }

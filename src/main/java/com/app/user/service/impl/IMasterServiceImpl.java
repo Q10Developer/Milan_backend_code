@@ -57,6 +57,7 @@ import com.app.user.entity.TireConfigurationEntity;
 import com.app.user.entity.TireMakeEntity;
 import com.app.user.entity.TirePatternEntity;
 import com.app.user.entity.TyreMasterEntity;
+import com.app.user.entity.VehicleInspectionDetailsEntity;
 import com.app.user.entity.VehicleInspectionEntity;
 import com.app.user.entity.VehicleManufacturerEntity;
 import com.app.user.entity.VehicleMasterEntity;
@@ -2502,8 +2503,9 @@ public class IMasterServiceImpl {
 
 	    if (clientVehicleRequestDTO != null) {
 	        // Check if the provided vehicle registration number is already associated with another client
-	        ClientVehicleEntity existingVehicle = clientVehicleReposistory.findByVehicleRegNumber(clientVehicleRequestDTO.getVehicleRegNumber());
-	        if (existingVehicle != null) {
+	       ClientVehicleEntity existingVehicle = clientVehicleReposistory.findByVehicleRegNumber(clientVehicleRequestDTO.getVehicleRegNumber());
+	    
+	    		if (existingVehicle != null) {
 	            // A vehicle with the same registration number already exists for another client
 	            return new ServiceResponseDTO(ResponseKeysValue.WARNING_VEHICLE_REG_NUMBER_ALREADY_EXIST_CODE,
 	                    ResponseKeysValue.WARNING_VEHICLE_REG_NUMBER_ALREADY_EXIST_DESC, null);
@@ -2649,6 +2651,26 @@ public class IMasterServiceImpl {
 	}
 	
 	
+	
+	
+
+	
+	public ServiceResponseDTO getVehicleRegNumber(String vehicleRegNumber) {
+		LOGGER.info(
+				"getVehcileRegNumber process start in IVehicleInspectionServiceImpl and getVehicleRegNumber method Executing ");
+		List<ClientVehicleEntity> detail = clientVehicleReposistory.findByListVehicleRegNumber(vehicleRegNumber);
+		if (!detail.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, detail);
+		}else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_VEHICLE_REG_NUMBER_FOUND,null);
+	}
+	}
+	
+	
+	
+	
+	
 	public ServiceResponseDTO getActiveCounts() {
 	    LOGGER.info("getActiveCounts process start in IMasterServiceImpl");
 
@@ -2665,6 +2687,36 @@ public class IMasterServiceImpl {
 	    return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
 	            ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, counts);
 	}
+	
+	
+	
+	
+	public ServiceResponseDTO getClientVehicleByClientIdAndLocationId(Long clientId, Long clientServiceLocationId) {
+	    LOGGER.info("getClientVehicleByClientIdAndLocationId process start in IMasterServiceImpl and getClientVehicleByClientIdAndLocationId method Executing ");
+	    List<ClientVehicleEntity> clientVehicleEntity = clientVehicleReposistory.findByVehicleByClientIdAndServiceLocationId(clientId,clientServiceLocationId );
+	    
+
+	    if (!clientVehicleEntity.isEmpty()) {
+	        return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+	                ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, clientVehicleEntity);
+	    } else {
+	        return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+	                null);
+	    }
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	

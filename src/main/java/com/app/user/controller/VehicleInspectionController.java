@@ -1,6 +1,7 @@
 package com.app.user.controller;
 
 
+import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +26,8 @@ import com.app.user.dto.request.VehicleInspectionRequestDTO;
 
 import com.app.user.entity.VehicleInspectionEntity;
 import com.app.user.service.impl.IVehicleInspectionServiceImpl;
+
+
 
 @RestController
 @CrossOrigin
@@ -128,11 +132,27 @@ public class VehicleInspectionController {
 	
 	@GetMapping(value = URLConstants.GET_TOP_TEN_ISSUE_CLIENT_ID_AND_VEHICLE_ID)
 	public ServiceResponseDTO getTopTenIssueClientIdAndVehicleId(@RequestParam(name = "clientId") Long  clientId,
-			@RequestParam(name="vehicleId") Long vehicleId ) {
+			@RequestParam(name="vehicleId") Long vehicleId) {
 		LOGGER.info("Executing  getVehicleLastInspectionDate method of MasterController");
-		return vehicleInspectionServiceImpl.getTopTenIssueClientIdAndVehicleId(clientId,vehicleId );
+		return vehicleInspectionServiceImpl.getTopTenIssueClientIdAndVehicleId(clientId,vehicleId);
 	}
 	
+	@GetMapping(value = URLConstants.GET_TIRE_DETAILS_BY_INSPECTION_ID_CLIENT_ID)
+	public ServiceResponseDTO getTireDetailsByInspectionIdClientId(
+			@RequestParam(name = "clientId") Long clientId,
+			@RequestParam(name="clientServiceLocationId") Long clientServiceLocationId) {
+		LOGGER.info("Executing getTireDetailsByInspectionIdClientId method of MasterController");
+		return vehicleInspectionServiceImpl.getTireDetailsByInspectionIdClientId(clientId,clientServiceLocationId);
+	}
+	
+	@GetMapping(value = URLConstants.GET_INSPECTION_DONE_BY_CLIENT_ID_LOCATION_ID)
+	public ServiceResponseDTO getInspectionDoneByClientIdAndLocationId(
+			@RequestParam(name = "clientId") Long clientId,
+			@RequestParam(name = "clientServiceLocationId") Long clientServiceLocationId)
+	{
+		LOGGER.info("Executing getTireDetailsByInspectionIdClientId method of MasterController");
+		return vehicleInspectionServiceImpl.getInspectionDoneByClientIdAndLocationId(clientId,clientServiceLocationId);
+	}
 
 }
 

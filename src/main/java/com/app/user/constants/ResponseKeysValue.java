@@ -165,6 +165,9 @@ public class ResponseKeysValue {
 	public static final String WARNING_CLIENT_VEHICLE_DATA_DOESNT_EXIST_DESC = "client vehicle data doesn't exist";
 	public static final String WARNING_VEHICLE_REG_NUMBER_ALREADY_EXIST_CODE ="100";
 	public static final String WARNING_VEHICLE_REG_NUMBER_ALREADY_EXIST_DESC = "vehicle reg number already exist";
+	public static final String FAILURE_ARITHMETIC_EXCEPTION_400 = "400";
+	public static final String FAILURE_ARITHMETIC_EXCEPTION_DESCRIPTION_400 = "arithmatic exception current tire life is divide by zero";
+	
 	
 	
 	

@@ -2,6 +2,7 @@ package com.app.user.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ import com.app.user.dto.ServiceResponseDTO;
 import com.app.user.dto.request.VehicleInspectionDetailsRequestDTO;
 import com.app.user.dto.request.VehicleInspectionRequestDTO;
 import com.app.user.dto.response.GenericResponseDTO;
+import com.app.user.entity.ClientVehicleEntity;
 import com.app.user.entity.VehicleInspectionDetailsEntity;
 import com.app.user.entity.VehicleInspectionEntity;
 import com.app.user.repository.VehicleInspectionDetailsRepository;
@@ -287,14 +289,6 @@ public class IVehicleInspectionServiceImpl {
 
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	@Transactional
 	public ServiceResponseDTO saveVehicleInspectionDetails(String inspectionId, int inspectionStatus,
 			List<VehicleInspectionDetailsRequestDTO> vehicleInspectionDetails) {
@@ -346,6 +340,11 @@ public class IVehicleInspectionServiceImpl {
 		}
 		return response;
 	}
+	
+	
+	
+	
+	
 
 	public ServiceResponseDTO getVehicleInspectionByInspectionId(String inspectionId) {
 		LOGGER.info(
@@ -362,9 +361,45 @@ public class IVehicleInspectionServiceImpl {
 	
 	
 	
+	
+	public ServiceResponseDTO getTireDetailsByInspectionIdClientId(Long clientId,Long clientServiceLocationId) {
+		LOGGER.info(
+				"getTireDetailsByInspectionIdClientId process start in IVehicleInspectionServiceImpl and getTireDetailsByInspectionIdClientId method Executing ");
+		List<VehicleInspectionDetailsEntity> vehicleoInspectionDetail =vehicleInspectionRepository.findByInspectionIdClientId(clientId,clientServiceLocationId);
+		if (!vehicleoInspectionDetail.isEmpty()) {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+					ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleoInspectionDetail);
+		}else {
+			return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_VEHICLE_REG_NUMBER_FOUND,null);
+	}
+	}
+	
+	
+	
+	
+	
+	
+	public ServiceResponseDTO getInspectionDoneByClientIdAndLocationId(Long clientId, Long clientServiceLocationId) {
+	    LOGGER.info("getInspectionDoneByClientIdAndLocationId process start in IVehicleInspectionServiceImpl and getInspectionDoneByClientIdAndLocationId method Executing ");
+	    List<VehicleInspectionEntity> vehicleEntity = vehicleInspectionRepository.findInspectionByClientIdAndServiceLocationId(clientId,clientServiceLocationId );
+	    
+
+	    if (!vehicleEntity.isEmpty()) {
+	        return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200,
+	                ResponseKeysValue.SUCCESS_STATUS_DESCRIPTION_200, vehicleEntity);
+	    } else {
+	        return new ServiceResponseDTO(ResponseKeysValue.SUCCESS_STATUS_CODE_200, ResponseKeysValue.NO_RECORDS_FOUND,
+	                null);
+	    }
+	}
+	
+	
+	
+
 
 	private void analysisCalculations(VehicleInspectionEntity vehicleInspectionEntity,
-			VehicleInspectionDetailsRequestDTO requestDTO, int inspectionStatus) {
+			VehicleInspectionDetailsRequestDTO requestDTO, int inspectionStatus)  {
+		ServiceResponseDTO response = null; 
 	   double finalTireLife=0.0;
 		double mileagePerMm = 0.0;
 		double projectedMileage = 0.0;
@@ -384,6 +419,7 @@ public class IVehicleInspectionServiceImpl {
 		
 			wearAnalysis = CalculationUtils.calculateWearAnalysis(requestDTO.getObservationCategoryLabel(),
 					requestDTO.getLstMm(), requestDTO.getCtMm(), requestDTO.getRstMm());
+			
 			rtd = Arrays.stream(new double[] { requestDTO.getRstMm(), requestDTO.getCtMm(), requestDTO.getLstMm() })
 					.min().getAsDouble();
 
@@ -397,9 +433,10 @@ public class IVehicleInspectionServiceImpl {
 			{
 			currentTireLife = CalculationUtils.calculateCurrentTireLife(vehicleInspectionEntity, requestDTO);
 			}
-			/*
-			 * Calculations for Projected Mileage and Mileage Per MM
+			
+			 /* Calculations for Projected Mileage and Mileage Per MM
 			 */
+			 
 		     if(requestDTO.getOdometerReadingWhenRemoved() !=null && requestDTO.getOdometerReadingWhenFitted()!= null && requestDTO.getOdometerReadingWhenRemoved() > requestDTO.getOdometerReadingWhenFitted() && requestDTO.getOdometerReadingWhenRemoved()!=0 && requestDTO.getOdometerReadingWhenFitted()!=0  )
 		     {
 		    	 finalTireLife = CalculationUtils.calculateFinalTireLife(requestDTO);
@@ -409,20 +446,28 @@ public class IVehicleInspectionServiceImpl {
 					&& !Utils.compareDates(vehicleInspectionEntity.getInspectionDateTime(),
 							requestDTO.getTireOriginalFitmentDate())) {
 				try {
-					if(currentTireLife != -1.0 )
+					
+					if(currentTireLife!= 0.0 )
 					{
 					mileagePerMm = CalculationUtils.calculateMileagePerMM( currentTireLife, rtd,requestDTO);
+					
 					}
-					if(requestDTO.getTireRemovalDate()== null && requestDTO.getOdometerReadingWhenRemoved() == null && mileagePerMm != -1.0 )
+					if(requestDTO.getTireRemovalDate()== null && requestDTO.getOdometerReadingWhenRemoved() == null && mileagePerMm != 0.0 )
 					{
 					projectedMileage = CalculationUtils.calculateProjectedMileagePerMM(requestDTO, mileagePerMm);
 					}
 					
 				} catch (ArithmeticException aex) {
 					LOGGER.error(
-							"ArithmeticException occurred while doing computation of mileagePerMm and projectedMileage : {}",
+							
+							"ArithmeticException occurred while doing computation of mileagePerMm and  : {}",
 							aex.getMessage());
-				}
+					
+					response = new ServiceResponseDTO(ResponseKeysValue.FAILURE_ARITHMETIC_EXCEPTION_400,
+							ResponseKeysValue.FAILURE_ARITHMETIC_EXCEPTION_DESCRIPTION_400, aex.getMessage());
+					
+}
+				
 			}
 		}
 		requestDTO.setCurrentTireLife(currentTireLife);
@@ -434,6 +479,11 @@ public class IVehicleInspectionServiceImpl {
 		requestDTO.setFinalTireLife(finalTireLife);
 		requestDTO.setMileagePerMm(mileagePerMm);
 		requestDTO.setProjectedMileage(projectedMileage);
+		
+		
+		
+		
 	}
-
+	
+	
 }

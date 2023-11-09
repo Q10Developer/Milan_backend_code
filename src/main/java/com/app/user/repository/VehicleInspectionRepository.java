@@ -2,6 +2,7 @@ package com.app.user.repository;
 
 
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -32,7 +33,7 @@ public interface VehicleInspectionRepository extends PagingAndSortingRepository<
 	
 
 
-
+    
 	List<VehicleInspectionEntity> findByVehicleRegNumber(String vehicleRegNumber);
 
 
@@ -79,6 +80,31 @@ List<VehicleInspectionEntity> findByUserName();
 			    @Param("clientId") Long clientId,
 			    @Param("vehicleId") Long vehicleId
 			);
+	 
+	 
+	 
+
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+
+	 
+	 @Query("SELECT vid FROM VehicleInspectionDetailsEntity vid WHERE vid.inspectionId IN (SELECT vi.inspectionId FROM VehicleInspectionEntity vi WHERE vi.clientId = :clientId AND client_service_location_id = :clientServiceLocationId)")
+	 List<VehicleInspectionDetailsEntity> findByInspectionIdClientId(@Param("clientId") Long clientId,@Param("clientServiceLocationId") Long clientServiceLocationId);
+
+	 
+	
+
+
+	 @Query(value = "SELECT * FROM vehicle_inspection WHERE client_id = :clientId AND client_service_location_id = :clientServiceLocationId AND inspection_status = 1", nativeQuery = true)
+	 List<VehicleInspectionEntity> findInspectionByClientIdAndServiceLocationId(@Param("clientId") Long clientId, @Param("clientServiceLocationId") Long clientServiceLocationId);
+
+	
+
 
 			
 
